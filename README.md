@@ -4,14 +4,16 @@
 ### Requirements:
   - Node.js
   - npm
-
+<br>
+<br>
 
 
 ### Setting up the repository
   - Once you clone the repo to your personal computer, go to the directory via command line and enter the following commands:
   - `npm install -g expo-cli`
   - `npm install`
-  
+<br>
+<br>  
 
 
 ### Prerequisites to starting the application via simulator
@@ -22,7 +24,8 @@ Windows:
 Mac:
   - ensure you have installed JDK8/android studio/android device simulator.
   - ensure you have xCode installed for ios simulation.
-
+<br>
+<br>
 
 
 ### Starting the simulator:
