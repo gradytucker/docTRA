@@ -11,13 +11,14 @@
   - Once you clone the repo to your personal computer, go to the directory via command line and enter the following commands:
   - `npm install -g expo-cli`
   - `npm install`
+ 
+  - expo handles all react-native components so you should not have to worry about anything else.
 <br>
 
 
 ### Prerequisites to starting the application via simulator
 Windows:
   - ensure you have installed JDK8/android studio/android device simulator.
-  - you will not be able to simulate on ios so do not worry about that.
 
 Mac:
   - ensure you have installed JDK8/android studio/android device simulator.
