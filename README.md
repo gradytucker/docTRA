@@ -5,7 +5,6 @@
   - Node.js
   - npm
 <br>
-<br>
 
 
 ### Setting up the repository
@@ -13,7 +12,6 @@
   - `npm install -g expo-cli`
   - `npm install`
 <br>
-<br>  
 
 
 ### Prerequisites to starting the application via simulator
@@ -24,7 +22,6 @@ Windows:
 Mac:
   - ensure you have installed JDK8/android studio/android device simulator.
   - ensure you have xCode installed for ios simulation.
-<br>
 <br>
 
 
