@@ -30,3 +30,7 @@ Mac:
   - go to the the docTRA home directory via command line, and type `expo start`
   - this will launch a local host browser instance where metro bundler will allow you to launch simulations for testing.
   - just google any errors that come up in your terminal if expo doesn't launch - there are plenty of guidance on how to fix these issues.
+<br>
+
+### Argon react-native "bootstrap" documentation:
+- https://demos.creative-tim.com/argon-react-native/docs/#/
