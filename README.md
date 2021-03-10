@@ -7,7 +7,7 @@ We aim to develop an application platform that provides targeted information to 
 
 This application is intended to be cross platform and be available on a variety of mobile operating systems. Full development, realization, and testing of the project commencing early next semester, with the utilization of a modified waterfall methodology with overlapping phases as its project model.
 We plan to introduce this application as part of the common humanity training at Epworth HealthCare that will take place in July 2021, and the application will be introduced and utilised for 6 weeks after their initial common humanity training sessions.
-
+<br>
 
 ### Development requirements:
   - Node.js
