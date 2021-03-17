@@ -22,27 +22,14 @@ class Header extends React.Component {
     const { white, title, navigation } = this.props;
   }
 
-  renderSearch = () => {
-    const { navigation } = this.props;
-    return (
-      <Input
-        right
-        color="black"
-        style={styles.search}
-        placeholder="What are you looking for?"
-        placeholderTextColor={'#8898AA'}
-        onFocus={() => navigation.navigate('Pro')}
-        iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="search-zoom-in" family="ArgonExtra" />}
-      />
-    );
-  }
+
 
   renderHeader = () => {
-    const { search, options, tabs } = this.props;
-    if (search || tabs || options) {
+    const { options, tabs } = this.props;
+    if (tabs || options) {
       return (
         <Block center>
-          {search ? this.renderSearch() : null}
+
           {options ? this.renderOptions() : null}
           {tabs ? this.renderTabs() : null}
         </Block>
@@ -68,29 +55,37 @@ class Header extends React.Component {
         <NavBar
           back={false}
           title={title}
+
           style={navbarStyles}
           transparent={transparent}
-          right={this.renderRight()}
-          rightStyle={{ alignItems: 'center' }}
+          right={
+            <Text bold size={15} color="#32325D">
+              {'docTRA'}
+            </Text>}
+          rightStyle={{ paddingVertical: 12, flex: 0.5 }}
           left={
-            <Icon 
-              name={back ? 'chevron-left' : "menu"} family="entypo" 
-              size={20} onPress={this.handleLeftPress} 
+            <Icon
+              name={back ? 'chevron-left' : "menu"} family="entypo"
+              size={28} onPress={this.handleLeftPress}
               color={iconColor || (white ? argonTheme.COLORS.WHITE : argonTheme.COLORS.ICON)}
               style={{ marginTop: 2 }}
             />
-              
+
           }
-          leftStyle={{ paddingVertical: 12, flex: 0.2 }}
+
+          leftStyle={{ paddingVertical: 12, flex: 0.4 }}
           titleStyle={[
             styles.title,
             { color: argonTheme.COLORS[white ? 'WHITE' : 'HEADER'] },
             titleColor && { color: titleColor }
           ]}
+
           {...props}
         />
+
         {this.renderHeader()}
       </Block>
+
     );
   }
 }
