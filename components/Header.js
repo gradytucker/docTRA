@@ -59,10 +59,10 @@ class Header extends React.Component {
           style={navbarStyles}
           transparent={transparent}
           right={
-            <Text bold size={15} color="#32325D">
+            <Text bold size={22} color="#32325D">
               {'docTRA'}
             </Text>}
-          rightStyle={{ paddingVertical: 12, flex: 0.5 }}
+          rightStyle={{ paddingVertical: 12, flex: 0.8 }}
           left={
             <Icon
               name={back ? 'chevron-left' : "menu"} family="entypo"
