@@ -1,6 +1,6 @@
 import React from 'react';
 import { withNavigation } from '@react-navigation/compat';
-import { TouchableOpacity, StyleSheet, Platform, Dimensions } from 'react-native';
+import { TouchableOpacity, View, TextInput, StyleSheet, Platform, Dimensions } from 'react-native';
 import { Button, Block, NavBar, Text, theme } from 'galio-framework';
 
 import Icon from './Icon';
@@ -18,6 +18,7 @@ class Header extends React.Component {
     const { back, navigation } = this.props;
     return (back ? navigation.goBack() : navigation.openDrawer());
   }
+  
   renderRight = () => {
     const { white, title, navigation } = this.props;
   }
@@ -39,14 +40,14 @@ class Header extends React.Component {
   render() {
     const { back, title, white, transparent, bgColor, iconColor, titleColor, navigation, ...props } = this.props;
 
-    const noShadow = ['Search', 'Categories', 'Deals', 'Pro', 'Profile'].includes(title);
+    const noShadow = ['Categories', 'Deals', 'Pro', 'Profile'].includes(title);
     const headerStyles = [
       !noShadow ? styles.shadow : null,
       transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null,
     ];
 
     const navbarStyles = [
-      styles.navbar,
+      styles.header,
       bgColor && { backgroundColor: bgColor }
     ];
 
@@ -124,19 +125,12 @@ const styles = StyleSheet.create({
     right: 12,
   },
   header: {
+    height:70,
     backgroundColor: theme.COLORS.WHITE,
   },
   divider: {
     borderRightWidth: 0.3,
     borderRightColor: theme.COLORS.ICON,
-  },
-  search: {
-    height: 48,
-    width: width - 32,
-    marginHorizontal: 16,
-    borderWidth: 1,
-    borderRadius: 3,
-    borderColor: argonTheme.COLORS.BORDER
   },
   options: {
     marginBottom: 24,
@@ -159,3 +153,4 @@ const styles = StyleSheet.create({
 });
 
 export default withNavigation(Header);
+

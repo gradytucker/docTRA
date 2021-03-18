@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   articles: {
     width: width - theme.SIZES.BASE * 2,
-    paddingVertical: theme.SIZES.BASE,
+    paddingVertical: 0, //draft
   },
 });
 
