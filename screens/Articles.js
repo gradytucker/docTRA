@@ -81,11 +81,11 @@ class Articles extends React.Component {
   renderCards = () => {
     return (
       <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
+        <Text bold size={28} style={[styles.title, {paddingHorizontal: theme.SIZES.BASE}]}>
           Cards
         </Text>
         <Block flex>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE}}>
             <Card item={articles[0]} horizontal />
             <Block flex row>
               <Card
@@ -147,7 +147,7 @@ class Articles extends React.Component {
         flex
         style={[styles.group, { paddingBottom: theme.SIZES.BASE * 5 }]}
       >
-        <Text bold size={16} style={styles.title}>
+        <Text bold size={28} style={styles.title}>
           Album
         </Text>
         <Block style={{ marginHorizontal: theme.SIZES.BASE * 2 }}>
