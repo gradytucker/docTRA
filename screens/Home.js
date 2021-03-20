@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, StatusBar } from 'react-native';
 import { Block, Text, theme } from "galio-framework";
 import { Card } from '../components';
 import articles from '../constants/articles';
@@ -15,6 +15,17 @@ class Home extends React.Component {
           {'\nDaily Quote'}
         </Text>
         <Block flex>
+          <StatusBar
+            barStyle="dark-content"
+            // dark-content, light-content and default
+            hidden={false}
+            //To hide statusBar
+            backgroundColor="#ff4081"
+            //Background color of statusBar
+            translucent={false}
+            //allowing light, but not detailed shapes
+            networkActivityIndicatorVisible={true}
+          />
           <Card item={articles[0]} full />
           <Text bold size={28} color="#32325D">
             {'\nExercises for you'}
