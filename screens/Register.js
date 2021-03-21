@@ -51,7 +51,21 @@ class Register extends React.Component {
       console.log("error")
     });
   }
-  
+  signUpAccount = () =>{
+    let email = this.state.email
+    let password = this.state.password
+    firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+    // Signed in
+    var user = userCredential.user;
+    console.log("Success")
+    // ...
+  })
+  .catch((error) => {
+    console.log("error")
+  });
+
+  }
   state = {
     name:"",
     email: "",
@@ -221,6 +235,11 @@ class Register extends React.Component {
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           CREATE ACCOUNT
                         </Text>
+                    </Button >
+                    <Button color="success" style={styles.createButton} onPress = {this.signUpAccount}>
+                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                         Sign Up
+                        </Text>
                     </Button>
                     </Block>
                   </KeyboardAvoidingView>
@@ -283,7 +302,7 @@ const styles = StyleSheet.create({
   },
   createButton: {
     width: width * 0.5,
-    marginTop: 25
+    marginTop: 10
   }
 });
 
