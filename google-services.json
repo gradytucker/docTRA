@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "813152005106",
+    "project_id": "doctra-f4f4b",
+    "storage_bucket": "doctra-f4f4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813152005106:android:30a689a4bba788d335196b",
+        "android_client_info": {
+          "package_name": "com.docTRA"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813152005106-ett0igen5ivu4f108kl11mkh4n18nrto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqgNzmNT6ByslUSmVf5DjNJw5X2jZtShM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "813152005106-ett0igen5ivu4f108kl11mkh4n18nrto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
