@@ -54,7 +54,17 @@ class Register extends React.Component {
   render() {
     return (
       <Block flex middle>
-        <StatusBar hidden />
+        <StatusBar
+          barStyle="dark-content"
+          // dark-content, light-content and default
+          hidden={false}
+          //To hide statusBar
+          backgroundColor="#ff4081"
+          //Background color of statusBar
+          translucent={false}
+          //allowing light, but not detailed shapes
+          networkActivityIndicatorVisible={true}
+        />
         <ImageBackground
           source={Images.RegisterBackground}
           style={{ width, height, zIndex: 1 }}

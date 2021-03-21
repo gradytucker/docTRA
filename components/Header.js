@@ -18,7 +18,7 @@ class Header extends React.Component {
     const { back, navigation } = this.props;
     return (back ? navigation.goBack() : navigation.openDrawer());
   }
-  
+
   renderRight = () => {
     const { white, title, navigation } = this.props;
   }
@@ -63,7 +63,7 @@ class Header extends React.Component {
             <Text bold size={22} color="#32325D">
               {'docTRA'}
             </Text>}
-          rightStyle={{ paddingVertical: 12, flex: 0.8 }}
+          rightStyle={{ paddingTop: iPhoneX ? 25 : 0, flex: 0.8 }}
           left={
             <Icon
               name={back ? 'chevron-left' : "menu"} family="entypo"
@@ -74,7 +74,7 @@ class Header extends React.Component {
 
           }
 
-          leftStyle={{ paddingVertical: 12, flex: 0.4 }}
+          leftStyle={{ paddingTop: iPhoneX ? 25 : 0, flex: 0.4 }}
           titleStyle={[
             styles.title,
             { color: argonTheme.COLORS[white ? 'WHITE' : 'HEADER'] },
@@ -100,9 +100,10 @@ const styles = StyleSheet.create({
     width: '100%',
     fontSize: 16,
     fontWeight: 'bold',
+    paddingTop: iPhoneX ? 25 : 0,
   },
   navbar: {
-    paddingVertical: 0,
+    paddingVertical: 20,
     paddingBottom: theme.SIZES.BASE * 1.5,
     paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE,
     zIndex: 5,
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     right: 12,
   },
   header: {
-    height:70,
+    height: iPhoneX ? 100 : 70,
     backgroundColor: theme.COLORS.WHITE,
   },
   divider: {

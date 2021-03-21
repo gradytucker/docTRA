@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Image } from "react-native";
 import AppLoading from "expo-app-loading";
 import { useFonts } from '@use-expo/font';
@@ -53,11 +53,11 @@ export default props => {
     console.warn(error);
   };
 
- function _handleFinishLoading() {
+  function _handleFinishLoading() {
     setLoading(true);
   };
 
-  if(!fontsLoaded && !isLoadingComplete) {
+  if (!fontsLoaded && !isLoadingComplete) {
     return (
       <AppLoading
         startAsync={_loadResourcesAsync}
@@ -65,7 +65,7 @@ export default props => {
         onFinish={_handleFinishLoading}
       />
     );
-  } else if(fontsLoaded) {
+  } else if (fontsLoaded) {
     return (
       <NavigationContainer>
         <GalioProvider theme={argonTheme}>
@@ -79,45 +79,3 @@ export default props => {
     return null
   }
 }
-
-// export default class App extends React.Component {
-//   state = {
-//     isLoadingComplete: false
-//   };
-
-//   render() {
-//     if (!this.state.isLoadingComplete) {
-//       return (
-//         <AppLoading
-//           startAsync={this._loadResourcesAsync}
-//           onError={this._handleLoadingError}
-//           onFinish={this._handleFinishLoading}
-//         />
-//       );
-//     } else {
-//       return (
-//         <NavigationContainer>
-//           <GalioProvider theme={argonTheme}>
-//             <Block flex>
-//               <Screens />
-//             </Block>
-//           </GalioProvider>
-//         </NavigationContainer>
-//       );
-//     }
-//   }
-
-//   _loadResourcesAsync = async () => {
-//     return Promise.all([...cacheImages(assetImages)]);
-//   };
-
-//   _handleLoadingError = error => {
-//     // In this case, you might want to report the error to your error
-//     // reporting service, for example Sentry
-//     console.warn(error);
-//   };
-
-//   _handleFinishLoading = () => {
-//     this.setState({ isLoadingComplete: true });
-//   };
-// }
