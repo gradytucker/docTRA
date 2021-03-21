@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import auth from '@react-native-firebase/auth'
 import { Block, Checkbox, Text, theme } from "galio-framework";
+import Home from "../screens/Home";
 
 
 import { Button, Icon, Input } from "../components";
@@ -38,19 +39,52 @@ function App() {
 
 
 class Register extends React.Component {
-  
+
+  componentDidMount(){
+    this.init();
+    this.isHasUser();
+  }
+
+  init = () => {
+    firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
+
+  componentDidUpdate(prevState){
+    if (this.state.hasUser != prevState.hasUser){
+      this.isHasUser();
+    }
+  }
+
+  isHasUser = () => {
+    firebase.auth().onAuthStateChanged((user) =>{
+      if(user){
+        console.log("has user")
+        this.props.navigation.navigate('Home')
+      }
+      else{
+        console.log("no user")
+      }
+    })
+
+  }
   createAccount = () =>{
     let email = this.state.email
     let password = this.state.password
     firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       var user = userCredential.user;
+      
       console.log("created")
     })
     .catch((error) => {
       console.log("error")
     });
   }
+
   signUpAccount = () =>{
     let email = this.state.email
     let password = this.state.password
@@ -69,7 +103,8 @@ class Register extends React.Component {
   state = {
     name:"",
     email: "",
-    password: ""
+    password: "",
+    hasUser: false
   }
   render() {
     return (
