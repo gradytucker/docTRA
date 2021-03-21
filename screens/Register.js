@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import * as firebase from "./../firebase"
+import firebase from "./../firebase"
 import {
   View,
   StyleSheet,
   ImageBackground,
   Dimensions,
   StatusBar,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  TouchableOpacity
 } from "react-native";
 import auth from '@react-native-firebase/auth'
 import { Block, Checkbox, Text, theme } from "galio-framework";
@@ -16,6 +17,7 @@ import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
 
 const { width, height } = Dimensions.get("screen");
+
 
 function App() {
   // Set an initializing state whilst Firebase connects
@@ -36,7 +38,25 @@ function App() {
 
 
 class Register extends React.Component {
- 
+  
+  createAccount = () =>{
+    let email = this.state.email
+    let password = this.state.password
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      var user = userCredential.user;
+      console.log("created")
+    })
+    .catch((error) => {
+      console.log("error")
+    });
+  }
+  
+  state = {
+    name:"",
+    email: "",
+    password: ""
+  }
   render() {
     return (
       <Block flex middle>
@@ -113,12 +133,20 @@ class Register extends React.Component {
                             style={styles.inputIcons}
                           />
                         }
+                        onChangeText={text => {
+                          this.setState({ name: text });
+                        }}
+                        value = {this.state.name}
+                        // NameTest = {
+                        //   console.log(this.state.name)
+                        // }
                       />
                     </Block>
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                       <Input
                         borderless
                         placeholder="Email"
+                        multiline={false}
                         iconContent={
                           <Icon
                             size={16}
@@ -128,6 +156,13 @@ class Register extends React.Component {
                             style={styles.inputIcons}
                           />
                         }
+                        onChangeText={text => {
+                          this.setState({ email: text });
+                        }}
+                        value = {this.state.email}
+                        // eamilTest = {
+                        //   console.log(this.state.email)
+                        // }
                       />
                     </Block>
                     <Block width={width * 0.8}>
@@ -144,6 +179,13 @@ class Register extends React.Component {
                             style={styles.inputIcons}
                           />
                         }
+                        onChangeText={text => {
+                          this.setState({ password: text });
+                        }}
+                        value = {this.state.password}
+                        // passwordTest = {
+                        //   console.log(this.state.password)
+                        // }
                       />
                       <Block row style={styles.passwordCheck}>
                         <Text size={12} color={argonTheme.COLORS.MUTED}>
@@ -175,11 +217,11 @@ class Register extends React.Component {
                       </Button>
                     </Block>
                     <Block middle>
-                      <Button color="primary" style={styles.createButton}>
+                    <Button color="primary" style={styles.createButton} onPress = {this.createAccount}>
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           CREATE ACCOUNT
                         </Text>
-                      </Button>
+                    </Button>
                     </Block>
                   </KeyboardAvoidingView>
                 </Block>
