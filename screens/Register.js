@@ -42,7 +42,7 @@ class Register extends React.Component {
 
   componentDidMount(){
     this.init();
-    this.isHasUser();
+    
   }
 
   init = () => {
@@ -53,11 +53,11 @@ class Register extends React.Component {
     });
   }
 
-  componentDidUpdate(prevState){
-    if (this.state.hasUser != prevState.hasUser){
-      this.isHasUser();
-    }
-  }
+  // componentDidUpdate(prevState){
+  //   if (this.state.hasUser != prevState.hasUser){
+  //     this.isHasUser();
+  //   }
+  // }
 
   isHasUser = () => {
     firebase.auth().onAuthStateChanged((user) =>{
@@ -69,8 +69,8 @@ class Register extends React.Component {
         console.log("no user")
       }
     })
-
   }
+
   createAccount = () =>{
     let email = this.state.email
     let password = this.state.password
@@ -83,22 +83,22 @@ class Register extends React.Component {
     .catch((error) => {
       console.log("error")
     });
+    this.isHasUser()
   }
 
   signUpAccount = () =>{
     let email = this.state.email
     let password = this.state.password
-    firebase.auth().signInWithEmailAndPassword(email, password)
-  .then((userCredential) => {
+    firebase.auth().signInWithEmailAndPassword(email, password).then((userCredential) => {
     // Signed in
     var user = userCredential.user;
     console.log("Success")
     // ...
-  })
-  .catch((error) => {
+    })
+    .catch((error) => {
     console.log("error")
-  });
-
+    });
+    this.isHasUser();
   }
   state = {
     name:"",
