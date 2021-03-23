@@ -232,37 +232,7 @@ function AppStack(props) {
       <Drawer.Screen name="Account" component={Register} />
       <Drawer.Screen name="Elements" component={ElementsStack} />
       <Drawer.Screen name="Articles" component={ArticlesStack} />
-    </Drawer.Navigator>, 
-    <Tab.Navigator
-  initialRouteName="Feed"
-  tabBarOptions={{
-    activeTintColor: '#42f44b',
-  }}>
-  <Tab.Screen
-    name="HomeStack"
-    component={HomeStack}
-    options={{
-      tabBarLabel: 'Home',
-      tabBarIcon: ({ color, size }) => (
-        <MaterialCommunityIcons name="home" color={color} size={size} />
-      ),
-    }}
-  />
-  <Tab.Screen
-    name="SettingsStack"
-    component={ArticlesStack}
-    options={{
-      tabBarLabel: 'Settings',
-      tabBarIcon: ({ color, size }) => (
-        <MaterialCommunityIcons
-          name="settings"
-          color={color}
-          size={size}
-        />
-      ),
-    }}
-  />
-</Tab.Navigator>
+    </Drawer.Navigator>
 );
 }
 
