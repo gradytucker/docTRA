@@ -179,8 +179,44 @@ function HomeStack(props) {
   );
 }
 
+const bottomNavitgationStack = () =>{
+  return (
+    
+      <Tab.Navigator
+        initialRouteName="Feed"
+        tabBarOptions={{
+          activeTintColor: '#42f44b',
+        }}>
+        <Tab.Screen
+          name="HomeStack"
+          component={HomeStack}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="AritclesStack"
+          component={ArticlesStack}
+          options={{
+            tabBarLabel: 'Articles',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="home"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+   
+  );
+}
 
-export default function OnboardingStack(props) {
+export default function OnboardingStack() {
   return (
     <Stack.Navigator mode="card" headerMode="none">
       <Stack.Screen
@@ -190,12 +226,12 @@ export default function OnboardingStack(props) {
           headerTransparent: true
         }}
       />
-      <Stack.Screen name="App" component={AppStack} />
+      <Stack.Screen name= "App" component={DrawerStack}></Stack.Screen>
     </Stack.Navigator>
   );
 }
 
-function AppStack(props) {
+const DrawerStack = () => {
   return (
     <Drawer.Navigator
       style={{ flex: 1 }}
@@ -226,12 +262,12 @@ function AppStack(props) {
       }}
       initialRouteName="Home"
     >
-      
-      <Drawer.Screen name="Home" component={HomeStack} />
+      <Drawer.Screen name="Home" component={bottomNavitgationStack} />
       <Drawer.Screen name="Profile" component={ProfileStack} />
       <Drawer.Screen name="Account" component={Register} />
       <Drawer.Screen name="Elements" component={ElementsStack} />
       <Drawer.Screen name="Articles" component={ArticlesStack} />
+      <Drawer.Screen name="tabStack" component ={bottomNavitgationStack} ></Drawer.Screen>
     </Drawer.Navigator>
 );
 }
