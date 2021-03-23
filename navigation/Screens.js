@@ -4,6 +4,9 @@ import { Easing, Animated, Dimensions } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 import { Block } from "galio-framework";
 
@@ -176,6 +179,7 @@ function HomeStack(props) {
   );
 }
 
+
 export default function OnboardingStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="none">
@@ -222,12 +226,43 @@ function AppStack(props) {
       }}
       initialRouteName="Home"
     >
+      
       <Drawer.Screen name="Home" component={HomeStack} />
       <Drawer.Screen name="Profile" component={ProfileStack} />
       <Drawer.Screen name="Account" component={Register} />
       <Drawer.Screen name="Elements" component={ElementsStack} />
       <Drawer.Screen name="Articles" component={ArticlesStack} />
-    </Drawer.Navigator>
-  );
+    </Drawer.Navigator>, 
+    <Tab.Navigator
+  initialRouteName="Feed"
+  tabBarOptions={{
+    activeTintColor: '#42f44b',
+  }}>
+  <Tab.Screen
+    name="HomeStack"
+    component={HomeStack}
+    options={{
+      tabBarLabel: 'Home',
+      tabBarIcon: ({ color, size }) => (
+        <MaterialCommunityIcons name="home" color={color} size={size} />
+      ),
+    }}
+  />
+  <Tab.Screen
+    name="SettingsStack"
+    component={ArticlesStack}
+    options={{
+      tabBarLabel: 'Settings',
+      tabBarIcon: ({ color, size }) => (
+        <MaterialCommunityIcons
+          name="settings"
+          color={color}
+          size={size}
+        />
+      ),
+    }}
+  />
+</Tab.Navigator>
+);
 }
 
