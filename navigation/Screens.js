@@ -6,7 +6,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+// icons from https://icons.expo.fyi/
 
 import { Block } from "galio-framework";
 
@@ -198,13 +198,27 @@ const bottomNavitgationStack = () =>{
           }}
         />
         <Tab.Screen
+            name = "ProfileStack"
+            component = {ProfileStack}
+            options = {{
+                tabBarLabel: 'Profile',
+                tabBarIcon: ({ color, size }) => (
+                    <MaterialCommunityIcons
+                        name = "account-circle"
+                        color={color}
+                        size={size}
+                    />
+                ),
+            }}
+        />
+        <Tab.Screen
           name="AritclesStack"
           component={ArticlesStack}
           options={{
             tabBarLabel: 'Articles',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
-                name="home"
+                name = "newspaper"
                 color={color}
                 size={size}
               />
