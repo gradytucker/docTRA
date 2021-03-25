@@ -95,6 +95,7 @@ function ArticlesStack(props) {
           headerTransparent: true
         }}
       />
+      <Stack.Screen name="tabStack" component = {bottomNavitgationStack}></Stack.Screen>
     </Stack.Navigator>
   );
 }
@@ -267,7 +268,6 @@ const DrawerStack = () => {
       <Drawer.Screen name="Account" component={Register} />
       <Drawer.Screen name="Elements" component={ElementsStack} />
       <Drawer.Screen name="Articles" component={ArticlesStack} />
-      <Drawer.Screen name="tabStack" component ={bottomNavitgationStack} ></Drawer.Screen>
     </Drawer.Navigator>
 );
 }
