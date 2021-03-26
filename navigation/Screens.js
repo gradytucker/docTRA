@@ -18,6 +18,8 @@ import Profile from "../screens/Profile";
 import Register from "../screens/Register";
 import Elements from "../screens/Elements";
 import Articles from "../screens/Articles";
+import WebViewScreen from "../screens/WebViewScreen";
+
 // drawer
 import CustomDrawerContent from "./Menu";
 
@@ -44,23 +46,6 @@ function ElementsStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
-            <Stack.Screen
-        name="Pro"
-        component={Pro}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true
-        }}
-      />
     </Stack.Navigator>
   );
 }
@@ -78,28 +63,21 @@ function ArticlesStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
-            <Stack.Screen
-        name="Pro"
-        component={Pro}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true
-        }}
-      />
       <Stack.Screen name="tabStack" component = {bottomNavitgationStack}></Stack.Screen>
     </Stack.Navigator>
   );
 }
+function WebViewScreenStack(props){
+  return<Stack.Navigator headerMode = "screen">
+    <Stack.Screen
+      name ="WebViewScreen"
+      component = {WebViewScreen}
+      options = {{
+        header:({navigation,scene}) => (<Header title = "Testing Website" navigation={navigation} scene ={scene} />),
 
+      }} />
+  </Stack.Navigator>
+}
 function ProfileStack(props) {
   return (
     <Stack.Navigator initialRouteName="Profile" mode="card" headerMode="screen">
@@ -117,23 +95,6 @@ function ProfileStack(props) {
             />
           ),
           cardStyle: { backgroundColor: "#FFFFFF" },
-          headerTransparent: true
-        }}
-      />
-            <Stack.Screen
-        name="Pro"
-        component={Pro}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
           headerTransparent: true
         }}
       />
@@ -157,23 +118,6 @@ function HomeStack(props) {
             />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
-        }}
-      />
-      <Stack.Screen
-        name="Pro"
-        component={Pro}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true
         }}
       />
     </Stack.Navigator>
@@ -227,6 +171,7 @@ export default function OnboardingStack() {
           headerTransparent: true
         }}
       />
+      <Stack.Screen name ="WebViewScreen" component = {WebViewScreenStack}></Stack.Screen>
       <Stack.Screen name= "App" component={DrawerStack}></Stack.Screen>
     </Stack.Navigator>
   );
