@@ -11,7 +11,6 @@ function URLsetting(dataList){
   art1.URL = dataList.Youtube.URL
   art1.title = dataList.Youtube.title
   art1.image = dataList.Youtube.imgURL
-  return URLlist
 }
 
 const art1 = {
