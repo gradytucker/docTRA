@@ -1,7 +1,7 @@
 import "firebase/auth"
 import * as firebase from 'firebase';
 
-const app = firebase.initializeApp({
+const firebaseSetUp = firebase.initializeApp({
     apiKey: "AIzaSyBwl3BxwCO2pIhPS02udk3Bt4bd71VAwSo",
     authDomain: "doctra-f4f4b.firebaseapp.com",
     projectId: "doctra-f4f4b",
@@ -11,5 +11,22 @@ const app = firebase.initializeApp({
     measurementId: "G-Z3K10JX1PS"
 })
 
-export const auth = app.auth()
-export default app
+
+
+
+
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
+  .then(() => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    // In memory persistence will be applied to the signed in Google user
+    // even though the persistence was set to 'none' and a page redirect
+    // occurred.
+    return firebase.auth().signInWithRedirect(provider);
+  })
+  .catch((error) => {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+  });
+
+export default firebaseSetUp

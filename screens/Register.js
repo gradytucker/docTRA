@@ -41,8 +41,7 @@ function App() {
 class Register extends React.Component {
 
   componentDidMount(){
-    this.init();
-    
+    this.signUpAccount()
   }
 
   init = () => {
@@ -102,8 +101,8 @@ class Register extends React.Component {
   }
   state = {
     name:"",
-    email: "",
-    password: "",
+    email: "admin@123.com",
+    password:"123456",
     hasUser: false
   }
   render() {
