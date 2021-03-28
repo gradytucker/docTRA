@@ -7,7 +7,12 @@ import { withNavigation } from '@react-navigation/compat';
 
 const { width } = Dimensions.get('screen');
 
+/*
+the purpose of this js file is open a web page in app when user click article card
+and get the web url send by card component.
+*/
 class WebViewScreen extends React.Component {
+  // loading state when open the web page
   render
   LoadingIndicatorView() {
     return (
@@ -21,12 +26,13 @@ class WebViewScreen extends React.Component {
       />
     )
   }
-    
+  // web render funcion
   render() {
     const {navigation, route} = this.props;
     //const {websiteURL} = navigation.state.params
     console.log(route)
     return (
+      // link to the web page
       <WebView
         source={{ uri: route.params.websiteURL}}
         javaScriptEnabled={true}

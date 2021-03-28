@@ -24,11 +24,13 @@ class Card extends React.Component {
 
     return (
       <Block row={horizontal} card flex style={cardContainer}>
+      {/*navigate to the webViewScreen when you click the element */}
         <TouchableWithoutFeedback onPress={() => navigation.navigate('WebViewScreen',{screen:"WebViewScreen",params:{websiteURL: item.URL}})}>
           <Block flex style={imgContainer}>
             <Image source={{uri: item.image}} style={imageStyles} />
           </Block>
         </TouchableWithoutFeedback>
+        {/*navigate to the webViewScreen when you click the element */}
         <TouchableWithoutFeedback onPress={() => navigation.navigate('WebViewScreen',{screen:"WebViewScreen",params:{websiteURL: item.URL}})}>
           <Block flex space="between" style={styles.cardDescription}>
             <Text size={14} style={styles.cardTitle}>{item.title}</Text>

@@ -41,11 +41,11 @@ function App() {
 
 
 class Register extends React.Component {
-
+  // event listener
   componentDidMount(){
     this.signUpAccount();
   }
-
+  //user sign out when app reopen
   init = () => {
     firebase.auth().signOut().then(() => {
       // Sign-out successful.
@@ -60,6 +60,7 @@ class Register extends React.Component {
   //   }
   // }
 
+  //check the user state
   isHasUser = () => {
     firebase.auth().onAuthStateChanged((user) =>{
       if(user){
@@ -71,7 +72,8 @@ class Register extends React.Component {
       }
     })
   }
-
+  
+  // create an account on firebase with email and password
   createAccount = () =>{
     let email = this.state.email
     let password = this.state.password
@@ -86,7 +88,7 @@ class Register extends React.Component {
     });
     this.isHasUser()
   }
-
+  // sign up using email and password
   signUpAccount = () =>{
     let email = this.state.email
     let password = this.state.password
@@ -101,24 +103,24 @@ class Register extends React.Component {
     });
     this.isHasUser();
   }
-
+  // google sign in init
   initAsync = async () => {
     await GoogleSignIn.initAsync({
       clientId: '813152005106-ett0igen5ivu4f108kl11mkh4n18nrto.apps.googleusercontent.com',
     });
     this._syncUserWithStateAsync();
   };
-
+  //check the user state
   _syncUserWithStateAsync = async () => {
     const user = await GoogleSignIn.signInSilentlyAsync();
     this.setState({ user });
   };
-
+  //google account sign out
   signOutAsync = async () => {
     await GoogleSignIn.signOutAsync();
     this.setState({ user: null });
   };
-
+  //google account sign in 
   signInAsync = async () => {
     try {
       await GoogleSignIn.askForPlayServicesAsync();
@@ -131,6 +133,7 @@ class Register extends React.Component {
     }
   };
 
+  // user state
   state = {
     user: null,
     name:"",
@@ -221,6 +224,7 @@ class Register extends React.Component {
                             style={styles.inputIcons}
                           />
                         }
+                        // change the state value when input information
                         onChangeText={text => {
                           this.setState({ name: text });
                         }}
@@ -244,6 +248,7 @@ class Register extends React.Component {
                             style={styles.inputIcons}
                           />
                         }
+                        // change the state value when input information
                         onChangeText={text => {
                           this.setState({ email: text });
                         }}
@@ -267,6 +272,7 @@ class Register extends React.Component {
                             style={styles.inputIcons}
                           />
                         }
+                        // change the state value when input information
                         onChangeText={text => {
                           this.setState({ password: text });
                         }}
@@ -305,10 +311,12 @@ class Register extends React.Component {
                       </Button>
                     </Block>
                     <Block middle>
+                      {/* create account button */}
                     <Button color="primary" style={styles.createButton} onPress = {this.createAccount}>
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           CREATE ACCOUNT
                         </Text>
+                        {/* sign in button */}
                     </Button >
                     <Button color="success" style={styles.createButton} onPress = {this.signUpAccount}>
                     <Text bold size={14} color={argonTheme.COLORS.WHITE}>

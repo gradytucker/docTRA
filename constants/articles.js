@@ -1,18 +1,21 @@
 import { object } from "prop-types";
 import firebase from "./../firebase";
 
+// read all the information from firebase database
 const db = firebase.database();
 db.ref('/ArticleURL').once("value").then(snapshot =>{
   const WebSiteURL = snapshot.val()
   URLsetting(WebSiteURL)
 })
 
+//set the article information
 function URLsetting(dataList){
   art1.URL = dataList.Youtube.URL
   art1.title = dataList.Youtube.title
   art1.image = dataList.Youtube.imgURL
 }
 
+//default information.
 const art1 = {
     title: '[ Daily Quote ]',
     image: 'https://blog.hubspot.com/hs-fs/hubfs/Sales_Blog/1-min.jpg?width=598&name=1-min.jpg',

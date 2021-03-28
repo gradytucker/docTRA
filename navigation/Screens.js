@@ -67,10 +67,13 @@ function ArticlesStack(props) {
     </Stack.Navigator>
   );
 }
+// create a stack screen for web browers
 function WebViewScreenStack(props){
   return<Stack.Navigator headerMode = "screen">
     <Stack.Screen
+    //the id of the web browers screen
       name ="WebViewScreen"
+      //webViewScreen js file
       component = {WebViewScreen}
       options = {{
         header:({navigation,scene}) => (<Header title = "Testing Website" navigation={navigation} scene ={scene} />),
@@ -124,14 +127,15 @@ function HomeStack(props) {
   );
 }
 
+// create stack screen for the bottom navigation tab 
 const bottomNavitgationStack = () =>{
   return (
-    
       <Tab.Navigator
         initialRouteName="Feed"
         tabBarOptions={{
           activeTintColor: '#42f44b',
         }}>
+          {/*link to the home screen*/}
         <Tab.Screen
           name="HomeStack"
           component={HomeStack}
@@ -143,6 +147,7 @@ const bottomNavitgationStack = () =>{
           }}
         />
         <Tab.Screen
+        // link to the profile screen
             name = "ProfileStack"
             component = {ProfileStack}
             options = {{
@@ -156,6 +161,7 @@ const bottomNavitgationStack = () =>{
                 ),
             }}
         />
+        {/*link to the Articles screen*/}
         <Tab.Screen
           name="AritclesStack"
           component={ArticlesStack}
@@ -185,6 +191,7 @@ export default function OnboardingStack() {
           headerTransparent: true
         }}
       />
+      {/*add the webViewScreen and other screen to stack navigator*/}
       <Stack.Screen name ="WebViewScreen" component = {WebViewScreenStack}></Stack.Screen>
       <Stack.Screen name= "App" component={DrawerStack}></Stack.Screen>
     </Stack.Navigator>
@@ -222,6 +229,7 @@ const DrawerStack = () => {
       }}
       initialRouteName="Home"
     >
+      {/*link to all the screen*/}
       <Drawer.Screen name="Home" component={bottomNavitgationStack} />
       <Drawer.Screen name="Profile" component={ProfileStack} />
       <Drawer.Screen name="Account" component={Register} />
