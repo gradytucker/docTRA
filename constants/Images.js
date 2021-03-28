@@ -9,8 +9,9 @@ const ArgonLogo = require("../assets/imgs/argonlogo.png");
 const iOSLogo = require("../assets/imgs/ios.png");
 const androidLogo = require("../assets/imgs/android.png");
 // internet imgs
-
 const ProfilePicture = 'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?fit=crop&w=1650&q=80';
+// docTra Images
+const compassionCartoon = require("../assets/docTraMaterial/compassioncartoon.png")
 
 const Viewed = [
   'https://images.unsplash.com/photo-1501601983405-7c7cabaa1581?fit=crop&w=240&q=80',
@@ -37,5 +38,6 @@ export default {
   Pro,
   ArgonLogo,
   iOSLogo,
-  androidLogo
+  androidLogo,
+  compassionCartoon
 };
