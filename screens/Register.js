@@ -9,9 +9,11 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity
 } from "react-native";
-import auth from '@react-native-firebase/auth'
+import auth from '@firebase/auth'
 import { Block, Checkbox, Text, theme } from "galio-framework";
 import Home from "../screens/Home";
+//import {GoogleSignIn} from 'expo-google-sign-in';
+
 
 
 import { Button, Icon, Input } from "../components";
@@ -41,8 +43,7 @@ function App() {
 class Register extends React.Component {
 
   componentDidMount(){
-    this.init();
-    
+    this.signUpAccount();
   }
 
   init = () => {
@@ -100,10 +101,41 @@ class Register extends React.Component {
     });
     this.isHasUser();
   }
+
+  initAsync = async () => {
+    await GoogleSignIn.initAsync({
+      clientId: '813152005106-ett0igen5ivu4f108kl11mkh4n18nrto.apps.googleusercontent.com',
+    });
+    this._syncUserWithStateAsync();
+  };
+
+  _syncUserWithStateAsync = async () => {
+    const user = await GoogleSignIn.signInSilentlyAsync();
+    this.setState({ user });
+  };
+
+  signOutAsync = async () => {
+    await GoogleSignIn.signOutAsync();
+    this.setState({ user: null });
+  };
+
+  signInAsync = async () => {
+    try {
+      await GoogleSignIn.askForPlayServicesAsync();
+      const { type, user } = await GoogleSignIn.signInAsync();
+      if (type === 'success') {
+        this._syncUserWithStateAsync();
+      }
+    } catch ({ message }) {
+      alert('login: Error:' + message);
+    }
+  };
+
   state = {
+    user: null,
     name:"",
-    email: "",
-    password: "",
+    email: "admin@123.com",
+    password:"123456",
     hasUser: false
   }
   render() {
@@ -143,9 +175,16 @@ class Register extends React.Component {
                       <Text style={styles.socialTextButtons}>GITHUB</Text>
                     </Block>
                   </Button>
-                  <Button style={styles.socialButtons}>
+                  <Button style={styles.socialButtons} onPress = {() => {
+                    if (this.state.user) {
+                      this.signOutAsync();
+                    } else {
+                      this.signInAsync();
+                    }
+
+                  }}>
                     <Block row>
-                      <Icon
+                      <Icon 
                         name="logo-google"
                         family="Ionicon"
                         size={14}

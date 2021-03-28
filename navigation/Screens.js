@@ -227,6 +227,7 @@ const DrawerStack = () => {
       <Drawer.Screen name="Account" component={Register} />
       <Drawer.Screen name="Elements" component={ElementsStack} />
       <Drawer.Screen name="Articles" component={ArticlesStack} />
+      <Drawer.Screen name ="WebViewScreen" component={WebViewScreenStack}></Drawer.Screen>
     </Drawer.Navigator>
 );
 }

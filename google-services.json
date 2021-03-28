@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "813152005106",
+    "firebase_url": "https://doctra-f4f4b-default-rtdb.firebaseio.com",
     "project_id": "doctra-f4f4b",
     "storage_bucket": "doctra-f4f4b.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "813152005106-8tll2u7sbjhaci7uuvmrm1l9m24lie9i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.docTRA",
+            "certificate_hash": "9e283267780d7fdfb1cf4f9a3af929977b37f666"
+          }
+        },
         {
           "client_id": "813152005106-ett0igen5ivu4f108kl11mkh4n18nrto.apps.googleusercontent.com",
           "client_type": 3
@@ -29,6 +38,13 @@
             {
               "client_id": "813152005106-ett0igen5ivu4f108kl11mkh4n18nrto.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "813152005106-pkpr0bgi2fnh86vmjth9d9qscclqh783.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ios.docTRA"
+              }
             }
           ]
         }
