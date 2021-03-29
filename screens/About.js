@@ -13,6 +13,8 @@ import { Block, Text, theme } from "galio-framework";
 import { articles, Images, argonTheme } from "../constants";
 import { Card } from "../components";
 import { BorderlessButton } from "react-native-gesture-handler";
+import Home from "../screens/Home";
+import { NavigationContainer } from '@react-navigation/native';
 
 const { width } = Dimensions.get("screen");
 
@@ -21,7 +23,7 @@ const cardWidth = width - theme.SIZES.BASE * 2;
 
 class Articles extends React.Component {
   renderProduct = (item, index) => {
-    const { navigation } = this.props;
+
 
     return (
       <TouchableWithoutFeedback
@@ -62,6 +64,7 @@ class Articles extends React.Component {
   };
 
   renderCards = () => {
+    const { navigation } = this.props;
     return (
 
       <Block>
@@ -80,14 +83,17 @@ class Articles extends React.Component {
         <Block flex={false} row center space="between" styles={styles}>
         </Block>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Block>
-            <Block row space="between">
-              <Text center
-                size={16}
-                color={theme.COLORS.MUTED}
-                style={styles.title}> Research Articles</Text>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate("ResearchArticles")}>
+            <Block>
+              <Block row space="between">
+                <Text center
+                  size={16}
+                  color={theme.COLORS.MUTED}
+                  style={styles.title}
+                > Research Articles</Text>
+              </Block>
             </Block>
-          </Block>
+          </TouchableWithoutFeedback>
           <Block>
             <Block row space="between">
               <Text center
@@ -113,7 +119,7 @@ class Articles extends React.Component {
             </Block>
           </Block>
         </ScrollView>
-      </Block>
+      </Block >
     );
   };
 
@@ -139,6 +145,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingTop: 20,
     paddingBottom: 20,
+    marginBottom: 3,
     fontWeight: "bold",
     color: argonTheme.COLORS.HEADER,
     textAlign: "justify",

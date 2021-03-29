@@ -19,6 +19,7 @@ import Register from "../screens/Register";
 import Elements from "../screens/Elements";
 import Training from "../screens/Training";
 import About from "../screens/About";
+import ResearchArticles from "../screens/ResearchArticles"
 import WebViewScreen from "../screens/WebViewScreen";
 
 // drawer
@@ -60,6 +61,24 @@ function TrainingStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="Training" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+      <Stack.Screen name="tabStack" component={bottomNavitgationStack}></Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+
+function ResearchArticleStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="ResearchArticles"
+        component={ResearchArticles}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Research Articles" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
@@ -269,6 +288,7 @@ const DrawerStack = () => {
       <Drawer.Screen name="Account" component={Register} />
       <Drawer.Screen name="Elements" component={ElementsStack} />
       <Drawer.Screen name="Training" component={TrainingStack} />
+      <Drawer.Screen name="ResearchArticles" component={ResearchArticleStack} />
       <Drawer.Screen name="WebViewScreen" component={WebViewScreenStack}></Drawer.Screen>
     </Drawer.Navigator>
   );
