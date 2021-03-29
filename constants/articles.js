@@ -1,31 +1,71 @@
 import { object } from "prop-types";
+import WebViewScreen from "../screens/WebViewScreen";
 import firebase from "./../firebase";
 
+
+function shuffle(array) {
+  var i = array.length,
+      j = 0,
+      temp;
+  while (i--) {
+      j = Math.floor(Math.random() * (i+1));
+      // swap randomly chosen element with current element
+      temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+  return array;
+}
+
+var randomNumer = shuffle([1,2,3,4,5])
+var articleList = []
+
+firebase.auth().onAuthStateChanged(user => {
+  if (user != null) {
+    console.log('We are authenticated now!');
+    const db = firebase.database();
+    randomNumer.forEach(element => {
+      let index = element
+      db.ref('/ArticleURL/'+ String(index)).once("value").then(snapshot => { 
+        const WebSiteURL = snapshot.val()
+        console.log(WebSiteURL)
+        URLsetting(WebSiteURL,index)
+  })
+    });
+  }else{
+      let email = "admin@123.com"
+      let password = "123456"
+      firebase.auth().signInWithEmailAndPassword(email, password).then((userCredential) => {
+      // Signed in
+      var user = userCredential.user;
+      console.log("Success")
+      // ...
+      })
+      .catch((error) => {
+      console.log("error")
+      });
+  }
+  // Do other things
+});
 // read all the information from firebase database
-const db = firebase.database();
-db.ref('/ArticleURL').once("value").then(snapshot => {
-  const WebSiteURL = snapshot.val()
-  URLsetting(WebSiteURL)
-})
+
 
 //set the article information
-function URLsetting(dataList) {
-  art1.URL = dataList.Youtube.URL
-  art1.title = dataList.Youtube.title
-  art1.image = dataList.Youtube.imgURL
+function URLsetting(dataList,index) {
+  articleList[index-1] = {
+    URL: dataList.URL,
+    title: dataList.title,
+    image: dataList.imgURL
+  }
 }
 
-//default information.
-const art1 = {
-  title: '[ Daily Quote ]',
-  image: 'https://blog.hubspot.com/hs-fs/hubfs/Sales_Blog/1-min.jpg?width=598&name=1-min.jpg',
-  URL: "default",
-  //cta: 'View article', 
-  horizontal: true
-}
-
-export default [
-  art1,
+articleList = [
+  {
+    title: 'Exercise 0',
+    image: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
+    //cta: 'View article'
+    URL: 'https://www.youtube.com',
+  },
   {
     title: 'Exercise 1',
     image: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
@@ -52,3 +92,4 @@ export default [
     horizontal: true
   },
 ];
+export default articleList
