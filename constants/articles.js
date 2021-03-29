@@ -1,5 +1,4 @@
 import { object } from "prop-types";
-import WebViewScreen from "../screens/WebViewScreen";
 import firebase from "./../firebase";
 
 

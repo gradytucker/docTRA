@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text,Dimensions,ActivityIndicator,SafeAreaView,StatusBar} from 'react-native'
+import { StyleSheet, View, Text,Dimensions,ActivityIndicator,SafeAreaView,StatusBar,Linking} from 'react-native'
 import {WebView} from 'react-native-webview';
 import { argonTheme } from '../constants';
 import { withNavigation } from '@react-navigation/compat';
@@ -38,6 +38,7 @@ class WebViewScreen extends React.Component {
         javaScriptEnabled={true}
         renderLoading={this.LoadingIndicatorView}
         startInLoadingState={true}
+        ref={(ref) => { this.webview = ref;}}
       />
     )
   }
