@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import firebase from "./../firebase"
+import firebase from "firebase"
 import {
   View,
   StyleSheet,
@@ -9,7 +9,6 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity
 } from "react-native";
-import auth from '@firebase/auth'
 import { Block, Checkbox, Text, theme } from "galio-framework";
 import Home from "../screens/Home";
 //import {GoogleSignIn} from 'expo-google-sign-in';
@@ -19,7 +18,6 @@ import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
 
 const { width, height } = Dimensions.get("screen");
-
 
 const config = {
   iosClientId: "813152005106-phlioohd71j6jpc6c148elppopi3686g.apps.googleusercontent.com",
@@ -45,18 +43,16 @@ class Register extends React.Component {
   }
 
   onSignIn = googleUser => {
+    console.log("google Auth Response",googleUser)
     // We need to register an Observer on Firebase Auth to make sure auth is initialized.
     const unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
-      unsubscribe();
+      unsubscribe()
       // Check if we are already signed-in Firebase with the correct user.
       if (!this.isUserEqual(googleUser, firebaseUser)) {
         // Build Firebase credential with the Google ID token.
-        var credential = firebase.auth.GoogleAuthProvider.credential(
-            googleUser.idToken,
-            googleUser.accessToken
-            );
+        var credential = firebase.auth.GoogleAuthProvider.credential(googleUser.idToken,googleUser.accessToken)
         // Sign in with credential from the Google user.
-        firebase.auth().signIWithCredential(credential).then(() => {
+        firebase.auth().signInWithCredential(credential).then(() => {
           console.log("user sign in")
         }).catch((error) => {
           // Handle Errors here.
@@ -79,8 +75,7 @@ class Register extends React.Component {
     if (firebaseUser) {
       var providerData = firebaseUser.providerData;
       for (var i = 0; i < providerData.length; i++) {
-        if (providerData[i].providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
-            providerData[i].uid === googleUser.getBasicProfile().getId()) {
+        if (providerData[i].providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID) {
           // We don't need to reauth the Firebase connection.
           return true;
         }
