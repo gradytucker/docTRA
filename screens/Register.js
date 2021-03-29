@@ -13,8 +13,7 @@ import auth from '@firebase/auth'
 import { Block, Checkbox, Text, theme } from "galio-framework";
 import Home from "../screens/Home";
 //import {GoogleSignIn} from 'expo-google-sign-in';
-
-
+import * as Google from 'expo-google-app-auth'
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
@@ -22,29 +21,75 @@ import { Images, argonTheme } from "../constants";
 const { width, height } = Dimensions.get("screen");
 
 
-function App() {
-  // Set an initializing state whilst Firebase connects
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
-
-  // Handle user state changes
-  function onAuthStateChanged(user) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
+const config = {
+  iosClientId: "813152005106-phlioohd71j6jpc6c148elppopi3686g.apps.googleusercontent.com",
+  androidClientId: "813152005106-0l5cs7ibnuv5vp28jbqefd7dm8r9aimu.apps.googleusercontent.com",
+  scopes: ['profile', 'email'],
 }
 
-
 class Register extends React.Component {
-  // event listener
-  componentDidMount(){
-    this.signUpAccount();
+
+  signInWithGoogleAsync = async () => {
+    try {
+      const result = await Google.logInAsync(config);
+  
+      if (result.type === 'success') {
+        this.onSignIn(result);
+        return result.accessToken;
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      return { error: true };
+    }
   }
+
+  onSignIn = googleUser => {
+    // We need to register an Observer on Firebase Auth to make sure auth is initialized.
+    const unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
+      unsubscribe();
+      // Check if we are already signed-in Firebase with the correct user.
+      if (!this.isUserEqual(googleUser, firebaseUser)) {
+        // Build Firebase credential with the Google ID token.
+        var credential = firebase.auth.GoogleAuthProvider.credential(
+            googleUser.idToken,
+            googleUser.accessToken
+            );
+        // Sign in with credential from the Google user.
+        firebase.auth().signIWithCredential(credential).then(() => {
+          console.log("user sign in")
+        }).catch((error) => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          // ...
+        });
+      } else {
+        console.log('User already signed-in Firebase.');
+      }
+    }
+    );
+  }
+
+  isUserEqual = (googleUser, firebaseUser) => {
+    if (firebaseUser) {
+      var providerData = firebaseUser.providerData;
+      for (var i = 0; i < providerData.length; i++) {
+        if (providerData[i].providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
+            providerData[i].uid === googleUser.getBasicProfile().getId()) {
+          // We don't need to reauth the Firebase connection.
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  
+
   //user sign out when app reopen
   init = () => {
     firebase.auth().signOut().then(() => {
@@ -179,13 +224,11 @@ class Register extends React.Component {
                     </Block>
                   </Button>
                   <Button style={styles.socialButtons} onPress = {() => {
-                    if (this.state.user) {
-                      this.signOutAsync();
-                    } else {
-                      this.signInAsync();
+        
+                      this.signInWithGoogleAsync();
                     }
 
-                  }}>
+                  }>
                     <Block row>
                       <Icon 
                         name="logo-google"
