@@ -22,7 +22,7 @@ const { width, height } = Dimensions.get("screen");
 
 
 const config = {
-  iosClientId: "813152005106-pkpr0bgi2fnh86vmjth9d9qscclqh783.apps.googleusercontent.com",
+  iosClientId: "813152005106-phlioohd71j6jpc6c148elppopi3686g.apps.googleusercontent.com",
   androidClientId: "813152005106-0l5cs7ibnuv5vp28jbqefd7dm8r9aimu.apps.googleusercontent.com",
   scopes: ['profile', 'email'],
 }
