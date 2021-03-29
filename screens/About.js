@@ -105,7 +105,7 @@ class Articles extends React.Component {
             </Block>
           </Block>
           <Block>
-            <Block row space="none">
+            <Block row space="between">
               <Text center
                 size={16}
                 color={theme.COLORS.MUTED}
