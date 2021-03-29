@@ -73,11 +73,11 @@ function AboutStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen
-        name="Training"
+        name="About"
         component={About}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="Training" navigation={navigation} scene={scene} />
+            <Header title="About" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
@@ -110,8 +110,6 @@ function ProfileStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              transparent
-              white
               title="Profile"
               navigation={navigation}
               scene={scene}
