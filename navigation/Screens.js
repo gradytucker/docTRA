@@ -151,7 +151,7 @@ const bottomNavitgationStack = () => {
     <Tab.Navigator
       initialRouteName="Feed"
       tabBarOptions={{
-        activeTintColor: '#42f44b',
+        activeTintColor: '#32325D',
       }}>
       {/*link to the home screen*/}
       <Tab.Screen
