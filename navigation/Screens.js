@@ -115,9 +115,10 @@ function WebViewScreenStack(props) {
       //webViewScreen js file
       component={WebViewScreen}
       options={{
-        header: ({ navigation, scene }) => (<Header title="Testing Website" navigation={navigation} scene={scene} />),
+        header: ({ navigation, scene }) => (<Header title="Web" navigation={navigation} scene={scene} />),
 
       }} />
+    <Stack.Screen name="tabStack" component={bottomNavitgationStack}></Stack.Screen>
   </Stack.Navigator>
 }
 function ProfileStack(props) {
@@ -188,10 +189,10 @@ const bottomNavitgationStack = () => {
         name="TrainingStack"
         component={TrainingStack}
         options={{
-          tabBarLabel: 'Training',
+          tabBarLabel: 'Exercises',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name="newspaper"
+              name="weight-lifter"
               color={color}
               size={size}
             />
@@ -206,7 +207,7 @@ const bottomNavitgationStack = () => {
           tabBarLabel: 'About',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name="newspaper"
+              name="information"
               color={color}
               size={size}
             />
@@ -246,6 +247,7 @@ export default function OnboardingStack() {
       />
       {/*add the webViewScreen and other screen to stack navigator*/}
       <Stack.Screen name="WebViewScreen" component={WebViewScreenStack}></Stack.Screen>
+      <Stack.Screen name="ResearchArticles" component={ResearchArticleStack}></Stack.Screen>
       <Stack.Screen name="App" component={DrawerStack}></Stack.Screen>
     </Stack.Navigator>
   );
@@ -288,6 +290,7 @@ const DrawerStack = () => {
       <Drawer.Screen name="Account" component={Register} />
       <Drawer.Screen name="Elements" component={ElementsStack} />
       <Drawer.Screen name="Training" component={TrainingStack} />
+      <Drawer.Screen name="About" component={AboutStack} />
       <Drawer.Screen name="ResearchArticles" component={ResearchArticleStack} />
       <Drawer.Screen name="WebViewScreen" component={WebViewScreenStack}></Drawer.Screen>
     </Drawer.Navigator>
