@@ -52,7 +52,7 @@ class Register extends React.Component {
         // Build Firebase credential with the Google ID token.
         var credential = firebase.auth.GoogleAuthProvider.credential(googleUser.idToken,googleUser.accessToken)
         // Sign in with credential from the Google user.
-        firebase.auth().signWithCredential(credential).then(() => {
+        firebase.auth().signInWithCredential(credential).then(() => {
           console.log("user sign in")
         }).catch((error) => {
           // Handle Errors here.
