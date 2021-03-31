@@ -5,8 +5,26 @@ import { Card } from '../components';
 import articles from '../constants/articles';
 import { Images } from '../constants';
 const { height, width } = Dimensions.get('screen');
+import firebase from './../firebase'
+
 
 class Home extends React.Component {
+
+  state = {
+    user: false,
+    articles : articles
+  }
+
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged(user => {
+      if(user != null){
+        this.setState({user: true});
+        setTimeout(() => this.setState({articles : articles}),2000)
+        this.setState({articles : articles})
+      }
+    })
+  }
+
   renderArticles = () => {
     return (
       <ScrollView

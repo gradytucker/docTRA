@@ -248,6 +248,7 @@ export default function OnboardingStack() {
       {/*add the webViewScreen and other screen to stack navigator*/}
       <Stack.Screen name="WebViewScreen" component={WebViewScreenStack}></Stack.Screen>
       <Stack.Screen name="ResearchArticles" component={ResearchArticleStack}></Stack.Screen>
+      <Stack.Screen name="Account" component={Register} />
       <Stack.Screen name="App" component={DrawerStack}></Stack.Screen>
     </Stack.Navigator>
   );

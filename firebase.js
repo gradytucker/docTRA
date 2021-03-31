@@ -11,4 +11,23 @@ const firebaseSetUp = firebase.initializeApp({
     measurementId: "G-Z3K10JX1PS"
 })
 
+firebase.auth().onAuthStateChanged(user => {
+    if (user != null) {
+      console.log('We are authenticated now!');
+    }else{
+        let email = "admin@123.com"
+        let password = "123456"
+        firebase.auth().signInWithEmailAndPassword(email, password).then((userCredential) => {
+        // Signed in
+        var user = userCredential.user;
+        console.log("Success")
+        // ...
+        })
+        .catch((error) => {
+        console.log("error")
+        });
+    }
+})
+
+export const auth = firebase.auth()
 export default firebaseSetUp

@@ -19,39 +19,19 @@ function shuffle(array) {
 var randomNumer = shuffle([1,2,3,4,5])
 var articleList = []
 
-firebase.auth().onAuthStateChanged(user => {
-  if (user != null) {
-    console.log('We are authenticated now!');
-    const db = firebase.database();
-    randomNumer.forEach(element => {
-      let index = element
-      db.ref('/ArticleURL/'+ String(index)).once("value").then(snapshot => { 
-        const WebSiteURL = snapshot.val()
-        console.log(WebSiteURL)
-        URLsetting(WebSiteURL,index)
+
+const db = firebase.database();
+randomNumer.forEach(element => {
+  let index = element
+  db.ref('/ArticleURL/'+ String(index)).once("value").then(snapshot => { 
+    const WebSiteURL = snapshot.val()
+    URLsetting(WebSiteURL,index)
   })
-    });
-  }else{
-      let email = "admin@123.com"
-      let password = "123456"
-      firebase.auth().signInWithEmailAndPassword(email, password).then((userCredential) => {
-      // Signed in
-      var user = userCredential.user;
-      console.log("Success")
-      // ...
-      })
-      .catch((error) => {
-      console.log("error")
-      });
-  }
-  // Do other things
-});
+})
 // read all the information from firebase database
-
-
 //set the article information
 function URLsetting(dataList,index) {
-  articleList[index-1] = {
+  articleList[index] = {
     URL: dataList.URL,
     title: dataList.title,
     image: dataList.imgURL
