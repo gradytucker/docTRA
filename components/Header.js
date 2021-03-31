@@ -16,7 +16,7 @@ const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 
 class Header extends React.Component {
   handleLeftPress = () => {
     const { back, navigation } = this.props;
-    return (back ? navigation.goBack() : navigation.openDrawer());
+    return (navigation.goBack());
   }
 
   renderRight = () => {
@@ -66,7 +66,7 @@ class Header extends React.Component {
           rightStyle={{ paddingTop: iPhoneX ? 25 : 0, flex: 0.8 }}
           left={
             <Icon
-              name={back ? 'chevron-left' : "menu"} family="entypo"
+              name={'chevron-left'} family="entypo"
               size={28} onPress={this.handleLeftPress}
               color={iconColor || (white ? argonTheme.COLORS.WHITE : argonTheme.COLORS.ICON)}
               style={{ marginTop: 2 }}

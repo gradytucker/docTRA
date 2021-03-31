@@ -1,5 +1,6 @@
 import { object } from "prop-types";
 import firebase from "./../firebase";
+import quotes_arr from '../constants/quotes';
 
 
 function shuffle(array) {
@@ -40,31 +41,31 @@ function URLsetting(dataList,index) {
 
 articleList = [
   {
-    title: 'Exercise 0',
+    title: quotes_arr[Math.floor(Math.random()*quotes_arr.length)],
     image: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
     //cta: 'View article'
     URL: 'https://www.youtube.com',
   },
   {
-    title: 'Exercise 1',
+    title: "Exercise 1",
     image: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
     //cta: 'View article'
     URL: 'https://www.youtube.com',
   },
   {
-    title: 'Exercise 2',
+    title: "Exercise 2",
     image: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80',
     //cta: 'View article' 
     URL: 'https://www.facebook.com',
   },
   {
-    title: 'Exercise 3',
+    title: "Exercise 3",
     image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1326&q=80',
     URL: 'https://www.google.com',
     //cta: 'View article' 
   },
   {
-    title: 'Exercise 4',
+    title: "Exercise 4",
     image: 'https://images.unsplash.com/photo-1482686115713-0fbcaced6e28?fit=crop&w=1947&q=80',
     //cta: 'View article', 
     URL: 'https://www.instagram.com',

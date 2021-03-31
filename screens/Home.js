@@ -31,7 +31,7 @@ class Home extends React.Component {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
         <Text bold size={28} color="#32325D">
-          {'\nDaily Quote'}
+          {'\nDaily:'}
         </Text>
         <Block flex>
           <StatusBar
