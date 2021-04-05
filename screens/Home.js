@@ -7,20 +7,32 @@ import { Images } from '../constants';
 const { height, width } = Dimensions.get('screen');
 import firebase from './../firebase'
 
+const now = new Date().getHours();
+var message = "hello";
+
+if (now < 12) {
+  message = '\nGood Morning!\nHere\'s some activities for you:';
+} else if (now >= 12 && now <= 17) {
+  message = '\nGood Afternoon!\nHere\'s some activities for you:';
+} else if (now >= 17 && now <= 24) {
+  message = '\nGood Evening!\nHere\'s some activities for you:';
+}
+
 
 class Home extends React.Component {
 
   state = {
     user: false,
-    articles : articles
+    articles: articles
   }
 
-  componentDidMount(){
+
+  componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
-      if(user != null){
-        this.setState({user: true});
-        setTimeout(() => this.setState({articles : articles}),2000)
-        this.setState({articles : articles})
+      if (user != null) {
+        this.setState({ user: true });
+        setTimeout(() => this.setState({ articles: articles }), 2000)
+        this.setState({ articles: articles })
       }
     })
   }
@@ -31,8 +43,9 @@ class Home extends React.Component {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
         <Text bold size={28} color="#32325D">
-          {'\nDaily:'}
+          {message}
         </Text>
+
         <Block flex>
           <StatusBar
             barStyle="dark-content"     // dark-content, light-content and default
@@ -41,16 +54,19 @@ class Home extends React.Component {
             translucent={false}     //allowing light, but not detailed shapes
             networkActivityIndicatorVisible={true}
           />
+          <Text bold size={20} color="#32325D">
+            {'\n\nDaily quote'}
+          </Text>
           <Card item={articles[0]} full />
-          <Text bold size={28} color="#32325D"> {'\nCompassion Cartoon'}
+          <Text bold size={20} color="#32325D"> {'\nCompassion Cartoon'}
           </Text>
           <Block>
             <Image
-                source={Images.compassionCartoon}
-                style={styles.cartoon}
+              source={Images.compassionCartoon}
+              style={styles.cartoon}
             />
           </Block>
-          <Text bold size={28} color="#32325D">
+          <Text bold size={20} color="#32325D">
             {'\nExercises for you'}
           </Text>
           <Block flex row>
