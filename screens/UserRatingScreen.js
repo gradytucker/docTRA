@@ -6,7 +6,8 @@ import {
   TouchableWithoutFeedback,
   ImageBackground,
   Dimensions,
-  TextInput
+  TextInput,
+  Alert
 } from "react-native";
 //galio
 import { Block, Text, theme } from "galio-framework";
@@ -24,6 +25,15 @@ const { width } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 
+const createOneButtonAlert = () =>
+  Alert.alert(
+    "Response submitted",
+    "Thankyou for giving feedback",
+    [
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ]
+  );
+
 class GeneralStarExample extends React.Component {
 
   constructor(props) {
@@ -38,6 +48,7 @@ class GeneralStarExample extends React.Component {
       starCount: rating
     });
   }
+
 
   render() {
     return (
@@ -66,11 +77,23 @@ class GeneralStarExample extends React.Component {
               color={theme.COLORS.MUTED}
               style={styles.aboutTitle}> {"\nHave any suggestions to make the app better? Tell us below!"}</Text>
             <TextInput style={styles.input}
+              ref={input => { this.textInput = input }}
               underlineColorAndroid="transparent"
               placeholder="Suggestions..."
+              multiline={true}
+              textAlignVertical={"top"}
+              textBreakStrategy={"highQuality"}
               placeholderTextColor="#9a73ef"
               autoCapitalize="none" />
-            <Button>submit</Button>
+            <Button
+              onPress={() => {
+                this.textInput.clear();
+                createOneButtonAlert();
+                this.setState({
+                  starCount: 0
+                });
+              }
+              }>submit all</Button>
           </Block>
         </ScrollView>
       </Block >
@@ -91,9 +114,9 @@ const styles = StyleSheet.create({
     paddingVertical: 0, //draft
   },
   input: {
-    marginTop: 0,
+    marginTop: -20,
     marginBottom: 50,
-    height: 40,
+    height: 100,
     width: width / 1.3,
     borderColor: '#7a42f4',
     borderWidth: 1
@@ -104,8 +127,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "100%",
     paddingTop: 20,
-    paddingBottom: 20,
-    marginBottom: 3,
+    paddingBottom: 0,
+    marginBottom: 0,
     fontWeight: "bold",
     color: argonTheme.COLORS.HEADER,
     textAlign: "justify",

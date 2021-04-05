@@ -103,7 +103,6 @@ function FAQStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
-      <Stack.Screen name="tabStack" component={bottomNavitgationStack}></Stack.Screen>
     </Stack.Navigator>
   );
 }
@@ -121,7 +120,6 @@ function StarRatingStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
-      <Stack.Screen name="tabStack" component={bottomNavitgationStack}></Stack.Screen>
     </Stack.Navigator>
   );
 }
@@ -212,7 +210,9 @@ const bottomNavitgationStack = () => {
       tabBarOptions={{
         activeTintColor: '#32325D',
       }}>
-      {/*link to the home screen*/}
+      {/*maintain bottom tab nav on all screens*/}
+
+
       <Tab.Screen
         name="HomeStack"
         component={HomeStack}
@@ -325,7 +325,7 @@ const DrawerStack = () => {
       initialRouteName="Home"
     >
       {/*link to all the screen*/}
-      <Drawer.Screen name="Home" component={bottomNavitgationStack} />
+      <Drawer.Screen name="tabStack" component={bottomNavitgationStack} />
       <Drawer.Screen name="Profile" component={ProfileStack} />
       <Drawer.Screen name="Account" component={Register} />
       <Drawer.Screen name="Elements" component={ElementsStack} />
