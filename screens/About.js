@@ -78,7 +78,7 @@ class Articles extends React.Component {
           <Text center
             size={20}
             color={theme.COLORS.MUTED}
-            style={styles.aboutTitle}> The Doctor Training and Rehabilitation Application.</Text>
+            style={styles.aboutTitle}> The Doctor Training Reinforcement and Assessment Application.</Text>
         </Block>
         <Block flex={false} row center space="between" styles={styles}>
         </Block>
@@ -94,14 +94,16 @@ class Articles extends React.Component {
               </Block>
             </Block>
           </TouchableWithoutFeedback>
-          <Block>
-            <Block row space="between">
-              <Text center
-                size={16}
-                color={theme.COLORS.MUTED}
-                style={styles.title}> FAQs</Text>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate("FAQs")}>
+            <Block>
+              <Block row space="between">
+                <Text center
+                  size={16}
+                  color={theme.COLORS.MUTED}
+                  style={styles.title}> FAQs</Text>
+              </Block>
             </Block>
-          </Block>
+          </TouchableWithoutFeedback>
           <Block>
             <Block row space="between">
               <Text center
