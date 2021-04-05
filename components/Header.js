@@ -64,14 +64,17 @@ class Header extends React.Component {
               {'docTRA'}
             </Text>}
           rightStyle={{ paddingTop: iPhoneX ? 25 : 0, flex: 0.8 }}
-          left={
+          left={title != 'Home' &&
+            title != 'About' &&
+            title != 'Training' &&
+            title != 'Profile' ?
             <Icon
               name={'chevron-left'} family="entypo"
               size={28} onPress={this.handleLeftPress}
               color={iconColor || (white ? argonTheme.COLORS.WHITE : argonTheme.COLORS.ICON)}
               style={{ marginTop: 2 }}
             />
-
+            : <Text></Text>
           }
 
           leftStyle={{ paddingTop: iPhoneX ? 25 : 0, flex: 0.4 }}
