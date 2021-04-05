@@ -79,7 +79,7 @@ class Header extends React.Component {
 
           leftStyle={{ paddingTop: iPhoneX ? 25 : 0, flex: 0.4 }}
           titleStyle={[
-            styles.title,
+            title != 'Home' && title != 'About' && title != 'Training' && title != 'Profile' ? styles.title : styles.titleNav,
             { color: argonTheme.COLORS[white ? 'WHITE' : 'HEADER'] },
             titleColor && { color: titleColor }
           ]}
@@ -105,6 +105,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingTop: iPhoneX ? 25 : 0,
   },
+
+  titleNav: {
+    width: '100%',
+    fontSize: 16,
+    fontWeight: 'bold',
+    paddingTop: iPhoneX ? 25 : 0,
+    marginLeft: -60,
+  },
+
   navbar: {
     paddingVertical: 20,
     paddingBottom: theme.SIZES.BASE * 1.5,
