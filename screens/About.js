@@ -112,14 +112,16 @@ class Articles extends React.Component {
                 style={styles.title}> Downloadable Guides</Text>
             </Block>
           </Block>
-          <Block>
-            <Block row space="between">
-              <Text center
-                size={16}
-                color={theme.COLORS.MUTED}
-                style={styles.title}> Give Feedback</Text>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate("StarRating")}>
+            <Block>
+              <Block row space="between">
+                <Text center
+                  size={16}
+                  color={theme.COLORS.MUTED}
+                  style={styles.title}> Give Feedback</Text>
+              </Block>
             </Block>
-          </Block>
+          </TouchableWithoutFeedback>
         </ScrollView>
       </Block >
     );
