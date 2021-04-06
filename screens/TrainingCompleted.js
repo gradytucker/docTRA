@@ -11,13 +11,12 @@ import {
 //galio
 import { Block, Text, theme } from "galio-framework";
 //argon
-import { articles, Images, argonTheme } from "../constants/";
-import { Card } from "../components/";
+import { articles, Images, argonTheme } from "../constants";
+import { Card } from "../components";
 import { Button } from "../components";
 import { color } from "react-native-reanimated";
 import ProgressCircle from 'react-native-progress-circle'
 const { width } = Dimensions.get("screen");
-
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
@@ -66,7 +65,6 @@ class Articles extends React.Component {
   };
 
   renderCards = () => {
-    const { navigation } = this.props;
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -81,54 +79,17 @@ class Articles extends React.Component {
             networkActivityIndicatorVisible={true}
           />
           <Text bold size={28} color="#32325D">
-            {'\nModules Completed:\n'}
-          </Text>
-          <Block flex center>
-            <ProgressCircle
-              percent={30}
-              radius={80}
-              borderWidth={20}
-              color="#3399FF"
-              shadowColor="#999"
-              bgColor="#fff"
-            >
-              <Text style={{ fontSize: 18 }}>{'30%'}</Text>
-            </ProgressCircle>
-            <Text style={{ fontSize: 18 }}>{'\n x modules remaining!'}</Text>
-          </Block>
-          <Text bold size={20} color="#32325D">
-            {'\n\nModules to do:'}
+            {'\n\nModules Completed:'}
           </Text>
           <Block flex row>
             <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE }} />
             <Card item={articles[2]} />
           </Block>
-          <Button
-            style={styles.trainingButton}
-            onPress={() => navigation.navigate("TrainingToDo")}
-          >{"View all >"}</Button>
-          <Text bold size={20} color="#32325D">
-            {'\n\nCompleted Modules:'}
-          </Text>
           <Block flex row>
             <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE }} />
             <Card item={articles[4]} />
           </Block>
-          <Button
-            style={styles.trainingButton}
-            onPress={() => navigation.navigate("TrainingCompleted")}
-          >{"View all >"}</Button>
-          <Text bold size={20} color="#32325D">
-            {'\n\nReflective Exercises:'}
-          </Text>
-          <Block flex row>
-            <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE }} />
-            <Card item={articles[4]} />
-          </Block>
-          <Button
-            style={styles.trainingButton}
-            onPress={() => navigation.navigate("TrainingReflective")}
-          >{"View all >"}</Button>
+
         </Block>
       </ScrollView>
     )

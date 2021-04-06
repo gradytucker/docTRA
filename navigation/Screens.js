@@ -23,6 +23,9 @@ import ResearchArticles from "../screens/ResearchArticles"
 import FAQs from "../screens/FAQs";
 import UserRatingScreen from "../screens/UserRatingScreen";
 import WebViewScreen from "../screens/WebViewScreen";
+import TrainingCompleted from "../screens/TrainingCompleted";
+import TrainingReflective from "../screens/TrainingReflective";
+import TrainingToDo from "../screens/TrainingToDo";
 
 // drawer
 import CustomDrawerContent from "./Menu";
@@ -63,6 +66,57 @@ function TrainingStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="Training" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+      <Stack.Screen name="tabStack" component={bottomNavitgationStack}></Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+function TrainingCompletedStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="TrainingCompleted"
+        component={TrainingCompleted}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Completed Modules " navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+      <Stack.Screen name="tabStack" component={bottomNavitgationStack}></Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+function TrainingToDoStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="TrainingToDo"
+        component={TrainingToDo}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Modules To Do" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+      <Stack.Screen name="tabStack" component={bottomNavitgationStack}></Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+function TrainingReflectiveStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="TrainingReflective"
+        component={TrainingReflective}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Reflective Training" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
@@ -330,6 +384,9 @@ const DrawerStack = () => {
       <Drawer.Screen name="Account" component={Register} />
       <Drawer.Screen name="Elements" component={ElementsStack} />
       <Drawer.Screen name="Training" component={TrainingStack} />
+      <Drawer.Screen name="TrainingToDo" component={TrainingToDoStack} />
+      <Drawer.Screen name="TrainingCompleted" component={TrainingCompletedStack} />
+      <Drawer.Screen name="TrainingReflective" component={TrainingReflectiveStack} />
       <Drawer.Screen name="About" component={AboutStack} />
       <Drawer.Screen name="ResearchArticles" component={ResearchArticleStack} />
       <Drawer.Screen name="StarRating" component={StarRatingStack} />
