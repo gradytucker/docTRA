@@ -11,11 +11,11 @@ const now = new Date().getHours();
 var message = "hello";
 
 if (now < 12) {
-  message = '\nGood Morning!\nHere\'s some activities for you:';
+  message = '\nGood Morning!\nHere are some activities:';
 } else if (now >= 12 && now <= 17) {
-  message = '\nGood Afternoon!\nHere\'s some activities for you:';
+  message = '\nGood Afternoon!\nHere are some activities:';
 } else if (now >= 17 && now <= 24) {
-  message = '\nGood Evening!\nHere\'s some activities for you:';
+  message = '\nGood Evening!\nHere are some activities:';
 }
 
 
