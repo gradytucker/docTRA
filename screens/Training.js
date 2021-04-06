@@ -3,6 +3,7 @@ import {
   ScrollView,
   StyleSheet,
   Image,
+  StatusBar,
   TouchableWithoutFeedback,
   ImageBackground,
   Dimensions
@@ -12,29 +13,14 @@ import { Block, Text, theme } from "galio-framework";
 //argon
 import { articles, Images, argonTheme } from "../constants/";
 import { Card } from "../components/";
-
+import { Button } from "../components";
+import { color } from "react-native-reanimated";
+import ProgressCircle from 'react-native-progress-circle'
 const { width } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
-const categories = [
-  {
-    title: "Music Album",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?fit=crop&w=840&q=80",
-    price: "$125"
-  },
-  {
-    title: "Events",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1543747579-795b9c2c3ada?fit=crop&w=840&q=80",
-    price: "$35"
-  }
-];
+
 
 class Articles extends React.Component {
   renderProduct = (item, index) => {
@@ -80,105 +66,90 @@ class Articles extends React.Component {
 
   renderCards = () => {
     return (
-      <Block flex style={styles.group}>
-        <Text bold size={28} style={[styles.title, { paddingHorizontal: theme.SIZES.BASE }]}>
-          Cards
-        </Text>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.articles}>
+
         <Block flex>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Card item={articles[0]} horizontal />
-            <Block flex row>
-              <Card
-                item={articles[1]}
-                style={{ marginRight: theme.SIZES.BASE }}
-              />
-              <Card item={articles[2]} />
-            </Block>
-            <Card item={articles[4]} full />
-            <Block flex card shadow style={styles.category}>
-              <ImageBackground
-                source={{ uri: Images.Products["View article"] }}
-                style={[
-                  styles.imageBlock,
-                  { width: width - theme.SIZES.BASE * 2, height: 252 }
-                ]}
-                imageStyle={{
-                  width: width - theme.SIZES.BASE * 2,
-                  height: 252
-                }}
-              >
-                <Block style={styles.categoryTitle}>
-                  <Text size={18} bold color={theme.COLORS.WHITE}>
-                    View article
-                  </Text>
-                </Block>
-              </ImageBackground>
-            </Block>
-          </Block>
-          <Block flex style={{ marginTop: theme.SIZES.BASE / 2 }}>
-            <ScrollView
-              horizontal={true}
-              pagingEnabled={true}
-              decelerationRate={0}
-              scrollEventThrottle={16}
-              snapToAlignment="center"
-              showsHorizontalScrollIndicator={false}
-              snapToInterval={cardWidth + theme.SIZES.BASE * 0.375}
-              contentContainerStyle={{
-                paddingHorizontal: theme.SIZES.BASE / 2
-              }}
+          <StatusBar
+            barStyle="dark-content"     // dark-content, light-content and default
+            hidden={false}  //To hide statusBar
+            backgroundColor="#ff4081"   //Background color of statusBar
+            translucent={false}     //allowing light, but not detailed shapes
+            networkActivityIndicatorVisible={true}
+          />
+          <Text bold size={28} color="#32325D">
+            {'\nModules Completed:\n'}
+          </Text>
+          <Block flex center>
+            <ProgressCircle
+              percent={30}
+              radius={80}
+              borderWidth={20}
+              color="#3399FF"
+              shadowColor="#999"
+              bgColor="#fff"
             >
-              {categories &&
-                categories.map((item, index) =>
-                  this.renderProduct(item, index)
-                )}
-            </ScrollView>
+              <Text style={{ fontSize: 18 }}>{'30%'}</Text>
+            </ProgressCircle>
           </Block>
+          <Text bold size={20} color="#32325D">
+            {'\n\nModules to do:'}
+          </Text>
+          <Block flex row>
+            <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE }} />
+            <Card item={articles[2]} />
+          </Block>
+          <Button
+            style={styles.trainingButton}
+            onPress={() => {
+              this.textInput.clear();
+              this.setState({
+                starCount: 0
+              });
+              this.storeUserFeedback(firebase.auth().currentUser.uid, this.state.feedbackText)
+            }
+            }>{"View all >"}</Button>
+          <Text bold size={20} color="#32325D">
+            {'\n\nCompleted Modules:'}
+          </Text>
+          <Block flex row>
+            <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE }} />
+            <Card item={articles[4]} />
+          </Block>
+          <Button
+            style={styles.trainingButton}
+            onPress={() => {
+              this.textInput.clear();
+              this.setState({
+                starCount: 0
+              });
+              this.storeUserFeedback(firebase.auth().currentUser.uid, this.state.feedbackText)
+            }
+            }>{"View all >"}</Button>
+          <Text bold size={20} color="#32325D">
+            {'\n\nReflective Exercises:'}
+          </Text>
+          <Block flex row>
+            <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE }} />
+            <Card item={articles[4]} />
+          </Block>
+          <Button
+            style={styles.trainingButton}
+            onPress={() => {
+              this.textInput.clear();
+              this.setState({
+                starCount: 0
+              });
+              this.storeUserFeedback(firebase.auth().currentUser.uid, this.state.feedbackText)
+            }
+            }>{"View all >"}</Button>
         </Block>
-      </Block>
-    );
-  };
+      </ScrollView>
+    )
+  }
 
-  renderAlbum = () => {
-    const { navigation } = this.props;
 
-    return (
-      <Block
-        flex
-        style={[styles.group, { paddingBottom: theme.SIZES.BASE * 5 }]}
-      >
-        <Text bold size={28} style={styles.title}>
-          Album
-        </Text>
-        <Block style={{ marginHorizontal: theme.SIZES.BASE * 2 }}>
-          <Block flex right>
-            <Text
-              size={12}
-              color={theme.COLORS.PRIMARY}
-              onPress={() => navigation.navigate("Home")}
-            >
-              View All
-            </Text>
-          </Block>
-          <Block
-            row
-            space="between"
-            style={{ marginTop: theme.SIZES.BASE, flexWrap: "wrap" }}
-          >
-            {Images.Viewed.map((img, index) => (
-              <Block key={`viewed-${img}`} style={styles.shadow}>
-                <Image
-                  resizeMode="cover"
-                  source={{ uri: img }}
-                  style={styles.albumThumb}
-                />
-              </Block>
-            ))}
-          </Block>
-        </Block>
-      </Block>
-    );
-  };
 
   render() {
     return (
@@ -187,7 +158,6 @@ class Articles extends React.Component {
           showsVerticalScrollIndicator={false}
         >
           {this.renderCards()}
-          {this.renderAlbum()}
         </ScrollView>
       </Block>
     );
@@ -195,11 +165,19 @@ class Articles extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  trainingButton: {
+    backgroundColor: theme.COLORS.MUTED,
+    color: theme.COLORS.BLACK
+  },
   title: {
     paddingBottom: theme.SIZES.BASE,
     paddingHorizontal: theme.SIZES.BASE * 2,
     marginTop: 22,
     color: argonTheme.COLORS.HEADER
+  },
+  articles: {
+    width: width - theme.SIZES.BASE * 2,
+    paddingVertical: 0, //draft
   },
   group: {
     paddingTop: theme.SIZES.BASE
