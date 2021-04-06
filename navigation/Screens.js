@@ -26,6 +26,7 @@ import WebViewScreen from "../screens/WebViewScreen";
 import TrainingCompleted from "../screens/TrainingCompleted";
 import TrainingReflective from "../screens/TrainingReflective";
 import TrainingToDo from "../screens/TrainingToDo";
+import DownloadableGuides from "../screens/DownloadableGuides";
 
 // drawer
 import CustomDrawerContent from "./Menu";
@@ -170,6 +171,23 @@ function StarRatingStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="Star Rating" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function DownloadableGuidesStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="DownloadableGuides"
+        component={DownloadableGuides}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Downloadable Guides" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
@@ -391,6 +409,7 @@ const DrawerStack = () => {
       <Drawer.Screen name="ResearchArticles" component={ResearchArticleStack} />
       <Drawer.Screen name="StarRating" component={StarRatingStack} />
       <Drawer.Screen name="FAQs" component={FAQStack} />
+      <Drawer.Screen name="DownloadableGuides" component={DownloadableGuidesStack} />
       <Drawer.Screen name="WebViewScreen" component={WebViewScreenStack}></Drawer.Screen>
     </Drawer.Navigator>
   );
