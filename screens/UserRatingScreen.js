@@ -19,6 +19,8 @@ import Home from "../screens/Home";
 import { NavigationContainer } from '@react-navigation/native';
 import StarRating from 'react-native-star-rating';
 import { Button } from "../components";
+import firebaseSetUp from "../firebase";
+import firebase from "firebase"
 
 const { width } = Dimensions.get("screen");
 
@@ -36,10 +38,21 @@ const createOneButtonAlert = () =>
 
 class GeneralStarExample extends React.Component {
 
+  storeUserFeedback = (userId,textInput) => {
+    firebase
+    .database()
+    .ref('users/' + userId)
+    .set({
+      starCount: this.state.starCount,
+      feedbackText: textInput
+    });
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      starCount: 0
+      starCount: 0,
+      feedbackText: ""
     };
   }
 
@@ -78,6 +91,7 @@ class GeneralStarExample extends React.Component {
               style={styles.aboutTitle}> {"\nHave any suggestions to make the app better? Tell us below!"}</Text>
             <TextInput style={styles.input}
               ref={input => { this.textInput = input }}
+              onChangeText={text => {this.setState({ feedbackText: text });}}
               underlineColorAndroid="transparent"
               placeholder="Suggestions..."
               multiline={true}
@@ -88,10 +102,11 @@ class GeneralStarExample extends React.Component {
             <Button
               onPress={() => {
                 this.textInput.clear();
-                createOneButtonAlert();
                 this.setState({
                   starCount: 0
                 });
+                this.storeUserFeedback(firebase.auth().currentUser.uid,this.state.feedbackText)
+                createOneButtonAlert();
               }
               }>submit all</Button>
           </Block>
