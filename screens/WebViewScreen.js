@@ -3,7 +3,7 @@ import { StyleSheet, View, Text,Dimensions,ActivityIndicator,SafeAreaView,Status
 import {WebView} from 'react-native-webview';
 import { argonTheme } from '../constants';
 import { withNavigation } from '@react-navigation/compat';
-
+import firebase from 'firebase'
 
 const { width } = Dimensions.get('screen');
 
@@ -12,6 +12,29 @@ the purpose of this js file is open a web page in app when user click article ca
 and get the web url send by card component.
 */
 class WebViewScreen extends React.Component {
+  storeUserHistory = (userId, url) => {
+    var dataList = []
+    var updates = {}
+    firebase.database().ref('user-history/' + userId).get().then(function(snapshot){
+      if (snapshot.exists()) {
+        dataList = snapshot.val()
+        console.log(dataList)
+        dataList.push({url:url})
+        updates['/user-history/' + userId] = dataList;
+        firebase.database().ref().update(updates);
+      }
+      else {
+        dataList.push({url: url})
+        updates['/user-history/' + userId] = dataList
+        firebase
+        .database()
+        .ref()
+        .update(updates)
+      }
+    }).catch(function(error) {
+      console.error(error);
+    });
+  }
   // loading state when open the web page
   render
   LoadingIndicatorView() {
@@ -29,6 +52,7 @@ class WebViewScreen extends React.Component {
   // web render funcion
   render() {
     const {navigation, route} = this.props;
+    this.storeUserHistory(firebase.auth().currentUser.uid,route.params.websiteURL);
     //const {websiteURL} = navigation.state.params
     console.log(route)
     return (
