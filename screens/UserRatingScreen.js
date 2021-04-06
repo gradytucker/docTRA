@@ -41,7 +41,7 @@ class GeneralStarExample extends React.Component {
   storeUserFeedback = (userId,textInput) => {
     firebase
     .database()
-    .ref('users/' + userId)
+    .ref('user-feedback/' + userId)
     .set({
       starCount: this.state.starCount,
       feedbackText: textInput
