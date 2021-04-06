@@ -25,12 +25,11 @@ class WebViewScreen extends React.Component {
       }
       else {
         dataList.push({url: url})
+        updates['/user-history/' + userId] = dataList
         firebase
         .database()
-        .ref('user-history/' + userId)
-        .set({
-          urlList: dataList
-        });
+        .ref()
+        .update(updates)
       }
     }).catch(function(error) {
       console.error(error);
