@@ -92,6 +92,7 @@ class Articles extends React.Component {
             >
               <Text style={{ fontSize: 18 }}>{'30%'}</Text>
             </ProgressCircle>
+            <Text style={{ fontSize: 18 }}>{'\n x modules remaining!'}</Text>
           </Block>
           <Text bold size={20} color="#32325D">
             {'\n\nModules to do:'}
