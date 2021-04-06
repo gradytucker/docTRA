@@ -47,7 +47,15 @@ const feedbackExistAlert = () =>{
 }
 class GeneralStarExample extends React.Component {
 
-  storeUserFeedback = (userId,textInput) => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      starCount: 0,
+      feedbackText: ""
+    };
+  }
+
+  storeUserFeedback = (userId,textInput,starCount) => {
     firebase.database().ref('user-feedback/' + userId).get().then(function(snapshot){
       if (snapshot.exists()) {
         feedbackExistAlert();
@@ -57,23 +65,15 @@ class GeneralStarExample extends React.Component {
         .database()
         .ref('user-feedback/' + userId)
         .set({
-          starCount: this.state.starCount,
+          starCount: starCount,
           feedbackText: textInput
         });
-        createOneButtonAlert
+        createOneButtonAlert();
       }
     }).catch(function(error) {
       console.error(error);
     });
    
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      starCount: 0,
-      feedbackText: ""
-    };
   }
 
   onStarRatingPress(rating) {
@@ -125,7 +125,7 @@ class GeneralStarExample extends React.Component {
                 this.setState({
                   starCount: 0
                 });
-                this.storeUserFeedback(firebase.auth().currentUser.uid,this.state.feedbackText)
+                this.storeUserFeedback(firebase.auth().currentUser.uid,this.state.feedbackText,this.state.starCount)
               }
               }>submit all</Button>
           </Block>
