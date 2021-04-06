@@ -36,16 +36,36 @@ const createOneButtonAlert = () =>
     ]
   );
 
+const feedbackExistAlert = () =>{
+  Alert.alert(
+    "you have already submitted",
+    "Thankyou for giving feedback",
+    [
+      { text: "ok", onPress: () => console.log("exist") }
+    ]
+  );
+}
 class GeneralStarExample extends React.Component {
 
   storeUserFeedback = (userId,textInput) => {
-    firebase
-    .database()
-    .ref('user-feedback/' + userId)
-    .set({
-      starCount: this.state.starCount,
-      feedbackText: textInput
+    firebase.database().ref('user-feedback/' + userId).get().then(function(snapshot){
+      if (snapshot.exists()) {
+        feedbackExistAlert();
+      }
+      else {
+        firebase
+        .database()
+        .ref('user-feedback/' + userId)
+        .set({
+          starCount: this.state.starCount,
+          feedbackText: textInput
+        });
+        createOneButtonAlert
+      }
+    }).catch(function(error) {
+      console.error(error);
     });
+   
   }
 
   constructor(props) {
@@ -106,7 +126,6 @@ class GeneralStarExample extends React.Component {
                   starCount: 0
                 });
                 this.storeUserFeedback(firebase.auth().currentUser.uid,this.state.feedbackText)
-                createOneButtonAlert();
               }
               }>submit all</Button>
           </Block>
