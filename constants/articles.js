@@ -35,7 +35,7 @@ function URLsetting(dataList,index) {
   articleList[index] = {
     URL: dataList.URL,
     title: dataList.title,
-    image: dataList.imgURL
+    image: dataList.image
   }
 }
 

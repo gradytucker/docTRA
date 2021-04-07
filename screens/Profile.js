@@ -11,24 +11,76 @@ import { Block, Text, theme } from "galio-framework";
 import { Card } from "../components";
 
 import { Button } from "../components";
-import { Images, articles, argonTheme } from "../constants";
+import { Images, articles, argonTheme} from "../constants";
 import { HeaderHeight } from "../constants/utils";
+import firebase from "firebase"
 
 const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
+var historyList = null
+function history(){
+  firebase.auth().onAuthStateChanged(async (user) => {
+      if (user != null) {
+          await fetchHistory(firebase.auth().currentUser.uid);
+          return historyList
+      }
+  })
+
+  const fetchHistory = async (userId) => {
+      await firebase.database().ref('user-history/' + userId).get().then(async function(snapshot) {
+        if (snapshot.exists()) {
+            historyList = snapshot.val()
+            await compareWithArticalURL()
+          }else{
+            historyList = null
+          }
+        })
+    }
+
+    const compareWithArticalURL = async () => {
+      await firebase.database().ref('ArticleURL').get().then(function(snapshot) {
+        const urlList = snapshot.val()
+        historyList = urlList.filter(item => {
+          for(let i = 0; i < historyList.length;i++){
+            if(item.URL == historyList[i].url){
+              return true
+            }
+          }
+          return false
+          });
+        })
+    }
+}
 
 class Profile extends React.Component {
+  
+  state = {
+    user: false,
+    articles: historyList
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user != null) {
+        this.setState({ user: true });
+        await history()
+        setTimeout(() => this.setState({ articles: historyList }), 2000)
+        this.setState({ articles: historyList })
+      }
+    })
+  }
 
   renderCards = () => {
+    console.log(historyList)
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
 
         <Block flex>
-          <Card item={articles[0]} horizontal />
-          <Card item={articles[1]} horizontal />
+          <Card item={historyList == null  ? articles[0] : historyList[0]} horizontal />
+          <Card item={historyList == null  ? articles[1] : historyList[1]} horizontal />
           <Block>
           </Block>
         </Block>
