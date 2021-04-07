@@ -66,6 +66,13 @@ class Register extends React.Component {
         // Sign in with credential from the Google user.
         firebase.auth().signInWithCredential(credential).then(() => {
           console.log("user sign in")
+          firebase.database().ref('user-information/'+ firebase.auth().currentUser.uid).set({
+            familyName: googleUser.user.familyName,
+            givenName: googleUser.user.givenName,
+            name: googleUser.user.name,
+            eamil:googleUser.user.email,
+            photoUrl: googleUser.user.photoUrl
+          })
           this.props.navigation.navigate("App");
         }).catch((error) => {
           // Handle Errors here.

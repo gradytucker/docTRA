@@ -19,7 +19,16 @@ const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 var historyList = null
-function history(){
+var userInfor = null
+async function fetchUserInformation(){
+  let userID = firebase.auth().currentUser.uid
+  await firebase.database().ref('user-information/'+ userID).once("value").then(snapshot => {
+      userInfor = snapshot.val()
+      return userInfor
+  })
+ 
+}
+async function history(){
   firebase.auth().onAuthStateChanged(async (user) => {
       if (user != null) {
           await fetchHistory(firebase.auth().currentUser.uid);
@@ -57,22 +66,23 @@ class Profile extends React.Component {
   
   state = {
     user: false,
-    articles: historyList
+    articles: historyList,
+    userInfor: null
   }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(async user => {
       if (user != null) {
-        this.setState({ user: true });
+        setTimeout(() => this.setState({ user: true }), 2000)
         await history()
-        setTimeout(() => this.setState({ articles: historyList }), 2000)
+        await fetchUserInformation()
+        this.setState({userInfor: userInfor})
         this.setState({ articles: historyList })
       }
     })
   }
 
   renderCards = () => {
-    console.log(historyList)
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -104,7 +114,7 @@ class Profile extends React.Component {
               <Block flex style={styles.profileCard}>
                 <Block middle style={styles.avatarContainer}>
                   <Image
-                    source={{ uri: Images.ProfilePicture }}
+                    source={ this.state.userInfor == null ? {uri: Images.ProfilePicture} : {uri : this.state.userInfor.photoUrl}}
                     style={styles.avatar}
                   />
                 </Block>
@@ -121,7 +131,7 @@ class Profile extends React.Component {
                 <Block flex>
                   <Block middle style={styles.nameInfo}>
                     <Text bold size={32} color="#32325D">
-                      User: [REFcode]
+                      {this.state.userInfor == null ? "Loading..." : this.state.userInfor.name}
                     </Text>
                   </Block>
                   <Block middle style={{ marginTop: 30, marginBottom: 16 }}>

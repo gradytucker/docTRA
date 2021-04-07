@@ -1,5 +1,5 @@
 import "@firebase/auth"
-import * as firebase from 'firebase'
+import firebase from 'firebase'
 
 const firebaseSetUp = firebase.initializeApp({
     apiKey: "AIzaSyBwl3BxwCO2pIhPS02udk3Bt4bd71VAwSo",
@@ -20,6 +20,13 @@ firebase.auth().onAuthStateChanged(user => {
         firebase.auth().signInWithEmailAndPassword(email, password).then((userCredential) => {
         // Signed in
         var user = userCredential.user;
+        firebase.database().ref('user-information/'+ firebase.auth().currentUser.uid).set({
+            familyName: "Test account",
+            givenName:"",
+            name: "Test account",
+            eamil:"admin@123.com",
+            photoUrl: "https://firebasestorage.googleapis.com/v0/b/doctra-f4f4b.appspot.com/o/doctraLogo.png?alt=media&token=a44d4d6a-a2e3-41a9-979b-c99798b6fd07"
+          })
         console.log("Success")
         // ...
         })
