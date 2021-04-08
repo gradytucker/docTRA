@@ -29,13 +29,11 @@ async function fetchUserInformation() {
 
 }
 async function history() {
-  firebase.auth().onAuthStateChanged(async (user) => {
-    if (user != null) {
+
       await fetchHistory(firebase.auth().currentUser.uid);
       return historyList
     }
-  })
-
+ 
   const fetchHistory = async (userId) => {
     await firebase.database().ref('user-history/' + userId).get().then(async function (snapshot) {
       if (snapshot.exists()) {
@@ -60,7 +58,7 @@ async function history() {
       });
     })
   }
-}
+
 
 class Profile extends React.Component {
 
@@ -73,7 +71,6 @@ class Profile extends React.Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(async user => {
       if (user != null) {
-        setTimeout(() => this.setState({ user: true }), 2000)
         await history()
         await fetchUserInformation()
         this.setState({ userInfor: userInfor })
