@@ -159,6 +159,9 @@ class Articles extends React.Component {
             style={styles.trainingButton}
             onPress={() => navigation.navigate("TrainingReflective")}
           >{"View all >"}</Button>
+          <Text bold size={20} color="#32325D">
+            {'\n'}
+          </Text>
         </Block>
       </ScrollView>
     )
