@@ -79,7 +79,7 @@ class Articles extends React.Component {
             networkActivityIndicatorVisible={true}
           />
           <Text bold size={28} color="#32325D">
-            {'\n\nModules to do:'}
+            {'\nModules to do:'}
           </Text>
           <Block flex row>
             <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE }} />
