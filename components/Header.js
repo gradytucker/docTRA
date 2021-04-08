@@ -7,12 +7,41 @@ import Icon from './Icon';
 import Input from './Input';
 import Tabs from './Tabs';
 import argonTheme from '../constants/Theme';
-
+import firebase from "firebase"
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
 
 
-
+function recordUserCompleteExercise(userId,url){
+  var dataList = []
+  var updates = {}
+  firebase.database().ref('user-complete/' + userId).get().then(function(snapshot) {
+    if (snapshot.exists()) {
+        dataList = snapshot.val()
+        if (dataList.length <= 100) {
+            dataList = dataList.filter(item => item.url !== url)
+            dataList.push({ url: url })
+            updates['/user-complete/' + userId] = dataList;
+            firebase.database().ref().update(updates);
+        } else {
+            dataList.pop()
+            dataList = dataList.filter(item => item.url !== url)
+            dataList.push({ url: url })
+            updates['/user-complete/' + userId] = dataList;
+            firebase.database().ref().update(updates);
+        }
+    } else {
+        dataList.push({ url: url })
+        updates['/user-complete/' + userId] = dataList
+        firebase
+            .database()
+            .ref()
+            .update(updates)
+    }
+}).catch(function(error) {
+    console.error(error);
+});
+}
 class Header extends React.Component {
   handleLeftPress = () => {
     const { back, title, navigation } = this.props;
@@ -29,13 +58,14 @@ class Header extends React.Component {
   }
 
   handleFinishPress = () => {
-    const { back, title, navigation } = this.props;
+    const { back, title, navigation} = this.props;
+    const url= this.props.scene.__memo[0].params.websiteURL
     const FinishAlert = () =>
       Alert.alert(
         "Finished the Exercise?",
         "",
         [
-          { text: "Yes", onPress: () => (console.log("OK Pressed"), navigation.goBack()) },
+          { text: "Yes", onPress: () => (recordUserCompleteExercise(firebase.auth().currentUser.uid,url), navigation.goBack()) },
           { text: "No", onPress: () => console.log("OK Pressed") }
         ]
       );
@@ -61,8 +91,7 @@ class Header extends React.Component {
     }
   }
   render() {
-    const { back, title, white, transparent, bgColor, iconColor, titleColor, navigation, ...props } = this.props;
-
+    const { route,back, title, white, transparent, bgColor, iconColor, titleColor, navigation, ...props } = this.props;
     const noShadow = ['Categories', 'Deals', 'Pro', 'Profile'].includes(title);
     const headerStyles = [
       !noShadow ? styles.shadow : null,

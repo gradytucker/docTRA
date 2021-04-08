@@ -35,7 +35,7 @@ async function history() {
     }
  
   const fetchHistory = async (userId) => {
-    await firebase.database().ref('user-history/' + userId).get().then(async function (snapshot) {
+    await firebase.database().ref('user-complete/' + userId).get().then(async function (snapshot) {
       if (snapshot.exists()) {
         historyList = snapshot.val()
         await compareWithArticalURL()
