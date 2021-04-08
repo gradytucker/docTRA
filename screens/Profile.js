@@ -5,7 +5,7 @@ import {
   ScrollView,
   Image,
   ImageBackground,
-  Platform
+  Platform, View
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 import { Card } from "../components";
@@ -14,6 +14,7 @@ import { Button } from "../components";
 import { Images, articles, argonTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import firebase from "firebase"
+import { FlatList } from "react-native-gesture-handler";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -29,7 +30,6 @@ async function fetchUserInformation() {
 
 }
 async function history() {
-
       await fetchHistory(firebase.auth().currentUser.uid);
       return historyList
     }
@@ -81,17 +81,12 @@ class Profile extends React.Component {
 
   renderCards = () => {
     return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.articles}>
-
-        <Block flex>
-          <Card item={historyList == null ? articles[0] : historyList[0]} horizontal />
-          <Card item={historyList == null ? articles[1] : historyList[1]} horizontal />
-          <Block>
-          </Block>
-        </Block>
-      </ScrollView>
+          <View style = {styles.articles}>
+            <FlatList data={this.state.articles == null  ? articles : this.state.articles}  
+            renderItem={({ item }) => <Card item={item} horizontal />}
+            keyExtractor={(item, index) => index.toString() }>
+            </FlatList>
+          </View>
     );
   };
 
@@ -104,14 +99,12 @@ class Profile extends React.Component {
             style={styles.profileContainer}
             imageStyle={styles.profileBackground}
           >
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              style={{ width, marginTop: '25%' }}
-            >
+            <FlatList ListHeaderComponent={
+              <View style={{ width, marginTop: '25%' }}>
               <Block flex style={styles.profileCard}>
                 <Block middle style={styles.avatarContainer}>
                   <Image
-                    source={this.state.userInfor == null ? { uri: Images.ProfilePicture } : { uri: this.state.userInfor.photoUrl }}
+                    source={ this.state.userInfor == null ? {uri: Images.ProfilePicture} : {uri : this.state.userInfor.photoUrl}}
                     style={styles.avatar}
                   />
                 </Block>
@@ -122,7 +115,6 @@ class Profile extends React.Component {
                     space="evenly"
                     style={{ marginTop: -20, paddingBottom: 24 }}
                   >
-
                   </Block>
                 </Block>
                 <Block flex>
@@ -142,11 +134,10 @@ class Profile extends React.Component {
                       {this.renderCards()}
                     </Block>
                   </Block>
-
-
                 </Block>
               </Block>
-            </ScrollView>
+              </View>
+            }></FlatList>
           </ImageBackground>
         </Block>
       </Block>
