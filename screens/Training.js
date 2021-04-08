@@ -6,7 +6,7 @@ import {
   StatusBar,
   TouchableWithoutFeedback,
   ImageBackground,
-  Dimensions,View
+  Dimensions, View
 } from "react-native";
 //galio
 import { Block, Text, theme } from "galio-framework";
@@ -99,63 +99,63 @@ class Articles extends React.Component {
           <Text bold size={20} color="#32325D">
             {'\n\nModules to do:'}
           </Text>
-          <View style = {styles.articles}>
-          <ScrollView 
-            horizontal = {true}
-            showsHorizontalScrollIndicator = {false}>
-          <Block flex row>
-            <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-          </Block>
-          </ScrollView>
+          <View style={styles.articles}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
+              <Block flex row>
+                <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+              </Block>
+            </ScrollView>
           </View>
-          <Button
+          <Button small
             style={styles.trainingButton}
             onPress={() => navigation.navigate("TrainingToDo")}
           >{"View all >"}</Button>
           <Text bold size={20} color="#32325D">
             {'\n\nCompleted Modules:'}
           </Text>
-          <View style = {styles.articles}>
-          <ScrollView 
-            horizontal = {true}
-            showsHorizontalScrollIndicator = {false}>
-          <Block flex row>
-            <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[4]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[5]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-          </Block>
-          </ScrollView>
+          <View style={styles.articles}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
+              <Block flex row>
+                <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[4]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[5]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+              </Block>
+            </ScrollView>
           </View>
-          <Button
+          <Button small
             style={styles.trainingButton}
             onPress={() => navigation.navigate("TrainingCompleted")}
           >{"View all >"}</Button>
           <Text bold size={20} color="#32325D">
             {'\n\nReflective Exercises:'}
           </Text>
-          <View style = {styles.articles}>
-          <ScrollView 
-            horizontal = {true}
-            showsHorizontalScrollIndicator = {false}>
-          <Block flex row>
-            <Card item={articles[5]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[5]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-            <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width:200}} />
-          </Block>
-          </ScrollView>
+          <View style={styles.articles}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
+              <Block flex row>
+                <Card item={articles[5]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[5]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+              </Block>
+            </ScrollView>
           </View>
-          <Button
+          <Button small
             style={styles.trainingButton}
             onPress={() => navigation.navigate("TrainingReflective")}
           >{"View all >"}</Button>
@@ -181,8 +181,7 @@ class Articles extends React.Component {
 
 const styles = StyleSheet.create({
   trainingButton: {
-    backgroundColor: theme.COLORS.MUTED,
-    color: theme.COLORS.BLACK
+    backgroundColor: argonTheme.COLORS.HEADER
   },
   title: {
     paddingBottom: theme.SIZES.BASE,
