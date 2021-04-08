@@ -57,7 +57,7 @@ class Home extends React.Component {
           <Text bold size={20} color="#32325D">
             {'\n\nDaily quote'}
           </Text>
-          <Card item={articles[0]} full />
+          <Card item={articles[0]} none />
           <Text bold size={20} color="#32325D"> {'\nCompassion Cartoon'}
           </Text>
           <Block>

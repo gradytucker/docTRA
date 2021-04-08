@@ -5,33 +5,33 @@ import quotes_arr from '../constants/quotes';
 
 function shuffle(array) {
   var i = array.length,
-      j = 0,
-      temp;
+    j = 0,
+    temp;
   while (i--) {
-      j = Math.floor(Math.random() * (i+1));
-      // swap randomly chosen element with current element
-      temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
+    j = Math.floor(Math.random() * (i + 1));
+    // swap randomly chosen element with current element
+    temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
   }
   return array;
 }
 
-var randomNumer = shuffle([1,2,3,4,5])
+var randomNumer = shuffle([1, 2, 3, 4, 5])
 var articleList = []
 
 
 const db = firebase.database();
 randomNumer.forEach(element => {
   let index = element
-  db.ref('/ArticleURL/'+ String(index)).once("value").then(snapshot => { 
+  db.ref('/ArticleURL/' + String(index)).once("value").then(snapshot => {
     const WebSiteURL = snapshot.val()
-    URLsetting(WebSiteURL,index)
+    URLsetting(WebSiteURL, index)
   })
 })
 // read all the information from firebase database
 //set the article information
-function URLsetting(dataList,index) {
+function URLsetting(dataList, index) {
   articleList[index] = {
     URL: dataList.URL,
     title: dataList.title,
@@ -41,32 +41,32 @@ function URLsetting(dataList,index) {
 
 articleList = [
   {
-    title: quotes_arr[Math.floor(Math.random()*quotes_arr.length)],
-    image: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
+    title: quotes_arr[Math.floor(Math.random() * quotes_arr.length)],
+    image: 'https://www.vedamani.com/wp-content/uploads/2020/06/file-2.png',
     //cta: 'View article'
     URL: 'https://www.youtube.com',
   },
   {
     title: "Exercise 1",
-    image: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
+    image: 'https://www.vedamani.com/wp-content/uploads/2020/06/file-2.png',
     //cta: 'View article'
     URL: 'https://www.youtube.com',
   },
   {
     title: "Exercise 2",
-    image: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80',
+    image: 'https://www.vedamani.com/wp-content/uploads/2020/06/file-2.png',
     //cta: 'View article' 
     URL: 'https://www.facebook.com',
   },
   {
     title: "Exercise 3",
-    image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1326&q=80',
+    image: 'https://www.vedamani.com/wp-content/uploads/2020/06/file-2.png',
     URL: 'https://www.google.com',
     //cta: 'View article' 
   },
   {
     title: "Exercise 4",
-    image: 'https://images.unsplash.com/photo-1482686115713-0fbcaced6e28?fit=crop&w=1947&q=80',
+    image: 'https://www.vedamani.com/wp-content/uploads/2020/06/file-2.png',
     //cta: 'View article', 
     URL: 'https://www.instagram.com',
     horizontal: true

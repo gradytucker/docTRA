@@ -1,39 +1,40 @@
 import React from 'react';
 import { withNavigation } from '@react-navigation/compat';
 import PropTypes from 'prop-types';
-import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback,Linking, webView } from 'react-native';
+import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback, Linking, webView } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
-import {WebView} from 'react-native-webview';
+import { WebView } from 'react-native-webview';
 import { argonTheme } from '../constants';
 
 
 class Card extends React.Component {
-  
+
   render() {
-    const { navigation, item, horizontal, full, style, ctaColor, imageStyle} = this.props;
+    const { navigation, item, horizontal, full, none, style, ctaColor, imageStyle } = this.props;
     const imageStyles = [
       full ? styles.fullImage : styles.horizontalImage,
+      none ? styles.noImage : styles.horizontalImage,
       imageStyle
     ];
     const cardContainer = [styles.card, styles.shadow, style];
     const imgContainer = [styles.imageContainer,
-      horizontal ? styles.horizontalStyles : styles.verticalStyles,
-      styles.shadow
+    horizontal ? styles.horizontalStyles : styles.verticalStyles,
+    styles.shadow
     ];
-    
+
 
     return (
       <Block row={horizontal} card flex style={cardContainer}>
-      {/*navigate to the webViewScreen when you click the element */}
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('WebViewScreen',{screen:"WebViewScreen",params:{websiteURL: item.URL}})}>
+        {/*navigate to the webViewScreen when you click the element */}
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('WebViewScreen', { screen: "WebViewScreen", params: { websiteURL: item.URL } })}>
           <Block flex style={imgContainer}>
-            <Image source={{uri: item.image}} style={imageStyles} />
+            <Image source={{ uri: item.image }} style={imageStyles} />
           </Block>
         </TouchableWithoutFeedback>
         {/*navigate to the webViewScreen when you click the element */}
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('WebViewScreen',{screen:"WebViewScreen",params:{websiteURL: item.URL}})}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('WebViewScreen', { screen: "WebViewScreen", params: { websiteURL: item.URL } })}>
           <Block flex space="between" style={styles.cardDescription}>
-            <Text size={14} style={styles.cardTitle}>{item.title}</Text>
+            <Text size={item.cardStyles == none ? 14 : 25} style={item.cardStyles == none ? styles.cardTitle : styles.noImageTitle}>{item.title}</Text>
             <Text size={12} muted={!ctaColor} color={ctaColor || argonTheme.COLORS.ACTIVE} bold>{item.cta}</Text>
           </Block>
         </TouchableWithoutFeedback>
@@ -46,6 +47,7 @@ Card.propTypes = {
   item: PropTypes.object,
   horizontal: PropTypes.bool,
   full: PropTypes.bool,
+  none: PropTypes.bool,
   ctaColor: PropTypes.string,
   imageStyle: PropTypes.any,
 }
@@ -61,7 +63,15 @@ const styles = StyleSheet.create({
   cardTitle: {
     flex: 1,
     flexWrap: 'wrap',
-    paddingBottom: 6
+    paddingBottom: 6,
+  },
+  noImageTitle: {
+    flex: 1,
+    flexWrap: 'wrap',
+    textAlign: 'center',
+    paddingBottom: 6,
+    fontWeight: "normal",
+    fontStyle: "italic"
   },
   cardDescription: {
     padding: theme.SIZES.BASE / 2
@@ -88,6 +98,14 @@ const styles = StyleSheet.create({
   },
   fullImage: {
     height: 215
+  },
+  noImage: {
+    height: 50,
+    width: 50,
+    marginTop: 15,
+    display: "flex",
+    marginLeft: "auto",
+    marginRight: "auto"
   },
   shadow: {
     shadowColor: theme.COLORS.BLACK,
