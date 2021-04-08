@@ -15,7 +15,7 @@ const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 
 
 class Header extends React.Component {
   handleLeftPress = () => {
-    const { back, navigation } = this.props;
+    const { back, title, navigation } = this.props;
     const BackAlert = () =>
       Alert.alert(
         "If you have not finished the exercise, it will not be marked as complete.",
@@ -25,11 +25,11 @@ class Header extends React.Component {
           { text: "Leave", onPress: () => (console.log("OK Pressed"), navigation.goBack()) }
         ]
       );
-    return (BackAlert());
+    return (title == "Web" ? BackAlert() : navigation.goBack());
   }
 
   handleFinishPress = () => {
-    const { back, navigation } = this.props;
+    const { back, title, navigation } = this.props;
     const FinishAlert = () =>
       Alert.alert(
         "Finished the Exercise?",
