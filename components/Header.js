@@ -1,6 +1,6 @@
 import React from 'react';
 import { withNavigation } from '@react-navigation/compat';
-import { TouchableOpacity, View, TextInput, StyleSheet, Platform, Dimensions } from 'react-native';
+import { TouchableOpacity, Alert, View, TextInput, StyleSheet, Platform, Dimensions } from 'react-native';
 import { Button, Block, NavBar, Text, theme } from 'galio-framework';
 
 import Icon from './Icon';
@@ -16,7 +16,30 @@ const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 
 class Header extends React.Component {
   handleLeftPress = () => {
     const { back, navigation } = this.props;
-    return (navigation.goBack());
+    const BackAlert = () =>
+      Alert.alert(
+        "If you have not finished the exercise, it will not be marked as complete.",
+        "",
+        [
+          { text: "Okay", onPress: () => (console.log("OK Pressed")) },
+          { text: "Leave", onPress: () => (console.log("OK Pressed"), navigation.goBack()) }
+        ]
+      );
+    return (BackAlert());
+  }
+
+  handleFinishPress = () => {
+    const { back, navigation } = this.props;
+    const FinishAlert = () =>
+      Alert.alert(
+        "Finished the Exercise?",
+        "",
+        [
+          { text: "Yes", onPress: () => (console.log("OK Pressed"), navigation.goBack()) },
+          { text: "No", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+    return (FinishAlert());
   }
 
   renderRight = () => {
@@ -60,9 +83,11 @@ class Header extends React.Component {
           style={navbarStyles}
           transparent={transparent}
           right={
-            <Text bold size={22} color="#32325D">
-              {'docTRA'}
-            </Text>}
+            title == 'Web' ?
+              <Text bold size={16} colour="#32325D" onPress={this.handleFinishPress}> {'Finish'} </Text>
+              : <Text bold size={22} color="#32325D">
+                {'docTRA'}
+              </Text>}
           rightStyle={{ paddingTop: iPhoneX ? 25 : 0, flex: 0.8 }}
           left={title != 'Home' &&
             title != 'About' &&
