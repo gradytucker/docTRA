@@ -15,15 +15,85 @@ import { articles, Images, argonTheme } from "../constants/";
 import { Card } from "../components/";
 import { Button } from "../components";
 import { color } from "react-native-reanimated";
+import firebase from "firebase";
 import ProgressCircle from 'react-native-progress-circle'
 const { width } = Dimensions.get("screen");
-
-
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
+var completedNum = 0;
+var totalNum = 0;
+var historyList = null
+var exerciseList = null
+var userInfor = null
+
+async function fetchUserInformation() {
+  var completedNum = 0;
+  var totalNum = 0;
+  let userID = firebase.auth().currentUser.uid
+  await firebase.database().ref('user-information/' + userID).once("value").then(snapshot => {
+    userInfor = snapshot.val()
+    return userInfor
+  })
+
+}
+async function history() {
+  await fetchHistory(firebase.auth().currentUser.uid);
+  return historyList
+}
+
+
+
+const fetchHistory = async (userId) => {
+  await firebase.database().ref('user-complete/' + userId).get().then(async function (snapshot) {
+    if (snapshot.exists()) {
+      historyList = snapshot.val()
+      await compareWithArticalURL()
+    } else {
+      historyList = null
+    }
+  })
+}
+
+
+const compareWithArticalURL = async () => {
+  await firebase.database().ref('ArticleURL').get().then(function (snapshot) {
+    const urlList = snapshot.val()
+    for (let i = 1; i < urlList.length; i++) {
+      totalNum++
+    }
+    historyList = urlList.filter(item => {
+      for (let i = 0; i < historyList.length; i++) {
+        if (item.URL == historyList[i].url) {
+          completedNum++;
+          return true;
+        }
+      }
+      return false;
+    });
+
+  })
+}
 
 
 class Articles extends React.Component {
+
+  state = {
+    user: false,
+    articles: historyList,
+    userInfor: null
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user != null) {
+        await history()
+        await fetchUserInformation()
+        this.setState({ userInfor: userInfor })
+        this.setState({ articles: historyList })
+      }
+    })
+  }
+
   renderProduct = (item, index) => {
     const { navigation } = this.props;
 
@@ -85,16 +155,16 @@ class Articles extends React.Component {
           </Text>
           <Block flex center>
             <ProgressCircle
-              percent={30}
+              percent={((completedNum / totalNum) * 100)}
               radius={80}
               borderWidth={20}
               color="#3399FF"
               shadowColor="#999"
               bgColor="#fff"
             >
-              <Text style={{ fontSize: 18 }}>{'30%'}</Text>
+              <Text style={{ fontSize: 18 }}>{((completedNum / totalNum) * 100) + '%'}</Text>
             </ProgressCircle>
-            <Text style={{ fontSize: 18 }}>{'\n x modules remaining!'}</Text>
+            <Text style={{ fontSize: 18 }}>{'\n' + (totalNum - completedNum) + ' modules remaining!'}</Text>
           </Block>
           <Text bold size={20} color="#32325D">
             {'\n\nModules to do:'}
