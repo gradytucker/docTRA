@@ -28,7 +28,6 @@ var userInfor = null
 
 async function fetchUserInformation() {
   var completedNum = 0;
-  var totalNum = 0;
   let userID = firebase.auth().currentUser.uid
   await firebase.database().ref('user-information/' + userID).once("value").then(snapshot => {
     userInfor = snapshot.val()
@@ -80,10 +79,12 @@ class Articles extends React.Component {
   state = {
     user: false,
     articles: historyList,
-    userInfor: null
+    userInfor: null,
+    totalNum: 0
   }
 
   componentDidMount() {
+    var totalNum = 0;
     firebase.auth().onAuthStateChanged(async user => {
       if (user != null) {
         await history()
