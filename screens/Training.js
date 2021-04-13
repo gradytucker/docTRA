@@ -90,6 +90,8 @@ class Articles extends React.Component {
         await fetchUserInformation()
         this.setState({ userInfor: userInfor })
         this.setState({ articles: historyList })
+        this.setState({ totalNum: totalNum })
+        this.setState({ completedNum: completedNum })
       }
     })
   }
