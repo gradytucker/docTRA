@@ -80,6 +80,7 @@ class Profile extends React.Component {
         await fetchUserInformation()
         this.setState({ userInfor: userInfor })
         this.setState({ articles: historyList })
+        this.setState({ completedNum: completedNum })
       }
     })
   }
