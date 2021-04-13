@@ -24,6 +24,7 @@ const assetImages = [
   Images.androidLogo
 ];
 
+
 // cache product images
 articles.map(article => assetImages.push(article.image));
 

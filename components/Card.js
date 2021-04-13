@@ -18,8 +18,7 @@ class Card extends React.Component {
     ];
     const cardContainer = [styles.card, styles.shadow, style];
     const imgContainer = [styles.imageContainer,
-    horizontal ? styles.horizontalStyles : styles.verticalStyles,
-    styles.shadow
+    horizontal ? styles.horizontalStyles : styles.verticalStyles
     ];
 
 
@@ -105,7 +104,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
     display: "flex",
     marginLeft: "auto",
-    marginRight: "auto"
+    marginRight: "auto",
+
   },
   shadow: {
     shadowColor: theme.COLORS.BLACK,
