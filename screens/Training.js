@@ -22,9 +22,13 @@ const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 var completedNum = 0;
 var totalNum = 0;
-var historyList = null
-var exerciseList = null
-var userInfor = null
+var historyList = null;
+var exerciseCompleted = null;
+var exerciseToDoGather = [];
+var exerciseList = null;
+var userInfor = null;
+
+
 
 async function fetchUserInformation() {
   var completedNum = 0;
@@ -64,7 +68,7 @@ const compareWithArticalURL = async () => {
       for (let i = 0; i < historyList.length; i++) {
         if (item.URL == historyList[i].url) {
           completedNum++;
-          return true;
+          return true
         }
       }
       return false;
@@ -75,12 +79,14 @@ const compareWithArticalURL = async () => {
 
 
 class Articles extends React.Component {
-
   state = {
     user: false,
     articles: historyList,
     userInfor: null,
-    totalNum: 0
+    totalNum: 0,
+    exercisesCompleted: articles,
+    exercisesToDo: exerciseToDoGather,
+    reflectiveExercises: [articles[1], articles[2]]
   }
 
   componentDidMount() {
@@ -93,6 +99,8 @@ class Articles extends React.Component {
         this.setState({ articles: historyList })
         this.setState({ totalNum: totalNum })
         this.setState({ completedNum: completedNum })
+        this.setState({ exercisesCompleted: historyList })
+        this.setState({ exercisesToDo: exercisesToDoGather })
       }
     })
   }
@@ -140,11 +148,7 @@ class Articles extends React.Component {
 
   renderCards = () => {
     const { navigation } = this.props;
-    this.state = {
-      exercisesCompleted: [articles[1], articles[2], articles[3], articles[4]],
-      exercisesToDo: [articles[2], articles[3], articles[4]],
-      reflectiveExercises: [articles[1], articles[2]],
-    };
+
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -181,11 +185,18 @@ class Articles extends React.Component {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
-              <Block flex row>
-                {this.state.exercisesToDo.map((w) => {
-                  return <Card item={w} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                })}
-              </Block>
+              {this.state.exercisesToDo.length != 0 ?
+                <Block flex row>
+                  {this.state.exercisesToDo.map((w) => {
+                    return <Card item={w} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                  })}
+                </Block>
+                : <Block center style={styles.productImage}>
+                  <Image
+                    style={styles.productImage}
+                    source={require('../assets/imgs/exerciseCompletedIMG.png')}
+                  />
+                </Block>}
             </ScrollView>
           </View>
           <Button small
@@ -232,7 +243,7 @@ class Articles extends React.Component {
             {'\n'}
           </Text>
         </Block>
-      </ScrollView>
+      </ScrollView >
     )
   }
 
@@ -300,9 +311,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2
   },
   productImage: {
-    width: cardWidth - theme.SIZES.BASE,
-    height: cardWidth - theme.SIZES.BASE,
-    borderRadius: 3
+    borderRadius: 3,
+    width: (cardWidth - theme.SIZES.BASE - 50) * 0.8,
+    height: (cardWidth - theme.SIZES.BASE - 200) * 0.8,
+    alignSelf: "center"
   },
   productPrice: {
     paddingTop: theme.SIZES.BASE,
