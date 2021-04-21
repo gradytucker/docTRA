@@ -140,6 +140,11 @@ class Articles extends React.Component {
 
   renderCards = () => {
     const { navigation } = this.props;
+    this.state = {
+      exercisesCompleted: [articles[1], articles[2], articles[3], articles[4]],
+      exercisesToDo: [articles[2], articles[3], articles[4]],
+      reflectiveExercises: [articles[1], articles[2]],
+    };
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -177,12 +182,9 @@ class Articles extends React.Component {
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
               <Block flex row>
-                <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                {this.state.exercisesToDo.map((w) => {
+                  return <Card item={w} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                })}
               </Block>
             </ScrollView>
           </View>
@@ -198,12 +200,9 @@ class Articles extends React.Component {
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
               <Block flex row>
-                <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[4]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[5]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                {this.state.exercisesCompleted.map((w) => {
+                  return <Card item={w} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                })}
               </Block>
             </ScrollView>
           </View>
@@ -219,12 +218,9 @@ class Articles extends React.Component {
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
               <Block flex row>
-                <Card item={articles[5]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[5]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                <Card item={articles[2]} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                {this.state.reflectiveExercises.map((w) => {
+                  return <Card item={w} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                })}
               </Block>
             </ScrollView>
           </View>

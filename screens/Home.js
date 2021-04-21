@@ -38,6 +38,11 @@ class Home extends React.Component {
   }
 
   renderArticles = () => {
+    this.state = {
+      exercisesToDo1: [articles[1], articles[2]],
+      exercisesToDo2: [articles[3], articles[4]],
+      reflectiveExercises: [articles[1], articles[2]],
+    };
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -70,12 +75,14 @@ class Home extends React.Component {
             {'\nExercises for you'}
           </Text>
           <Block flex row>
-            <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE }} />
-            <Card item={articles[2]} />
+            {this.state.exercisesToDo1.map((w) => {
+              return <Card item={w} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+            })}
           </Block>
           <Block flex row>
-            <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE }} />
-            <Card item={articles[4]} />
+            {this.state.exercisesToDo2.map((w) => {
+              return <Card item={w} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+            })}
           </Block>
         </Block>
       </ScrollView>
