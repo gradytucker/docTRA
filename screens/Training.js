@@ -17,6 +17,7 @@ import { Button } from "../components";
 import { color } from "react-native-reanimated";
 import firebase from "firebase";
 import ProgressCircle from 'react-native-progress-circle'
+import articleList from "../constants/articles";
 const { width } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
@@ -27,6 +28,7 @@ var exerciseCompleted = null;
 var exerciseToDoGather = [];
 var exerciseList = null;
 var userInfor = null;
+var key_count = 0;
 
 
 
@@ -96,14 +98,16 @@ class Articles extends React.Component {
         await history()
         await fetchUserInformation()
         this.setState({ userInfor: userInfor })
-        this.setState({ articles: historyList })
+        this.setState({ articles: historyList==null ? articles : historyList })
         this.setState({ totalNum: totalNum })
         this.setState({ completedNum: completedNum })
-        this.setState({ exercisesCompleted: historyList })
+        this.setState({ exercisesCompleted: historyList==null ? articles : historyList })
         this.setState({ exercisesToDo: exercisesToDoGather })
       }
     })
   }
+
+  componentWillUnmount(){}
 
   renderProduct = (item, index) => {
     const { navigation } = this.props;
@@ -188,7 +192,7 @@ class Articles extends React.Component {
               {this.state.exercisesToDo.length != 0 ?
                 <Block flex row>
                   {this.state.exercisesToDo.map((w) => {
-                    return <Card item={w} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                    return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
                   })}
                 </Block>
                 : <Block center style={styles.productImage}>
@@ -212,7 +216,7 @@ class Articles extends React.Component {
               showsHorizontalScrollIndicator={false}>
               <Block flex row>
                 {this.state.exercisesCompleted.map((w) => {
-                  return <Card item={w} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                  return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
                 })}
               </Block>
             </ScrollView>
@@ -230,7 +234,7 @@ class Articles extends React.Component {
               showsHorizontalScrollIndicator={false}>
               <Block flex row>
                 {this.state.reflectiveExercises.map((w) => {
-                  return <Card item={w} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                  return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
                 })}
               </Block>
             </ScrollView>

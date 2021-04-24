@@ -399,7 +399,6 @@ const DrawerStack = () => {
       {/*link to all the screen*/}
       <Drawer.Screen name="tabStack" component={bottomNavitgationStack} />
       <Drawer.Screen name="Profile" component={ProfileStack} />
-      <Drawer.Screen name="Account" component={Register} />
       <Drawer.Screen name="Elements" component={ElementsStack} />
       <Drawer.Screen name="Training" component={TrainingStack} />
       <Drawer.Screen name="TrainingToDo" component={TrainingToDoStack} />

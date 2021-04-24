@@ -3,41 +3,12 @@ import firebase from "./../firebase";
 import quotes_arr from '../constants/quotes';
 
 
-function shuffle(array) {
-  var i = array.length,
-    j = 0,
-    temp;
-  while (i--) {
-    j = Math.floor(Math.random() * (i + 1));
-    // swap randomly chosen element with current element
-    temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
-  return array;
-}
-
-var randomNumer = shuffle([1, 2, 3, 4, 5])
-var articleList = []
 
 
-const db = firebase.database();
-randomNumer.forEach(element => {
-  let index = element
-  db.ref('/ArticleURL/' + String(index)).once("value").then(snapshot => {
-    const WebSiteURL = snapshot.val()
-    URLsetting(WebSiteURL, index)
-  })
-})
+
 // read all the information from firebase database
 //set the article information
-function URLsetting(dataList, index) {
-  articleList[index] = {
-    URL: dataList.URL,
-    title: dataList.title,
-    image: dataList.image
-  }
-}
+
 
 articleList = [
   {

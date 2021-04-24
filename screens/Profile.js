@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -35,8 +35,6 @@ async function history() {
   await fetchHistory(firebase.auth().currentUser.uid);
   return historyList
 }
-
-
 
 const fetchHistory = async (userId) => {
   await firebase.database().ref('user-complete/' + userId).get().then(async function (snapshot) {
@@ -84,6 +82,8 @@ class Profile extends React.Component {
       }
     })
   }
+
+  componentWillUnmount(){}
 
   renderCards = () => {
     return (

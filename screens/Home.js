@@ -5,11 +5,12 @@ import { Card } from '../components';
 import articles from '../constants/articles';
 import { Images } from '../constants';
 const { height, width } = Dimensions.get('screen');
-import firebase from './../firebase'
+import firebase from 'firebase'
+import Articles from './Training';
 
 const now = new Date().getHours();
 var message = "hello";
-
+var key_count = 0;
 if (now < 12) {
   message = '\nGood Morning!\nHere are some activities:';
 } else if (now >= 12 && now <= 17) {
@@ -19,30 +20,56 @@ if (now < 12) {
 }
 
 
+var newArticleList = null
+var randomList = getRandomIndex([1,2,3,4,5])
+
+function getRandomIndex(array){
+    var i = array.length,
+    j = 0,
+    temp;
+    while (i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      // swap randomly chosen element with current element
+      temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+    return array;
+}
+
+async function fetchArticalList(){ 
+  await firebase.database().ref('ArticleURL').get().then(function(snapshot){
+      newArticleList = snapshot.val()
+      console.log(newArticleList)
+    })
+}
+
 class Home extends React.Component {
 
   state = {
     user: false,
-    articles: articles
+    articles: articles,
+    exercisesToDo1: [articles[1], articles[2]],
+    exercisesToDo2: [articles[3], articles[4]],
+    reflectiveExercises: [articles[1], articles[2]]
   }
 
-
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(async user => {
       if (user != null) {
-        this.setState({ user: true });
-        setTimeout(() => this.setState({ articles: articles }), 2000)
-        this.setState({ articles: articles })
+        await fetchArticalList()
+        console.log(newArticleList)
+        console.log(randomList)
+        this.setState({articles: newArticleList})
+        this.setState({exercisesToDo1: [newArticleList[1], newArticleList[2]]})
+        this.setState({exercisesToDo2: [newArticleList[3], newArticleList[4]]})
+        this.setState({reflectiveExercises: [newArticleList[1], newArticleList[2]]})
       }
     })
   }
+  componentWillUnmount(){}
 
   renderArticles = () => {
-    this.state = {
-      exercisesToDo1: [articles[1], articles[2]],
-      exercisesToDo2: [articles[3], articles[4]],
-      reflectiveExercises: [articles[1], articles[2]],
-    };
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -62,7 +89,7 @@ class Home extends React.Component {
           <Text bold size={20} color="#32325D">
             {'\n\nDaily quote'}
           </Text>
-          <Card item={articles[0]} none />
+          <Card item={articles[0]} none keyExtractor={(item, index) => index.toString()}/>
           <Text bold size={20} color="#32325D"> {'\nCompassion Cartoon'}
           </Text>
           <Block>
@@ -76,12 +103,12 @@ class Home extends React.Component {
           </Text>
           <Block flex row>
             {this.state.exercisesToDo1.map((w) => {
-              return <Card item={w} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+              return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
             })}
           </Block>
           <Block flex row>
             {this.state.exercisesToDo2.map((w) => {
-              return <Card item={w} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+              return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
             })}
           </Block>
         </Block>
