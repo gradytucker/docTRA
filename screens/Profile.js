@@ -19,6 +19,8 @@ import { FlatList } from "react-native-gesture-handler";
 const { width, height } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
 var historyList = null
+var oldList = null
+var newList = null
 var userInfor = null
 var completedNum = 0;
 
@@ -31,57 +33,57 @@ async function fetchUserInformation() {
   })
 
 }
-async function history() {
-  await fetchHistory(firebase.auth().currentUser.uid);
-  return historyList
-}
-
-const fetchHistory = async (userId) => {
-  await firebase.database().ref('user-complete/' + userId).get().then(async function (snapshot) {
-    if (snapshot.exists()) {
-      historyList = snapshot.val()
-      await compareWithArticalURL()
-    } else {
-      historyList = null
-    }
-  })
-}
-
-const compareWithArticalURL = async () => {
-  await firebase.database().ref('ArticleURL').get().then(function (snapshot) {
-    const urlList = snapshot.val()
-    historyList = urlList.filter(item => {
-      for (let i = 0; i < historyList.length; i++) {
-        if (item.URL == historyList[i].url) {
-          return true
-        }
-      }
-      return false
-    });
-  })
-}
 
 
 class Profile extends React.Component {
 
   state = {
     user: false,
+    userId: null,
     articles: historyList,
     userInfor: null
   }
-  
+
+  fetchHistory = async () => {
+    let userId = firebase.auth().currentUser.uid
+    firebase.database().ref('user-complete/' + userId).on('value', async (snapshot) => {
+      if (snapshot.exists()) {
+        historyList = snapshot.val()
+        await this.compareWithArticalURL()
+      } else {
+        historyList = null
+      }
+    })
+  }
+
+  compareWithArticalURL = async () => {
+    await firebase.database().ref('ArticleURL').get().then( (snapshot) => {
+      let urlList = snapshot.val()
+      historyList = urlList.filter(item => {
+        for (let i = 0; i < historyList.length; i++) {
+          if (item.URL == historyList[i].url) {
+            return true
+          }
+        }
+        return false
+      });
+      
+      this.setState({ articles: historyList })
+      completedNum = historyList == null ? 0 :historyList.length
+      this.setState({ articles: historyList==null ? articles : historyList })
+    })
+  }
+
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
-      await history()
+      await this.fetchHistory()
       await fetchUserInformation()
-      completedNum = historyList == null ? 0 :historyList.length
       this.setState({ userInfor: userInfor })
-      this.setState({ articles: historyList })
-      this.setState({ completedNum: completedNum })
     }
   })
 
   signOut = () => {
+    this.state.userId = firebase.auth().currentUser.uid
     firebase.auth().signOut().then(() => {
       this.props.navigation.navigate("Account");
     }).catch((error) => {
@@ -89,16 +91,24 @@ class Profile extends React.Component {
     });
   }
 
+
   componentDidMount() {
     this.firebaseFetch()
   }
 
-  componentWillUnmount(){}
+  componentDidUpdate(){}
+  
+  componentWillUnmount(){
+    let userId = this.state.userId
+    completedNum = 0
+    historyList = null
+    firebase.database().ref('user-complete/' + userId).off()}
+    
 
   renderCards = () => {
     return (
       <View style={styles.articles}>
-        <FlatList data={this.state.articles == null ? articles : this.state.articles}
+        <FlatList data={this.state.articles == null ? null : this.state.articles}
           renderItem={({ item }) => <Card item={item} horizontal />}
           keyExtractor={(item, index) => index.toString()}>
         </FlatList>

@@ -42,48 +42,14 @@ async function fetchUserInformation() {
   })
 
 }
-async function history() {
-  await fetchHistory(firebase.auth().currentUser.uid);
-  return historyList
-}
 
 
-
-const fetchHistory = async (userId) => {
-  await firebase.database().ref('user-complete/' + userId).get().then(async function (snapshot) {
-    if (snapshot.exists()) {
-      historyList = snapshot.val()
-      await compareWithArticalURL()
-    } else {
-      historyList = null
-    }
-  })
-}
-
-
-const compareWithArticalURL = async () => {
-  await firebase.database().ref('ArticleURL').get().then(function (snapshot) {
-    const urlList = snapshot.val()
-    for (let i = 1; i < urlList.length; i++) {
-      totalNum++
-    }
-    historyList = urlList.filter(item => {
-      for (let i = 0; i < historyList.length; i++) {
-        if (item.URL == historyList[i].url) {
-          completedNum++;
-          return true
-        }
-      }
-      return false;
-    });
-
-  })
-}
 
 
 class Articles extends React.Component {
   state = {
     user: false,
+    userId: null,
     articles: historyList,
     userInfor: null,
     totalNum: 0,
@@ -92,15 +58,51 @@ class Articles extends React.Component {
     reflectiveExercises: [articles[1], articles[2]]
   }
 
-  firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
-    if (user != null) {
-      await history()
-      await fetchUserInformation()
-      this.setState({ userInfor: userInfor })
+  fetchHistory = async () => {
+    historyList = null
+    totalNum = 0;
+    completedNum = 0
+    let userId = firebase.auth().currentUser.uid
+    await firebase.database().ref('user-complete/' + userId).on('value',async (snapshot) => {
+      if (snapshot.exists()) {
+        historyList = snapshot.val()
+        await this.compareWithArticalURL()
+      } else {
+        historyList = null
+      }
+    })
+  }
+
+  compareWithArticalURL = async () => {
+    firebase.database().ref('ArticleURL').on('value',async (snapshot) => {
+      const urlList = snapshot.val()
+      totalNum = 0
+      completedNum = 0
+      for (let i = 1; i < urlList.length; i++) {
+        totalNum++
+      }
+      historyList = urlList.filter(item => {
+        for (let i = 0; i < historyList.length; i++) {
+          if (item.URL == historyList[i].url) {
+            completedNum++;
+            return true
+          }
+        }
+        return false;
+      });
       this.setState({ articles: historyList==null ? articles : historyList })
       this.setState({ totalNum: totalNum })
       this.setState({ completedNum: completedNum })
       this.setState({ exercisesCompleted: historyList==null ? articles : historyList })
+    })
+  }
+
+  firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
+    if (user != null) {
+      this.state.userId = firebase.auth().currentUser.uid
+      await this.fetchHistory()
+      await fetchUserInformation()
+      this.setState({ userInfor: userInfor })
       this.setState({ exercisesToDo: exercisesToDoGather })
     }
   })
@@ -109,7 +111,10 @@ class Articles extends React.Component {
     this.firebaseFetch()
   }
 
-  componentWillUnmount(){}
+  componentWillUnmount(){
+    let userId = this.state.userId
+    firebase.database().ref('user-complete/' + userId).off()
+  }
 
   renderProduct = (item, index) => {
     const { navigation } = this.props;
