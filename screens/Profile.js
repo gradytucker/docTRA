@@ -53,7 +53,6 @@ const compareWithArticalURL = async () => {
     historyList = urlList.filter(item => {
       for (let i = 0; i < historyList.length; i++) {
         if (item.URL == historyList[i].url) {
-          completedNum++;
           return true
         }
       }
@@ -75,6 +74,7 @@ class Profile extends React.Component {
     if (user != null) {
       await history()
       await fetchUserInformation()
+      completedNum = historyList.length
       this.setState({ userInfor: userInfor })
       this.setState({ articles: historyList })
       this.setState({ completedNum: completedNum })

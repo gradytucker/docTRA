@@ -91,6 +91,7 @@ class Articles extends React.Component {
     exercisesToDo: exerciseToDoGather,
     reflectiveExercises: [articles[1], articles[2]]
   }
+
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
       await history()
@@ -103,6 +104,7 @@ class Articles extends React.Component {
       this.setState({ exercisesToDo: exercisesToDoGather })
     }
   })
+  
   componentDidMount() {
     this.firebaseFetch()
   }
