@@ -53,20 +53,23 @@ class Home extends React.Component {
     exercisesToDo2: [articles[3], articles[4]],
     reflectiveExercises: [articles[1], articles[2]]
   }
+  
+  firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
+    if (user != null) {
+      await fetchArticalList()
+      console.log(newArticleList)
+      console.log(randomList)
+      this.setState({articles: newArticleList})
+      this.setState({exercisesToDo1: [newArticleList[1], newArticleList[2]]})
+      this.setState({exercisesToDo2: [newArticleList[3], newArticleList[4]]})
+      this.setState({reflectiveExercises: [newArticleList[1], newArticleList[2]]})
+    }
+  })
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(async user => {
-      if (user != null) {
-        await fetchArticalList()
-        console.log(newArticleList)
-        console.log(randomList)
-        this.setState({articles: newArticleList})
-        this.setState({exercisesToDo1: [newArticleList[1], newArticleList[2]]})
-        this.setState({exercisesToDo2: [newArticleList[3], newArticleList[4]]})
-        this.setState({reflectiveExercises: [newArticleList[1], newArticleList[2]]})
-      }
-    })
+    this.firebaseFetch()
   }
+
   componentWillUnmount(){}
 
   renderArticles = () => {

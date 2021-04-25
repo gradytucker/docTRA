@@ -29,6 +29,7 @@ var exerciseToDoGather = [];
 var exerciseList = null;
 var userInfor = null;
 var key_count = 0;
+var totalNum = 0;
 
 
 
@@ -90,21 +91,20 @@ class Articles extends React.Component {
     exercisesToDo: exerciseToDoGather,
     reflectiveExercises: [articles[1], articles[2]]
   }
-
+  firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
+    if (user != null) {
+      await history()
+      await fetchUserInformation()
+      this.setState({ userInfor: userInfor })
+      this.setState({ articles: historyList==null ? articles : historyList })
+      this.setState({ totalNum: totalNum })
+      this.setState({ completedNum: completedNum })
+      this.setState({ exercisesCompleted: historyList==null ? articles : historyList })
+      this.setState({ exercisesToDo: exercisesToDoGather })
+    }
+  })
   componentDidMount() {
-    var totalNum = 0;
-    firebase.auth().onAuthStateChanged(async user => {
-      if (user != null) {
-        await history()
-        await fetchUserInformation()
-        this.setState({ userInfor: userInfor })
-        this.setState({ articles: historyList==null ? articles : historyList })
-        this.setState({ totalNum: totalNum })
-        this.setState({ completedNum: completedNum })
-        this.setState({ exercisesCompleted: historyList==null ? articles : historyList })
-        this.setState({ exercisesToDo: exercisesToDoGather })
-      }
-    })
+    this.firebaseFetch()
   }
 
   componentWillUnmount(){}

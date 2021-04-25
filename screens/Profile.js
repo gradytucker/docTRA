@@ -70,17 +70,19 @@ class Profile extends React.Component {
     articles: historyList,
     userInfor: null
   }
+  
+  firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
+    if (user != null) {
+      await history()
+      await fetchUserInformation()
+      this.setState({ userInfor: userInfor })
+      this.setState({ articles: historyList })
+      this.setState({ completedNum: completedNum })
+    }
+  })
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(async user => {
-      if (user != null) {
-        await history()
-        await fetchUserInformation()
-        this.setState({ userInfor: userInfor })
-        this.setState({ articles: historyList })
-        this.setState({ completedNum: completedNum })
-      }
-    })
+    this.firebaseFetch()
   }
 
   componentWillUnmount(){}
