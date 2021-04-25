@@ -46,12 +46,15 @@ class Register extends React.Component {
   }
 
   userCheckIn = () =>{
-    firebase.auth().onAuthStateChanged(user => {
+    let unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if(user != null){
         this.state.hasUser = true
         this.props.navigation.navigate("App")
+      }else{
+        this.state.hasUser = false
       }
     })
+    unsubscribe()
   }
 
   onSignIn = googleUser => {
@@ -123,6 +126,7 @@ class Register extends React.Component {
     this.userCheckIn()
   }
 
+  componentWillUnmount(){}
 
   render() {
     const {navigation} = this.props;

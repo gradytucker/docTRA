@@ -40,7 +40,6 @@ function getRandomIndex(array){
 async function fetchArticalList(){ 
   await firebase.database().ref('ArticleURL').get().then(function(snapshot){
       newArticleList = snapshot.val()
-      console.log(newArticleList)
     })
 }
 
@@ -53,12 +52,10 @@ class Home extends React.Component {
     exercisesToDo2: [articles[3], articles[4]],
     reflectiveExercises: [articles[1], articles[2]]
   }
-  
+
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
       await fetchArticalList()
-      console.log(newArticleList)
-      console.log(randomList)
       this.setState({articles: newArticleList})
       this.setState({exercisesToDo1: [newArticleList[1], newArticleList[2]]})
       this.setState({exercisesToDo2: [newArticleList[3], newArticleList[4]]})

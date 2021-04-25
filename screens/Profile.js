@@ -74,12 +74,20 @@ class Profile extends React.Component {
     if (user != null) {
       await history()
       await fetchUserInformation()
-      completedNum = historyList.length
+      completedNum = historyList == null ? 0 :historyList.length
       this.setState({ userInfor: userInfor })
       this.setState({ articles: historyList })
       this.setState({ completedNum: completedNum })
     }
   })
+
+  signOut = () => {
+    firebase.auth().signOut().then(() => {
+      this.props.navigation.navigate("Account");
+    }).catch((error) => {
+      console.log("error on sign out")
+    });
+  }
 
   componentDidMount() {
     this.firebaseFetch()
@@ -109,6 +117,9 @@ class Profile extends React.Component {
           >
             <FlatList ListHeaderComponent={
               <View style={{ width, marginTop: '25%' }}>
+                <Block style = {styles.signOut}>
+                      <Text bold size={16} colour="#32325D" onPress = {this.signOut}> {'Sign out'} </Text>
+                </Block>
                 <Block flex style={styles.profileCard}>
                   <Block middle style={styles.avatarContainer}>
                     <Image
@@ -161,6 +172,14 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === "android" ? -HeaderHeight : 0,
     // marginBottom: -HeaderHeight * 2,
     flex: 1
+  },
+  signOut:{
+    alignSelf: "flex-end",
+    marginVertical: 0,
+    marginHorizontal:20,
+    backgroundColor: argonTheme.COLORS.WHITE,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#8898AA"
   },
   profileContainer: {
     width: width,

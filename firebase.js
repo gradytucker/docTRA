@@ -11,9 +11,11 @@ const firebaseSetUp = firebase.initializeApp({
     measurementId: "G-Z3K10JX1PS"
 })
 
-firebase.auth().onAuthStateChanged(user => {
+var firebaseLogin = firebase.auth().onAuthStateChanged(user => {
+    
     if (user != null) {
       console.log('We are authenticated now!');
+      console.log(user)
     }else{
         let email = "admin@123.com"
         let password = "123456"
@@ -27,7 +29,7 @@ firebase.auth().onAuthStateChanged(user => {
             eamil:"admin@123.com",
             photoUrl: "https://firebasestorage.googleapis.com/v0/b/doctra-f4f4b.appspot.com/o/doctraLogo.png?alt=media&token=a44d4d6a-a2e3-41a9-979b-c99798b6fd07"
           })
-        console.log("Success")
+        console.log("test_account login")
         // ...
         })
         .catch((error) => {
@@ -35,6 +37,6 @@ firebase.auth().onAuthStateChanged(user => {
         });
     }
 })
+firebaseLogin()
 
-export const auth = firebase.auth()
 export default firebaseSetUp
