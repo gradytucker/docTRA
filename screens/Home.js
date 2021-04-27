@@ -21,7 +21,7 @@ if (now < 12) {
 
 
 var newArticleList = null
-var randomList = getRandomIndex([1,2,3,4,5])
+var randomList = getRandomIndex([1,2,3,4,5,6,7])
 
 function getRandomIndex(array){
     var i = array.length,
@@ -38,8 +38,15 @@ function getRandomIndex(array){
 }
 
 async function fetchArticalList(){ 
-  await firebase.database().ref('ArticleURL').get().then(function(snapshot){
+  await firebase.database().ref('user-modules/' + firebase.auth().currentUser.uid).get().then(async function(snapshot){
+    if(snapshot.exists()){
       newArticleList = snapshot.val()
+    }else{
+      await firebase.database().ref('ArticleURL').get().then(function(snapshot){
+        newArticleList = snapshot.val()
+      })
+      await firebase.database().ref('user-modules/'+ firebase.auth().currentUser.uid).set(newArticleList)
+    }
     })
 }
 
@@ -57,9 +64,9 @@ class Home extends React.Component {
     if (user != null) {
       await fetchArticalList()
       this.setState({articles: newArticleList})
-      this.setState({exercisesToDo1: [newArticleList[1], newArticleList[2]]})
-      this.setState({exercisesToDo2: [newArticleList[3], newArticleList[4]]})
-      this.setState({reflectiveExercises: [newArticleList[1], newArticleList[2]]})
+      this.setState({exercisesToDo1: [newArticleList[randomList[1]], newArticleList[randomList[2]]]})
+      this.setState({exercisesToDo2: [newArticleList[randomList[3]], newArticleList[randomList[4]]]})
+      this.setState({reflectiveExercises: [newArticleList[randomList[1]], newArticleList[randomList[2]]]})
     }
   })
 

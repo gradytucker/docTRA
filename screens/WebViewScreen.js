@@ -70,6 +70,7 @@ class WebViewScreen extends React.Component {
                 { uri: route.params.websiteURL }
             }
             javaScriptEnabled = { true }
+            domStorageEnabled= { true }
             renderLoading = { this.LoadingIndicatorView }
             startInLoadingState = { true }
             ref = {
