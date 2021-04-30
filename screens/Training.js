@@ -63,7 +63,7 @@ class Articles extends React.Component {
     totalNum = 0;
     completedNum = 0
     let userId = firebase.auth().currentUser.uid
-    await firebase.database().ref('user-complete/' + userId).on('value',async (snapshot) => {
+    await firebase.database().ref('user-complete/' + userId).on('value', async (snapshot) => {
       if (snapshot.exists()) {
         historyList = snapshot.val()
         await this.compareWithArticalURL()
@@ -74,7 +74,7 @@ class Articles extends React.Component {
   }
 
   compareWithArticalURL = async () => {
-    firebase.database().ref('ArticleURL').on('value',async (snapshot) => {
+    firebase.database().ref('ArticleURL').on('value', async (snapshot) => {
       const urlList = snapshot.val()
       totalNum = 0
       completedNum = 0
@@ -90,10 +90,10 @@ class Articles extends React.Component {
         }
         return false;
       });
-      this.setState({ articles: historyList==null ? articles : historyList })
+      this.setState({ articles: historyList == null ? articles : historyList })
       this.setState({ totalNum: totalNum })
       this.setState({ completedNum: completedNum })
-      this.setState({ exercisesCompleted: historyList==null ? articles : historyList })
+      this.setState({ exercisesCompleted: historyList == null ? articles : historyList })
     })
   }
 
@@ -106,12 +106,12 @@ class Articles extends React.Component {
       this.setState({ exercisesToDo: exercisesToDoGather })
     }
   })
-  
+
   componentDidMount() {
     this.firebaseFetch()
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     let userId = this.state.userId
     firebase.database().ref('user-complete/' + userId).off()
   }
@@ -178,14 +178,14 @@ class Articles extends React.Component {
           </Text>
           <Block flex center>
             <ProgressCircle
-              percent={((completedNum / totalNum) * 100)}
+              percent={Math.floor((completedNum / totalNum) * 100)}
               radius={80}
               borderWidth={20}
               color="#3399FF"
               shadowColor="#999"
               bgColor="#fff"
             >
-              <Text style={{ fontSize: 18 }}>{((completedNum / totalNum) * 100) + '%'}</Text>
+              <Text style={{ fontSize: 18 }}>{Math.floor((completedNum / totalNum) * 100) + '%'}</Text>
             </ProgressCircle>
             <Text style={{ fontSize: 18 }}>{'\n' + (totalNum - completedNum) + ' modules remaining!'}</Text>
           </Block>

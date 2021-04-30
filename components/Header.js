@@ -12,35 +12,35 @@ const { height, width } = Dimensions.get('window');
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
 
 
-function recordUserCompleteExercise(userId,url){
+function recordUserCompleteExercise(userId, url) {
   var dataList = []
   var updates = {}
-  firebase.database().ref('user-complete/' + userId).get().then(function(snapshot) {
+  firebase.database().ref('user-complete/' + userId).get().then(function (snapshot) {
     if (snapshot.exists()) {
-        dataList = snapshot.val()
-        if (dataList.length <= 100) {
-            dataList = dataList.filter(item => item.url !== url)
-            dataList.push({ url: url })
-            updates['/user-complete/' + userId] = dataList;
-            firebase.database().ref().update(updates);
-        } else {
-            dataList.pop()
-            dataList = dataList.filter(item => item.url !== url)
-            dataList.push({ url: url })
-            updates['/user-complete/' + userId] = dataList;
-            firebase.database().ref().update(updates);
-        }
-    } else {
+      dataList = snapshot.val()
+      if (dataList.length <= 100) {
+        dataList = dataList.filter(item => item.url !== url)
         dataList.push({ url: url })
-        updates['/user-complete/' + userId] = dataList
-        firebase
-            .database()
-            .ref()
-            .update(updates)
+        updates['/user-complete/' + userId] = dataList;
+        firebase.database().ref().update(updates);
+      } else {
+        dataList.pop()
+        dataList = dataList.filter(item => item.url !== url)
+        dataList.push({ url: url })
+        updates['/user-complete/' + userId] = dataList;
+        firebase.database().ref().update(updates);
+      }
+    } else {
+      dataList.push({ url: url })
+      updates['/user-complete/' + userId] = dataList
+      firebase
+        .database()
+        .ref()
+        .update(updates)
     }
-}).catch(function(error) {
+  }).catch(function (error) {
     console.error(error);
-});
+  });
 }
 class Header extends React.Component {
   handleLeftPress = () => {
@@ -50,23 +50,24 @@ class Header extends React.Component {
         "If you have not finished the exercise, it will not be marked as complete.",
         "",
         [
-          { text: "Okay", onPress: () => (console.log("OK Pressed")) },
-          { text: "Leave", onPress: () => (console.log("OK Pressed"), navigation.goBack()) }
+          { text: "Leave", onPress: () => (console.log("OK Pressed"), navigation.goBack()) },
+          { text: "Okay", onPress: () => (console.log("OK Pressed")) }
         ]
       );
     return (title == "Web" ? BackAlert() : navigation.goBack());
   }
 
   handleFinishPress = () => {
-    const { back, title, navigation} = this.props;
-    const url= this.props.scene.__memo[0].params.websiteURL
+    const { back, title, navigation } = this.props;
+    const url = this.props.scene.__memo[0].params.websiteURL
     const FinishAlert = () =>
       Alert.alert(
         "Finished the Exercise?",
         "",
         [
-          { text: "Yes", onPress: () => (recordUserCompleteExercise(firebase.auth().currentUser.uid,url), navigation.goBack()) },
-          { text: "No", onPress: () => console.log("OK Pressed") }
+          { text: "No", onPress: () => console.log("OK Pressed") },
+          { text: "Yes", onPress: () => (recordUserCompleteExercise(firebase.auth().currentUser.uid, url), navigation.navigate("ExerciseRating")) }
+
         ]
       );
     return (FinishAlert());
@@ -91,7 +92,7 @@ class Header extends React.Component {
     }
   }
   render() {
-    const { route,back, title, white, transparent, bgColor, iconColor, titleColor, navigation, ...props } = this.props;
+    const { route, back, title, white, transparent, bgColor, iconColor, titleColor, navigation, ...props } = this.props;
     const noShadow = ['Categories', 'Deals', 'Pro', 'Profile'].includes(title);
     const headerStyles = [
       !noShadow ? styles.shadow : null,
@@ -121,6 +122,7 @@ class Header extends React.Component {
           left={title != 'Home' &&
             title != 'About' &&
             title != 'Training' &&
+            title != 'Exercise Rating' &&
             title != 'Profile' ?
             <Icon
               name={'chevron-left'} family="entypo"
@@ -133,7 +135,7 @@ class Header extends React.Component {
 
           leftStyle={{ paddingTop: iPhoneX ? 25 : 0, flex: 0.4 }}
           titleStyle={[
-            title != 'Home' && title != 'About' && title != 'Training' && title != 'Profile' ? styles.title : styles.titleNav,
+            title != 'Home' && title != 'Exercise Rating' && title != 'About' && title != 'Training' && title != 'Profile' ? styles.title : styles.titleNav,
             { color: argonTheme.COLORS[white ? 'WHITE' : 'HEADER'] },
             titleColor && { color: titleColor }
           ]}

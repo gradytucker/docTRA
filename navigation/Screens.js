@@ -22,6 +22,7 @@ import About from "../screens/About";
 import ResearchArticles from "../screens/ResearchArticles"
 import FAQs from "../screens/FAQs";
 import UserRatingScreen from "../screens/UserRatingScreen";
+import ExerciseRatingScreen from "../screens/ExerciseRatingScreen";
 import WebViewScreen from "../screens/WebViewScreen";
 import TrainingCompleted from "../screens/TrainingCompleted";
 import TrainingReflective from "../screens/TrainingReflective";
@@ -171,6 +172,23 @@ function StarRatingStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="Star Rating" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function ExerciseRatingStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Exercise Rating"
+        component={ExerciseRatingScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Exercise Rating" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
@@ -407,6 +425,7 @@ const DrawerStack = () => {
       <Drawer.Screen name="About" component={AboutStack} />
       <Drawer.Screen name="ResearchArticles" component={ResearchArticleStack} />
       <Drawer.Screen name="StarRating" component={StarRatingStack} />
+      <Drawer.Screen name="ExerciseRating" component={ExerciseRatingStack} />
       <Drawer.Screen name="FAQs" component={FAQStack} />
       <Drawer.Screen name="DownloadableGuides" component={DownloadableGuidesStack} />
       <Drawer.Screen name="WebViewScreen" component={WebViewScreenStack}></Drawer.Screen>
