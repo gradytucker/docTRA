@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -57,7 +57,7 @@ class Profile extends React.Component {
   }
 
   compareWithArticalURL = async () => {
-    await firebase.database().ref('ArticleURL').get().then( (snapshot) => {
+    await firebase.database().ref('ArticleURL').get().then((snapshot) => {
       let urlList = snapshot.val()
       historyList = urlList.filter(item => {
         for (let i = 0; i < historyList.length; i++) {
@@ -67,10 +67,10 @@ class Profile extends React.Component {
         }
         return false
       });
-      
+
       this.setState({ articles: historyList })
-      completedNum = historyList == null ? 0 :historyList.length
-      this.setState({ articles: historyList==null ? articles : historyList })
+      completedNum = historyList == null ? 0 : historyList.length
+      this.setState({ articles: historyList == null ? articles : historyList })
     })
   }
 
@@ -96,14 +96,15 @@ class Profile extends React.Component {
     this.firebaseFetch()
   }
 
-  componentDidUpdate(){}
-  
-  componentWillUnmount(){
+  componentDidUpdate() { }
+
+  componentWillUnmount() {
     let userId = this.state.userId
     completedNum = 0
     historyList = null
-    firebase.database().ref('user-complete/' + userId).off()}
-    
+    firebase.database().ref('user-complete/' + userId).off()
+  }
+
 
   renderCards = () => {
     return (
@@ -127,9 +128,7 @@ class Profile extends React.Component {
           >
             <FlatList ListHeaderComponent={
               <View style={{ width, marginTop: '25%' }}>
-                <Block style = {styles.signOut}>
-                      <Text bold size={16} colour="#32325D" onPress = {this.signOut}> {'Sign out'} </Text>
-                </Block>
+
                 <Block flex style={styles.profileCard}>
                   <Block middle style={styles.avatarContainer}>
                     <Image
@@ -156,6 +155,9 @@ class Profile extends React.Component {
                       <Block style={styles.divider} />
                     </Block>
                     <Block middle>
+                      <Block style={styles.signOut}>
+                        <Text bold size={16} color="#FFFFFF" onPress={this.signOut}> {'Sign out'} </Text>
+                      </Block>
                       <Block>
                         <Text bold size={22} color="#32325D">
                           {'\nRecently Completed Exercises:\n'}
@@ -183,11 +185,14 @@ const styles = StyleSheet.create({
     // marginBottom: -HeaderHeight * 2,
     flex: 1
   },
-  signOut:{
-    alignSelf: "flex-end",
-    marginVertical: 0,
-    marginHorizontal:20,
-    backgroundColor: argonTheme.COLORS.WHITE,
+  signOut: {
+    paddingVertical: 2,
+    paddingHorizontal: 5,
+    borderRadius: 5,
+    alignSelf: "center",
+    marginTop: 70,
+    marginHorizontal: 0,
+    backgroundColor: "#32325D",
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: "#8898AA"
   },
@@ -233,7 +238,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     width: "90%",
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: "#E9ECEF"
   },
   thumb: {
