@@ -13,6 +13,8 @@ import { Block, Text, theme } from "galio-framework";
 //argon
 import { articles, Images, argonTheme } from "../constants";
 import { Card } from "../components";
+import firebase from "firebase";
+import { FlatList } from "react-native-gesture-handler";
 import { Button } from "../components";
 import { color } from "react-native-reanimated";
 import ProgressCircle from 'react-native-progress-circle'
@@ -21,8 +23,98 @@ const { width } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 
+var completedNum = 0;
+var totalNum = 0;
+var historyList = null;
+var incompleteList = null;
+var userInfor = null;
+var key_count = 0;
+var totalNum = 0;
+
 
 class Articles extends React.Component {
+  state = {
+    user: false,
+    userId: null,
+    articles: historyList,
+    userInfor: null,
+    totalNum: 0,
+    exercisesCompleted: articles,
+    exercisesToDo: articles,
+    reflectiveExercises: [articles[1], articles[2]]
+  }
+
+  fetchHistory = async () => {
+    historyList = null
+    totalNum = 0;
+    completedNum = 0
+    let userId = firebase.auth().currentUser.uid
+    await firebase.database().ref('user-complete/' + userId).on('value', async (snapshot) => {
+      if (snapshot.exists()) {
+        historyList = snapshot.val()
+        await this.compareWithArticalURL()
+      } else {
+        historyList = null
+      }
+    })
+  }
+
+
+  compareWithArticalURL = async () => {
+    firebase.database().ref('ArticleURL').on('value', async (snapshot) => {
+      const urlList = snapshot.val()
+      totalNum = 0
+      completedNum = 0
+      for (let i = 1; i < urlList.length; i++) {
+        totalNum++
+      }
+      historyList = urlList.filter(item => {
+        for (let i = 0; i < historyList.length; i++) {
+          if (item.URL == historyList[i].url) {
+            completedNum++;
+            return true
+          }
+        }
+        return false;
+      });
+      this.setState({ totalNum: totalNum })
+      this.setState({ completedNum: completedNum })
+      this.setState({ exercisesCompleted: historyList == null ? articles : historyList })
+      this.setState({
+        exercisesToDo: urlList.filter(item => {
+          for (let j = 0; j < historyList.length; j++) {
+            if (item.URL == historyList[j].URL) {
+              return false
+            }
+          }
+          return true
+        })
+      })
+    })
+  }
+
+
+
+
+
+  firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
+    if (user != null) {
+      this.state.userId = firebase.auth().currentUser.uid
+      await this.fetchHistory()
+      await fetchUserInformation()
+      this.setState({ userInfor: userInfor })
+    }
+  })
+
+  componentDidMount() {
+    this.firebaseFetch()
+  }
+
+  componentWillUnmount() {
+    let userId = this.state.userId
+    firebase.database().ref('user-complete/' + userId).off()
+  }
+
   renderProduct = (item, index) => {
     const { navigation } = this.props;
 
@@ -79,15 +171,13 @@ class Articles extends React.Component {
             networkActivityIndicatorVisible={true}
           />
           <Text bold size={28} color="#32325D">
-            {'\nModules to do:'}
+            {'\nModules To Do:'}
           </Text>
           <Block flex row>
-            <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE }} />
-            <Card item={articles[2]} />
-          </Block>
-          <Block flex row>
-            <Card item={articles[3]} style={{ marginRight: theme.SIZES.BASE }} />
-            <Card item={articles[4]} />
+            <FlatList data={this.state.exercisesToDo}
+              renderItem={({ item }) => <Card item={item} horizontal />}
+              keyExtractor={(item, index) => index.toString()}>
+            </FlatList>
           </Block>
 
         </Block>
