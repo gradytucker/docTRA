@@ -26,6 +26,7 @@ const cardWidth = width - theme.SIZES.BASE * 2;
 var completedNum = 0;
 var totalNum = 0;
 var historyList = null;
+var moduleList = null;
 var incompleteList = null;
 var userInfor = null;
 var key_count = 0;
@@ -53,8 +54,8 @@ class Articles extends React.Component {
     articles: historyList,
     userInfor: null,
     totalNum: 0,
-    exercisesCompleted: articles,
-    exercisesToDo: articles,
+    exercisesCompleted: [],
+    exercisesToDo: [],
     reflectiveExercises: [articles[1], articles[2]]
   }
 
@@ -68,14 +69,23 @@ class Articles extends React.Component {
         historyList = snapshot.val()
         await this.compareWithArticalURL()
       } else {
+        await this.fetchModulesToDo()
         historyList = null
       }
     })
   }
 
+  fetchModulesToDo = async () =>{
+    let userId = firebase.auth().currentUser.uid
+    firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
+        moduleList = snapshot.val()
+        this.setState({ exercisesToDo: moduleList})
+      })
+  }
 
   compareWithArticalURL = async () => {
-    firebase.database().ref('ArticleURL').on('value', async (snapshot) => {
+    let userId = firebase.auth().currentUser.uid
+    firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
       const urlList = snapshot.val()
       totalNum = 0
       completedNum = 0
@@ -91,25 +101,22 @@ class Articles extends React.Component {
         }
         return false;
       });
+
+      moduleList = urlList.filter(item => {
+        for (let j = 0; j < historyList.length; j++) {
+          if (item.URL == historyList[j].URL) {
+            return false
+          }
+        }
+        return true
+      });
+
       this.setState({ totalNum: totalNum })
       this.setState({ completedNum: completedNum })
-      this.setState({ exercisesCompleted: historyList == null ? articles : historyList })
-      this.setState({
-        exercisesToDo: urlList.filter(item => {
-          for (let j = 0; j < historyList.length; j++) {
-            if (item.URL == historyList[j].URL) {
-              return false
-            }
-          }
-          return true
-        })
-      })
+      this.setState({ exercisesCompleted: historyList == null ? null : historyList })
+      this.setState({ exercisesToDo: moduleList})
     })
   }
-
-
-
-
 
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
@@ -127,6 +134,7 @@ class Articles extends React.Component {
   componentWillUnmount() {
     let userId = this.state.userId
     firebase.database().ref('user-complete/' + userId).off()
+    firebase.database().ref('user-modules/' + userId).off()
   }
 
   renderProduct = (item, index) => {

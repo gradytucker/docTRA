@@ -3,9 +3,6 @@ import firebase from "./../firebase";
 import quotes_arr from '../constants/quotes';
 
 
-
-
-
 // read all the information from firebase database
 //set the article information
 

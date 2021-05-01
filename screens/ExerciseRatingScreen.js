@@ -28,6 +28,7 @@ const { width } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
+var index = 0;
 
 const createOneButtonAlert = () =>
   Alert.alert(
@@ -56,22 +57,43 @@ class GeneralStarExample extends React.Component {
       feedbackText: ""
     };
   }
-
-  storeUserFeedback = (userId, textInput, starCount) => {
-    firebase.database().ref('user-feedback/' + userId).get().then(function (snapshot) {
-      if (snapshot.exists()) {
-        feedbackExistAlert();
+  compareWithArticalURL = (url) => {
+    let dataList = []
+    firebase.database().ref('ArticleURL').get().then((snapshot) => {
+      dataList = snapshot.val()
+      for (index = 1; index < dataList.length; index++) {
+        if (url == dataList[index].URL) {
+          return
+        }
       }
-      else {
-        firebase
-          .database()
-          .ref('user-feedback/' + userId)
-          .set({
+    })
+  }
+  storeUserFeedback = (userId, textInput, starCount) => {
+    const url = this.props.route.params.websiteURL
+    let updates = {}
+    let dataList = []
+    this.compareWithArticalURL(url)
+    firebase.database().ref('exercise-rating/' + index).get().then(function (snapshot) {
+        if(snapshot.exists()){
+          dataList = snapshot.val()
+          dataList.push({
+            user: userId,
+            url: url,
             starCount: starCount,
             feedbackText: textInput
-          });
-        createOneButtonAlert();
-      }
+          })
+          updates['/exercise-rating/' + index] = dataList;
+          firebase.database().ref().update(updates);
+        }else{
+          dataList.push({
+            user: userId,
+            url: url,
+            starCount: starCount,
+            feedbackText: textInput
+          })
+          updates['/exercise-rating/' + index] = dataList;
+          firebase.database().ref().update(updates);
+        }
     }).catch(function (error) {
       console.error(error);
     });
@@ -128,6 +150,7 @@ class GeneralStarExample extends React.Component {
                 this.setState({
                   starCount: 0
                 });
+                this.storeUserFeedback(firebase.auth().currentUser.uid,this.state.feedbackText,this.state.starCount)
                 navigation.navigate("tabStack");
               }
               }>submit and finish</Button>

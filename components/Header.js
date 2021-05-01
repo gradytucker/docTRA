@@ -11,6 +11,21 @@ import firebase from "firebase"
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
 
+function compareWithArticalUR(userId, url){
+  let dataList = []
+  firebase.database().ref('user-modules/' + userId).get().then((snapshot) => {
+    dataList = snapshot.val()
+    for (let index = 1; index < dataList.length; index++) {
+      if (url == dataList[index].URL) {
+        firebase.database().ref('user-modules/' + userId + "/" + index).remove().then(function(){
+          console.log(index)
+          console.log("removed!")
+        })
+        return
+      }
+    }
+  })
+}
 
 function recordUserCompleteExercise(userId, url) {
   var dataList = []
@@ -66,7 +81,7 @@ class Header extends React.Component {
         "",
         [
           { text: "No", onPress: () => console.log("OK Pressed") },
-          { text: "Yes", onPress: () => (recordUserCompleteExercise(firebase.auth().currentUser.uid, url), navigation.navigate("ExerciseRating")) }
+          { text: "Yes", onPress: () => (recordUserCompleteExercise(firebase.auth().currentUser.uid, url), navigation.navigate("ExerciseRating",{ screen: "Exercise Rating", params: { websiteURL: url } })) }
 
         ]
       );
