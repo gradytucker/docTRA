@@ -21,33 +21,33 @@ if (now < 12) {
 
 
 var newArticleList = null
-var randomList = getRandomIndex([1,2,3,4,5,6,7])
+var randomList = getRandomIndex([1, 2, 3, 4, 5, 6, 7])
 
-function getRandomIndex(array){
-    var i = array.length,
+function getRandomIndex(array) {
+  var i = array.length,
     j = 0,
     temp;
-    while (i--) {
-      j = Math.floor(Math.random() * (i + 1));
-      // swap randomly chosen element with current element
-      temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
+  while (i--) {
+    j = Math.floor(Math.random() * (i + 1));
+    // swap randomly chosen element with current element
+    temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
   }
-    return array;
+  return array;
 }
 
-async function fetchArticalList(){ 
-  await firebase.database().ref('user-modules/' + firebase.auth().currentUser.uid).get().then(async function(snapshot){
-    if(snapshot.exists()){
+async function fetchArticalList() {
+  await firebase.database().ref('user-modules/' + firebase.auth().currentUser.uid).get().then(async function (snapshot) {
+    if (snapshot.exists()) {
       newArticleList = snapshot.val()
-    }else{
-      await firebase.database().ref('ArticleURL').get().then(function(snapshot){
+    } else {
+      await firebase.database().ref('ArticleURL').get().then(function (snapshot) {
         newArticleList = snapshot.val()
       })
-      await firebase.database().ref('user-modules/'+ firebase.auth().currentUser.uid).set(newArticleList)
+      await firebase.database().ref('user-modules/' + firebase.auth().currentUser.uid).set(newArticleList)
     }
-    })
+  })
 }
 
 class Home extends React.Component {
@@ -63,10 +63,10 @@ class Home extends React.Component {
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
       await fetchArticalList()
-      this.setState({articles: newArticleList})
-      this.setState({exercisesToDo1: [newArticleList[randomList[1]], newArticleList[randomList[2]]]})
-      this.setState({exercisesToDo2: [newArticleList[randomList[3]], newArticleList[randomList[4]]]})
-      this.setState({reflectiveExercises: [newArticleList[randomList[1]], newArticleList[randomList[2]]]})
+      this.setState({ articles: newArticleList })
+      this.setState({ exercisesToDo1: [newArticleList[randomList[1]], newArticleList[randomList[2]]] })
+      this.setState({ exercisesToDo2: [newArticleList[randomList[3]], newArticleList[randomList[4]]] })
+      this.setState({ reflectiveExercises: [newArticleList[randomList[1]], newArticleList[randomList[2]]] })
     }
   })
 
@@ -74,7 +74,7 @@ class Home extends React.Component {
     this.firebaseFetch()
   }
 
-  componentWillUnmount(){}
+  componentWillUnmount() { }
 
   renderArticles = () => {
     return (
@@ -96,7 +96,7 @@ class Home extends React.Component {
           <Text bold size={20} color="#32325D">
             {'\n\nDaily quote'}
           </Text>
-          <Card item={articles[0]} none keyExtractor={(item, index) => index.toString()}/>
+          <Card item={articles[0]} none keyExtractor={(item, index) => index.toString()} />
           <Text bold size={20} color="#32325D"> {'\nCompassion Cartoon'}
           </Text>
           <Block>
@@ -110,11 +110,6 @@ class Home extends React.Component {
           </Text>
           <Block flex row>
             {this.state.exercisesToDo1.map((w) => {
-              return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-            })}
-          </Block>
-          <Block flex row>
-            {this.state.exercisesToDo2.map((w) => {
               return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
             })}
           </Block>

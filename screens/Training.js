@@ -12,6 +12,7 @@ import {
 import { Block, Text, theme } from "galio-framework";
 //argon
 import { articles, Images, argonTheme } from "../constants/";
+const allArticles = articles
 import { Card } from "../components/";
 import { Button } from "../components";
 import { color } from "react-native-reanimated";
@@ -21,12 +22,11 @@ import articleList from "../constants/articles";
 const { width } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
+
 var completedNum = 0;
 var totalNum = 0;
 var historyList = null;
-var exerciseCompleted = null;
-var exerciseToDoGather = [];
-var exerciseList = null;
+var incompleteList = null;
 var userInfor = null;
 var key_count = 0;
 var totalNum = 0;
@@ -54,7 +54,7 @@ class Articles extends React.Component {
     userInfor: null,
     totalNum: 0,
     exercisesCompleted: articles,
-    exercisesToDo: exerciseToDoGather,
+    exercisesToDo: articles,
     reflectiveExercises: [articles[1], articles[2]]
   }
 
@@ -73,6 +73,7 @@ class Articles extends React.Component {
     })
   }
 
+
   compareWithArticalURL = async () => {
     firebase.database().ref('ArticleURL').on('value', async (snapshot) => {
       const urlList = snapshot.val()
@@ -90,12 +91,25 @@ class Articles extends React.Component {
         }
         return false;
       });
-      this.setState({ articles: historyList == null ? articles : historyList })
       this.setState({ totalNum: totalNum })
       this.setState({ completedNum: completedNum })
       this.setState({ exercisesCompleted: historyList == null ? articles : historyList })
+      this.setState({
+        exercisesToDo: urlList.filter(item => {
+          for (let j = 0; j < historyList.length; j++) {
+            if (item.URL == historyList[j].URL) {
+              return false
+            }
+          }
+          return true
+        })
+      })
     })
   }
+
+
+
+
 
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
@@ -103,7 +117,6 @@ class Articles extends React.Component {
       await this.fetchHistory()
       await fetchUserInformation()
       this.setState({ userInfor: userInfor })
-      this.setState({ exercisesToDo: exercisesToDoGather })
     }
   })
 
