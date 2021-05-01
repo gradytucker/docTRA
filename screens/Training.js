@@ -44,9 +44,6 @@ async function fetchUserInformation() {
 
 }
 
-
-
-
 class Articles extends React.Component {
   state = {
     user: false,

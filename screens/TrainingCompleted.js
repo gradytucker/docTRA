@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  View,
   ScrollView,
   StyleSheet,
   Image,
@@ -28,7 +29,7 @@ var incompleteList = null;
 var userInfor = null;
 var key_count = 0;
 var totalNum = 0;
-
+var moduleList = null;
 
 class Articles extends React.Component {
   state = {
@@ -37,7 +38,7 @@ class Articles extends React.Component {
     articles: historyList,
     userInfor: null,
     totalNum: 0,
-    exercisesCompleted: articles,
+    exercisesCompleted: null,
     exercisesToDo: articles,
     reflectiveExercises: [articles[1], articles[2]]
   }
@@ -57,9 +58,9 @@ class Articles extends React.Component {
     })
   }
 
-
   compareWithArticalURL = async () => {
-    firebase.database().ref('ArticleURL').on('value', async (snapshot) => {
+    let userId = firebase.auth().currentUser.uid
+    firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
       const urlList = snapshot.val()
       totalNum = 0
       completedNum = 0
@@ -75,32 +76,28 @@ class Articles extends React.Component {
         }
         return false;
       });
+
+      moduleList = urlList.filter(item => {
+        for (let j = 0; j < historyList.length; j++) {
+          if (item.URL == historyList[j].URL) {
+            return false
+          }
+        }
+        return true
+      });
+
       this.setState({ totalNum: totalNum })
       this.setState({ completedNum: completedNum })
-      this.setState({ exercisesCompleted: historyList == null ? articles : historyList })
-      this.setState({
-        exercisesToDo: urlList.filter(item => {
-          for (let j = 0; j < historyList.length; j++) {
-            if (item.URL == historyList[j].URL) {
-              return false
-            }
-          }
-          return true
-        })
-      })
+      this.setState({ exercisesCompleted: historyList == null ? null : historyList })
+      this.setState({ exercisesToDo: moduleList})
     })
   }
-
-
-
 
 
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
       this.state.userId = firebase.auth().currentUser.uid
       await this.fetchHistory()
-      await fetchUserInformation()
-      this.setState({ userInfor: userInfor })
     }
   })
 
@@ -111,55 +108,12 @@ class Articles extends React.Component {
   componentWillUnmount() {
     let userId = this.state.userId
     firebase.database().ref('user-complete/' + userId).off()
+    firebase.database().ref('user-modules/' + userId).off()
   }
-
-  renderProduct = (item, index) => {
-    const { navigation } = this.props;
-
-    return (
-      <TouchableWithoutFeedback
-        style={{ zIndex: 3 }}
-        key={`product-${item.title}`}
-        onPress={() => navigation.navigate("WebViewScreen", { product: item })}
-      >
-        <Block center style={styles.productItem}>
-          <Image
-            resizeMode="cover"
-            style={styles.productImage}
-            source={{ uri: item.image }}
-          />
-          <Block center style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Text
-              center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.productPrice}
-            >
-              {item.price}
-            </Text>
-            <Text center size={34}>
-              {item.title}
-            </Text>
-            <Text
-              center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.productDescription}
-            >
-              {item.description}
-            </Text>
-          </Block>
-        </Block>
-      </TouchableWithoutFeedback>
-    );
-  };
 
   renderCards = () => {
     return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.articles}>
-
+      <View style={styles.articles}>
         <Block flex>
           <StatusBar
             barStyle="dark-content"     // dark-content, light-content and default
@@ -177,9 +131,8 @@ class Articles extends React.Component {
               keyExtractor={(item, index) => index.toString()}>
             </FlatList>
           </Block>
-
         </Block>
-      </ScrollView>
+      </View>
     )
   }
 
@@ -188,11 +141,8 @@ class Articles extends React.Component {
   render() {
     return (
       <Block flex center>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
-          {this.renderCards()}
-        </ScrollView>
+        <FlatList ListHeaderComponent={this.renderCards()}>
+        </FlatList>
       </Block>
     );
   }
