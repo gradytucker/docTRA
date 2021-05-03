@@ -53,7 +53,6 @@ class Articles extends React.Component {
     totalNum: 0,
     exercisesCompleted: [],
     exercisesToDo: [],
-    reflectiveExercises: [articles[1], articles[2]]
   }
 
   fetchHistory = async () => {
@@ -72,12 +71,12 @@ class Articles extends React.Component {
     })
   }
 
-  fetchModulesToDo = async () =>{
+  fetchModulesToDo = async () => {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
-        moduleList = snapshot.val()
-        this.setState({ exercisesToDo: moduleList})
-      })
+      moduleList = snapshot.val()
+      this.setState({ exercisesToDo: moduleList })
+    })
   }
 
   compareWithArticalURL = async () => {
@@ -111,7 +110,7 @@ class Articles extends React.Component {
       this.setState({ totalNum: totalNum })
       this.setState({ completedNum: completedNum })
       this.setState({ exercisesCompleted: historyList == null ? null : historyList })
-      this.setState({ exercisesToDo: moduleList})
+      this.setState({ exercisesToDo: moduleList })
     })
   }
 
@@ -249,24 +248,6 @@ class Articles extends React.Component {
           <Button small
             style={styles.trainingButton}
             onPress={() => navigation.navigate("TrainingCompleted")}
-          >{"View all >"}</Button>
-          <Text bold size={20} color="#32325D">
-            {'\n\nReflective Exercises:'}
-          </Text>
-          <View style={styles.articles}>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}>
-              <Block flex row>
-                {this.state.reflectiveExercises.map((w) => {
-                  return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                })}
-              </Block>
-            </ScrollView>
-          </View>
-          <Button small
-            style={styles.trainingButton}
-            onPress={() => navigation.navigate("TrainingReflective")}
           >{"View all >"}</Button>
           <Text bold size={20} color="#32325D">
             {'\n'}

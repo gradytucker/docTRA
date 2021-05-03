@@ -40,7 +40,6 @@ class Articles extends React.Component {
     totalNum: 0,
     exercisesCompleted: null,
     exercisesToDo: articles,
-    reflectiveExercises: [articles[1], articles[2]]
   }
 
   fetchHistory = async () => {
@@ -89,7 +88,7 @@ class Articles extends React.Component {
       this.setState({ totalNum: totalNum })
       this.setState({ completedNum: completedNum })
       this.setState({ exercisesCompleted: historyList == null ? null : historyList })
-      this.setState({ exercisesToDo: moduleList})
+      this.setState({ exercisesToDo: moduleList })
     })
   }
 
