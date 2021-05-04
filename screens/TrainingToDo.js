@@ -1,3 +1,14 @@
+{/*THIS IS THE TRAINING TO DO PAGE
+
+on this page is a full list of all exercises that the user has yet to complete, 
+in a flatlist format for the user to scroll down to.
+the users are able to see and keep track of all the exercises they have yet to complete
+thus far. from here they are able to start exercises if they so choose.
+
+
+*/}
+
+
 import React from "react";
 import {
   View,
@@ -45,14 +56,16 @@ class Articles extends React.Component {
     reflectiveExercises: [articles[1], articles[2]]
   }
 
-  fetchModulesToDo = async () =>{
+  /* FETCH MODULES LIST FROM DATABASE */
+  fetchModulesToDo = async () => {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
-        moduleList = snapshot.val()
-        this.setState({ exercisesToDo: moduleList})
-      })
+      moduleList = snapshot.val()
+      this.setState({ exercisesToDo: moduleList })
+    })
   }
 
+  /* FETCH HISTORY LIST FROM DATABASE */
   fetchHistory = async () => {
     historyList = null
     totalNum = 0;
@@ -69,6 +82,7 @@ class Articles extends React.Component {
     })
   }
 
+  /* FETCH HISTORY LIST TO MODULES FROM DATABASE */
   compareWithArticalURL = async () => {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
@@ -100,11 +114,11 @@ class Articles extends React.Component {
       this.setState({ totalNum: totalNum })
       this.setState({ completedNum: completedNum })
       this.setState({ exercisesCompleted: historyList == null ? null : historyList })
-      this.setState({ exercisesToDo: moduleList})
+      this.setState({ exercisesToDo: moduleList })
     })
   }
 
-
+  /* FIREBASE FETCH */
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
       this.state.userId = firebase.auth().currentUser.uid
@@ -112,10 +126,12 @@ class Articles extends React.Component {
     }
   })
 
+  /* MOUNT */
   componentDidMount() {
     this.firebaseFetch()
   }
 
+  /* UNMOUNT */
   componentWillUnmount() {
     let userId = this.state.userId
     firebase.database().ref('user-complete/' + userId).off()
@@ -123,6 +139,7 @@ class Articles extends React.Component {
   }
 
 
+  /* SHOW ALL NECESSARY CARDS */
   renderCards = () => {
     return (
       <View style={styles.articles}>
@@ -150,7 +167,7 @@ class Articles extends React.Component {
   }
 
 
-
+  /* RENDER SCREEN */
   render() {
     return (
       <Block flex center>

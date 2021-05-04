@@ -152,7 +152,7 @@ class Articles extends React.Component {
   }
 
 
-
+  /* RENDER SCREEN */
   render() {
     return (
       <Block flex center>
