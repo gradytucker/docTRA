@@ -1,3 +1,13 @@
+{/*THIS IS THE TRAINING COMPLETED PAGE
+
+on this page is a full list of all exercises that the user has completed, 
+in a flatlist format for the user to scroll down to.
+the users are able to see and keep track of all the exercises they have completed
+thus far. from here they are able to redo exercises if they so choose.
+
+
+*/}
+
 import React from "react";
 import {
   View,
@@ -42,6 +52,7 @@ class Articles extends React.Component {
     exercisesToDo: articles,
   }
 
+  /* FETCH HISTORY LIST FROM DATABASE */
   fetchHistory = async () => {
     historyList = null
     totalNum = 0;
@@ -57,6 +68,7 @@ class Articles extends React.Component {
     })
   }
 
+  /* COMPARE HISTORY LIST WITH MODULES  */
   compareWithArticalURL = async () => {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
@@ -93,6 +105,7 @@ class Articles extends React.Component {
   }
 
 
+  /* FIREBASE FETCH */
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
       this.state.userId = firebase.auth().currentUser.uid
@@ -100,16 +113,19 @@ class Articles extends React.Component {
     }
   })
 
+  /* MOUNT */
   componentDidMount() {
     this.firebaseFetch()
   }
 
+  /* UNMOUNT */
   componentWillUnmount() {
     let userId = this.state.userId
     firebase.database().ref('user-complete/' + userId).off()
     firebase.database().ref('user-modules/' + userId).off()
   }
 
+  /* SHOW ALL COMPLETED CARDS IN FLATLIST FORMAT */
   renderCards = () => {
     return (
       <View style={styles.articles}>
