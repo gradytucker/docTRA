@@ -93,6 +93,8 @@ class Articles extends React.Component {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
       moduleList = snapshot.val()
+      moduleList.shift()
+      totalNum = moduleList.length
       this.setState({ exercisesToDo: moduleList })
     })
   }
@@ -125,7 +127,7 @@ class Articles extends React.Component {
         }
         return true
       });
-
+      console.log(moduleList)
       this.setState({ totalNum: totalNum })
       this.setState({ completedNum: completedNum })
       this.setState({ exercisesCompleted: historyList == null ? null : historyList })
