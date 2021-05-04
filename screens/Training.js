@@ -238,11 +238,18 @@ class Articles extends React.Component {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
-              <Block flex row>
-                {this.state.exercisesCompleted.map((w) => {
-                  return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-                })}
-              </Block>
+              {this.state.exercisesCompleted.length != 0 ?
+                <Block flex row>
+                  {this.state.exercisesCompleted.map((w) => {
+                    return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                  })}
+                </Block>
+                : <Block center style={styles.productImage}>
+                  <Image
+                    style={styles.productImage}
+                    source={require('../assets/imgs/startExercisesIMG.png')}
+                  />
+                </Block>}
             </ScrollView>
           </View>
           <Button small
