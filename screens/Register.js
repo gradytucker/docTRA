@@ -108,6 +108,18 @@ class Register extends React.Component {
     return false;
   }
   
+  isHasUser = (firebaseUser) => {
+    if(firebaseUser){
+      var providerData = firebaseUser.providerData
+      for (var i = 0; i < providerData.length; i++) {
+        if (providerData[i].providerId === firebase.auth.EmailAuthProvider.PROVIDER_ID) {
+          // We don't need to reauth the Firebase connection.
+          return true;
+        }
+      }
+    }
+    return false;
+  }
   // componentDidUpdate(prevState){
   //   if (this.state.hasUser != prevState.hasUser){
   //     this.isHasUser();
@@ -116,10 +128,38 @@ class Register extends React.Component {
   // user state
   state = {
     user: null,
-    name:"",
+    name:"Tester",
     email: "admin@123.com",
     password:"123456",
     hasUser: false
+  }
+
+  createAccount = () =>{
+    let email = this.state.email
+    let password = this.state.password
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      var user = userCredential.user;
+      console.log("created")
+    })
+    .catch((error) => {
+      console.log("error")
+    });
+  }
+
+  signUpAccount = () =>{
+    let email = this.state.email
+    let password = this.state.password
+    firebase.auth().signInWithEmailAndPassword(email, password).then((userCredential) => {
+    // Signed in
+    var user = userCredential.user;
+    this.props.navigation.navigate("App");
+    console.log("Success")
+    // ...
+    })
+    .catch((error) => {
+    console.log("error")
+    });
   }
 
   componentDidMount(){
@@ -154,18 +194,6 @@ class Register extends React.Component {
                   Welcome to docTRA
                 </Text>
                 <Block flex middle>
-                  <Button style={{ ...styles.socialButtons}}>
-                    <Block row>
-                      <Icon
-                        name="logo-github"
-                        family="Ionicon"
-                        size={20}
-                        color={"black"}
-                        style={{ marginTop: 2, marginRight: 5 }}
-                      />
-                      <Text style={styles.socialTextButtons}>GITHUB</Text>
-                    </Block>
-                  </Button>
                   <Block flex middle>
                   <Button style={styles.socialButtons} onPress = {() => {
                       this.signInWithGoogleAsync();
@@ -186,8 +214,99 @@ class Register extends React.Component {
                   </Block>
                 </Block>
               </Block>
+              
               <Block flex>
+              <Block flex={0.17} middle>
+                  <Text color="#8898AA" size={12}>
+                    Or sign up the classic way
+                  </Text>
+                </Block>
                 <Block flex center>
+                <KeyboardAvoidingView
+                    style={{ flex: 1 }}
+                    behavior="padding"
+                    enabled
+                  >
+                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                      <Input
+                        borderless
+                        placeholder="Name"
+                        iconContent={
+                          <Icon
+                            size={16}
+                            color={argonTheme.COLORS.ICON}
+                            name="hat-3"
+                            family="ArgonExtra"
+                            style={styles.inputIcons}
+                          />
+                        }
+                        // change the state value when input information
+                        onChangeText={text => {
+                          this.setState({ name: text });
+                        }}
+                        value = {this.state.name}
+                        // NameTest = {
+                        //   console.log(this.state.name)
+                        // }
+                      />
+                    </Block>
+                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                      <Input
+                        borderless
+                        placeholder="Email"
+                        multiline={false}
+                        iconContent={
+                          <Icon
+                            size={16}
+                            color={argonTheme.COLORS.ICON}
+                            name="ic_mail_24px"
+                            family="ArgonExtra"
+                            style={styles.inputIcons}
+                          />
+                        }
+                        // change the state value when input information
+                        onChangeText={text => {
+                          this.setState({ email: text });
+                        }}
+                        value = {this.state.email}
+                        // eamilTest = {
+                        //   console.log(this.state.email)
+                        // }
+                      />
+                    </Block>
+                    <Block width={width * 0.8}>
+                      <Input
+                        password
+                        borderless
+                        placeholder="Password"
+                        iconContent={
+                          <Icon
+                            size={16}
+                            color={argonTheme.COLORS.ICON}
+                            name="padlock-unlocked"
+                            family="ArgonExtra"
+                            style={styles.inputIcons}
+                          />
+                        }
+                        // change the state value when input information
+                        onChangeText={text => {
+                          this.setState({ password: text });
+                        }}
+                        value = {this.state.password}
+                        // passwordTest = {
+                        //   console.log(this.state.password)
+                        // }
+                      />
+                      <Block row style={styles.passwordCheck}>
+                        <Text size={12} color={argonTheme.COLORS.MUTED}>
+                          password strength:
+                        </Text>
+                        <Text bold size={12} color={argonTheme.COLORS.SUCCESS}>
+                          {" "}
+                          strong
+                        </Text>
+                      </Block>
+                    </Block>
                     <Block row width={width * 0.75}>
                       <Checkbox
                         checkboxStyle={{
@@ -207,6 +326,21 @@ class Register extends React.Component {
                         Privacy Policy
                       </Button>
                     </Block>
+                    <Block middle>
+                      {/* create account button */}
+                    <Button color="primary" style={styles.createButton} onPress = {this.createAccount}>
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          CREATE ACCOUNT
+                        </Text>
+                        {/* sign in button */}
+                    </Button >
+                    <Button color="success" style={styles.createButton} onPress = {this.signUpAccount}>
+                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                         Sign Up
+                        </Text>
+                    </Button>
+                    </Block>
+                  </KeyboardAvoidingView>
                 </Block>
               </Block>
             </Block>
