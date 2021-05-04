@@ -48,7 +48,7 @@ var key_count = 0;
 var totalNum = 0;
 
 
-
+/* FETCH USER INFORMATION FROM DATABASE */
 async function fetchUserInformation() {
   var completedNum = 0;
   let userID = firebase.auth().currentUser.uid
@@ -252,7 +252,7 @@ class Articles extends React.Component {
   }
 
 
-
+  /* RENDER SCREEN */
   render() {
     return (
       <Block flex center>

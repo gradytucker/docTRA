@@ -1,3 +1,18 @@
+{/*THIS IS THE PROFILE PAGE
+
+on this page features the users profile info.
+mainly their name, the number of exercises completed, and 
+a list of all exercises completed.
+due to an adherence to a level of privacy, not much else
+data is stored to be displayed for the user.
+
+this page also features a logout button if the user chooses
+to do so.
+
+
+*/}
+
+
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -24,6 +39,7 @@ var newList = null
 var userInfor = null
 var completedNum = 0;
 
+/* FETCH USER INFORMATION FROM DATABASE */
 async function fetchUserInformation() {
   var completedNum = 0;
   let userID = firebase.auth().currentUser.uid
@@ -44,6 +60,7 @@ class Profile extends React.Component {
     userInfor: null
   }
 
+  /* FETCH HISTORY FROM DATABASE */
   fetchHistory = async () => {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-complete/' + userId).on('value', async (snapshot) => {
@@ -56,6 +73,7 @@ class Profile extends React.Component {
     })
   }
 
+  /* COMPARE HISTORY FROM MODULES FROM DATABASE */
   compareWithArticalURL = async () => {
     await firebase.database().ref('ArticleURL').get().then((snapshot) => {
       let urlList = snapshot.val()
@@ -74,6 +92,7 @@ class Profile extends React.Component {
     })
   }
 
+  /* FIREBASE FETCH */
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
       await this.fetchHistory()
@@ -82,6 +101,7 @@ class Profile extends React.Component {
     }
   })
 
+  /* SIGN OUT FUNCTION */
   signOut = () => {
     this.state.userId = firebase.auth().currentUser.uid
     firebase.auth().signOut().then(() => {
@@ -91,13 +111,14 @@ class Profile extends React.Component {
     });
   }
 
-
+  /* MOUNT */
   componentDidMount() {
     this.firebaseFetch()
   }
 
   componentDidUpdate() { }
 
+  /* UNMOUNT */
   componentWillUnmount() {
     let userId = this.state.userId
     completedNum = 0
@@ -105,7 +126,7 @@ class Profile extends React.Component {
     firebase.database().ref('user-complete/' + userId).off()
   }
 
-
+  /* SHOW CARDS FROM HISTORY LIST (COMPLETED EXERCISES) */
   renderCards = () => {
     return (
       <View style={styles.articles}>
@@ -117,6 +138,7 @@ class Profile extends React.Component {
     );
   };
 
+  /* RENDER PROFILE SCREEN */
   render() {
     return (
       <Block flex style={styles.profile}>
@@ -127,10 +149,11 @@ class Profile extends React.Component {
             imageStyle={styles.profileBackground}
           >
             <FlatList ListHeaderComponent={
-              <View style={{ width, marginTop: '25%' }}>
+              <View style={{ width, marginTop: '30%' }}>
 
                 <Block flex style={styles.profileCard}>
                   <Block middle style={styles.avatarContainer}>
+                    {/* PROFILE IMAGE */}
                     <Image
                       source={this.state.userInfor == null ? { uri: Images.ProfilePicture } : { uri: this.state.userInfor.photoUrl }}
                       style={styles.avatar}
@@ -146,6 +169,7 @@ class Profile extends React.Component {
                     </Block>
                   </Block>
                   <Block flex>
+                    {/* USER NAME */}
                     <Block middle style={styles.nameInfo}>
                       <Text bold size={32} color="#32325D">
                         {this.state.userInfor == null ? "Loading..." : this.state.userInfor.name}
@@ -155,6 +179,7 @@ class Profile extends React.Component {
                       <Block style={styles.divider} />
                     </Block>
                     <Block middle>
+                      {/* SIGN OUT BUTTON */}
                       <Block style={styles.signOut}>
                         <Text bold size={16} color="#FFFFFF" onPress={this.signOut}> {'Sign out'} </Text>
                       </Block>

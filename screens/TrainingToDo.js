@@ -139,7 +139,7 @@ class Articles extends React.Component {
   }
 
 
-  /* SHOW ALL NECESSARY CARDS */
+  /* SHOW ALL TO DO EXERCISE CARDS */
   renderCards = () => {
     return (
       <View style={styles.articles}>
