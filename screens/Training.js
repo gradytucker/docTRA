@@ -316,8 +316,9 @@ const styles = StyleSheet.create({
   },
   productImage: {
     borderRadius: 3,
-    width: (cardWidth - theme.SIZES.BASE - 50) * 0.8,
-    height: (cardWidth - theme.SIZES.BASE - 200) * 0.8,
+    opacity: 0.7,
+    width: (cardWidth - theme.SIZES.BASE) * 0.9,
+    height: (cardWidth - theme.SIZES.BASE - 200) * 0.9,
     alignSelf: "center"
   },
   productPrice: {
