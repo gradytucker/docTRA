@@ -13,10 +13,8 @@ import { Block } from "galio-framework";
 // screens
 import Home from "../screens/Home";
 import Onboarding from "../screens/Onboarding";
-import Pro from "../screens/Pro";
 import Profile from "../screens/Profile";
 import Register from "../screens/Register";
-import Elements from "../screens/Elements";
 import Training from "../screens/Training";
 import About from "../screens/About";
 import ResearchArticles from "../screens/ResearchArticles"
