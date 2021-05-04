@@ -1,3 +1,14 @@
+{/*THIS IS THE HOME PAGE
+
+on this page features the a welcome greeting banner, 
+and various general content for the user to explore.
+we have a randomised daily quote, a cartoon, 
+and some random exercises from the users to do list
+as a queue for them to start a new exercise quickly.
+
+
+*/}
+
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView, StatusBar, Image } from 'react-native';
 import { Block, Text, theme } from "galio-framework";
@@ -8,6 +19,8 @@ const { height, width } = Dimensions.get('screen');
 import firebase from 'firebase'
 import Articles from './Training';
 
+
+{/* THIS NEEDS TO BE FROM THE TO DO LIST, MUST FIX*/ }
 const now = new Date().getHours();
 var message = "hello";
 var key_count = 0;
@@ -37,6 +50,8 @@ function getRandomIndex(array) {
   return array;
 }
 
+
+{/* THIS NEEDS TO BE FROM THE TO DO LIST, MUST FIX*/ }
 async function fetchArticalList() {
   await firebase.database().ref('user-modules/' + firebase.auth().currentUser.uid).get().then(async function (snapshot) {
     if (snapshot.exists()) {
@@ -60,6 +75,7 @@ class Home extends React.Component {
     reflectiveExercises: [articles[1], articles[2]]
   }
 
+  /* firebase fetch*/
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
       await fetchArticalList()
@@ -70,12 +86,14 @@ class Home extends React.Component {
     }
   })
 
+  /* MOUNT */
   componentDidMount() {
     this.firebaseFetch()
   }
 
   componentWillUnmount() { }
 
+  /* RENDER T.O.D GREETING, DAILY QUOTE, CARTOON, EXERCISE QUEUE  */
   renderArticles = () => {
     return (
       <ScrollView
@@ -118,6 +136,7 @@ class Home extends React.Component {
     )
   }
 
+  /* RENDER SCREEN */
   render() {
     return (
       <Block flex center style={styles.home}>
