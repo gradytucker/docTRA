@@ -178,14 +178,14 @@ class Articles extends React.Component {
           </Text>
           <Block flex center>
             <ProgressCircle
-              percent={Math.floor((completedNum / totalNum) * 100)}
+              percent={isNaN(Math.floor((completedNum / totalNum) * 100)) ? 0 : Math.floor((completedNum / totalNum) * 100)}
               radius={80}
               borderWidth={20}
               color="#3399FF"
               shadowColor="#999"
               bgColor="#fff"
             >
-              <Text style={{ fontSize: 18 }}>{Math.floor((completedNum / totalNum) * 100) + '%'}</Text>
+              <Text style={{ fontSize: 18 }}>{isNaN(Math.floor((completedNum / totalNum) * 100)) ? 0 + "%" : Math.floor((completedNum / totalNum) * 100) + '%'}</Text>
             </ProgressCircle>
             <Text style={{ fontSize: 18 }}>{'\n' + (totalNum - completedNum) + ' modules remaining!'}</Text>
           </Block>
