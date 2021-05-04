@@ -1,3 +1,11 @@
+{/*THIS IS THE TRAINING PAGE
+
+on this page features a progress ring, and two horizontal lists of exercises:
+exercisesCompleted and exercisesToDo. 
+
+
+*/}
+
 import React from "react";
 import {
   ScrollView,
@@ -215,7 +223,7 @@ class Articles extends React.Component {
               showsHorizontalScrollIndicator={false}>
               {this.state.exercisesToDo.length != 0 ?
                 <Block flex row>
-                  {this.state.exercisesToDo.map((w) => {
+                  {this.state.exercisesToDo.slice(0, 5).map((w) => {
                     return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
                   })}
                 </Block>
@@ -240,7 +248,7 @@ class Articles extends React.Component {
               showsHorizontalScrollIndicator={false}>
               {this.state.exercisesCompleted.length != 0 ?
                 <Block flex row>
-                  {this.state.exercisesCompleted.map((w) => {
+                  {this.state.exercisesCompleted.slice(0, 5).map((w) => {
                     return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
                   })}
                 </Block>
