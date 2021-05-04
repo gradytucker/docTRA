@@ -1,10 +1,17 @@
 {/*THIS IS THE TRAINING PAGE
 
 on this page features a progress ring, and two horizontal lists of exercises:
-exercisesCompleted and exercisesToDo. 
+exercisesCompleted and exercisesToDo. each preview list has 5 cards, and to view
+all exercises to do, the user clicks "view all", to see all exercises that are 
+either 'to do' or 'done.
+
+the progress ring helps incentivise the user to keep going with their exercises,
+visualising their progress.
 
 
 */}
+
+
 
 import React from "react";
 import {
@@ -63,6 +70,8 @@ class Articles extends React.Component {
     exercisesToDo: [],
   }
 
+
+  /* FETCH HISTORY LIST FROM DATABASE */
   fetchHistory = async () => {
     historyList = null
     totalNum = 0;
@@ -79,6 +88,7 @@ class Articles extends React.Component {
     })
   }
 
+  /* FETCH MODULES TO DO FROM DATABASE */
   fetchModulesToDo = async () => {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
@@ -87,6 +97,7 @@ class Articles extends React.Component {
     })
   }
 
+  /* COMPARE HISTORY LIST WITH MODULES LIST */
   compareWithArticalURL = async () => {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
@@ -122,6 +133,7 @@ class Articles extends React.Component {
     })
   }
 
+  /* START FIREBASE FETCH */
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
       this.state.userId = firebase.auth().currentUser.uid
@@ -135,53 +147,16 @@ class Articles extends React.Component {
     this.firebaseFetch()
   }
 
+  /* UNMOUNT */
   componentWillUnmount() {
     let userId = this.state.userId
     firebase.database().ref('user-complete/' + userId).off()
     firebase.database().ref('user-modules/' + userId).off()
   }
 
-  renderProduct = (item, index) => {
-    const { navigation } = this.props;
 
-    return (
-      <TouchableWithoutFeedback
-        style={{ zIndex: 3 }}
-        key={`product-${item.title}`}
-        onPress={() => navigation.navigate("WebViewScreen", { product: item })}
-      >
-        <Block center style={styles.productItem}>
-          <Image
-            resizeMode="cover"
-            style={styles.productImage}
-            source={{ uri: item.image }}
-          />
-          <Block center style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Text
-              center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.productPrice}
-            >
-              {item.price}
-            </Text>
-            <Text center size={34}>
-              {item.title}
-            </Text>
-            <Text
-              center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.productDescription}
-            >
-              {item.description}
-            </Text>
-          </Block>
-        </Block>
-      </TouchableWithoutFeedback>
-    );
-  };
 
+  /* SHOW ALL REQUIRED CARDS ON SCREEN */
   renderCards = () => {
     const { navigation } = this.props;
 
@@ -221,6 +196,8 @@ class Articles extends React.Component {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
+              {/* SHOW EXERCISES TO DO LIST, FIRST 5 ELEMENTS SLICE. IF NO ELEMENTS
+              IN LIST, SHOW 'COMPLETION' IMAGE */}
               {this.state.exercisesToDo.length != 0 ?
                 <Block flex row>
                   {this.state.exercisesToDo.slice(0, 5).map((w) => {
@@ -246,6 +223,8 @@ class Articles extends React.Component {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
+              {/* SHOW EXERCISESCOMPLETED LIST, FIRST 5 ELEMENTS SLICE. IF NO ELEMENTS
+              IN LIST, SHOW 'START EXERCISES' IMAGE */}
               {this.state.exercisesCompleted.length != 0 ?
                 <Block flex row>
                   {this.state.exercisesCompleted.slice(0, 5).map((w) => {
