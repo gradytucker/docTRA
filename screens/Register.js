@@ -128,7 +128,7 @@ class Register extends React.Component {
   state = {
     user: null,
     name:"Tester",
-    email: "admin@123.com",
+    email: "",
     password:"123456",
     hasUser: false
   }
