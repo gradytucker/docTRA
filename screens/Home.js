@@ -32,57 +32,106 @@ if (now < 12) {
   message = '\nGood Evening!\nHere are some activities:';
 }
 
-
-var newArticleList = null
-var randomList = getRandomIndex([1, 2, 3, 4, 5, 6, 7])
-
-function getRandomIndex(array) {
-  var i = array.length,
-    j = 0,
-    temp;
-  while (i--) {
-    j = Math.floor(Math.random() * (i + 1));
-    // swap randomly chosen element with current element
-    temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
-  return array;
-}
+var completedNum = 0;
+var totalNum = 0;
+var historyList = null;
+var incompleteList = null;
+var userInfor = null;
+var key_count = 0;
+var totalNum = 0;
+var moduleList = null;
 
 
-{/* THIS NEEDS TO BE FROM THE TO DO LIST, MUST FIX*/ }
-async function fetchArticalList() {
-  await firebase.database().ref('user-modules/' + firebase.auth().currentUser.uid).get().then(async function (snapshot) {
-    if (snapshot.exists()) {
-      newArticleList = snapshot.val()
-    } else {
-      await firebase.database().ref('ArticleURL').get().then(function (snapshot) {
-        newArticleList = snapshot.val()
-      })
-      await firebase.database().ref('user-modules/' + firebase.auth().currentUser.uid).set(newArticleList)
-    }
-  })
-}
+
 
 class Home extends React.Component {
 
+
   state = {
     user: false,
-    articles: articles,
-    exercisesToDo1: [articles[1], articles[2]],
-    exercisesToDo2: [articles[3], articles[4]],
+    userId: null,
+    articles: historyList,
+    userInfor: null,
+    totalNum: 0,
+    exercisesCompleted: articles,
+    exercisesToDo: [],
     reflectiveExercises: [articles[1], articles[2]]
   }
 
-  /* firebase fetch*/
+  get_random = (list) => {
+    return list[Math.floor((Math.random() * list.length))];
+  }
+
+
+  /* FETCH MODULES LIST FROM DATABASE */
+  fetchModulesToDo = async () => {
+    let userId = firebase.auth().currentUser.uid
+    firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
+      moduleList = snapshot.val()
+      moduleList.shift()
+      totalNum = moduleList.length
+      this.setState({ exercisesToDo: moduleList })
+    })
+  }
+
+  /* FETCH HISTORY LIST FROM DATABASE */
+  fetchHistory = async () => {
+    historyList = null
+    totalNum = 0;
+    completedNum = 0
+    let userId = firebase.auth().currentUser.uid
+    await firebase.database().ref('user-complete/' + userId).on('value', async (snapshot) => {
+      if (snapshot.exists()) {
+        historyList = snapshot.val()
+        await this.compareWithArticalURL()
+      } else {
+        await this.fetchModulesToDo()
+        historyList = null
+      }
+    })
+  }
+
+  /* FETCH HISTORY LIST TO MODULES FROM DATABASE */
+  compareWithArticalURL = async () => {
+    let userId = firebase.auth().currentUser.uid
+    firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
+      const urlList = snapshot.val()
+      totalNum = 0
+      completedNum = 0
+
+      for (let i = 1; i < urlList.length; i++) {
+        totalNum++
+      }
+      historyList = urlList.filter(item => {
+        for (let i = 0; i < historyList.length; i++) {
+          if (item.URL == historyList[i].url) {
+            completedNum++;
+            return true
+          }
+        }
+        return false;
+      });
+
+      moduleList = urlList.filter(item => {
+        for (let j = 0; j < historyList.length; j++) {
+          if (item.URL == historyList[j].URL) {
+            return false
+          }
+        }
+        return true
+      });
+      this.setState({ totalNum: totalNum })
+      this.setState({ completedNum: completedNum })
+      this.setState({ exercisesCompleted: historyList == null ? null : historyList })
+      this.setState({ exercisesToDo: moduleList })
+    })
+  }
+
+  /* FIREBASE FETCH */
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
-      await fetchArticalList()
-      this.setState({ articles: newArticleList })
-      this.setState({ exercisesToDo1: [newArticleList[randomList[1]], newArticleList[randomList[2]]] })
-      this.setState({ exercisesToDo2: [newArticleList[randomList[3]], newArticleList[randomList[4]]] })
-      this.setState({ reflectiveExercises: [newArticleList[randomList[1]], newArticleList[randomList[2]]] })
+      this.state.userId = firebase.auth().currentUser.uid
+      await this.fetchHistory()
     }
   })
 
@@ -91,7 +140,12 @@ class Home extends React.Component {
     this.firebaseFetch()
   }
 
-  componentWillUnmount() { }
+  /* UNMOUNT */
+  componentWillUnmount() {
+    let userId = this.state.userId
+    firebase.database().ref('user-complete/' + userId).off()
+    firebase.database().ref('user-modules/' + userId).off()
+  }
 
   /* RENDER T.O.D GREETING, DAILY QUOTE, CARTOON, EXERCISE QUEUE  */
   renderArticles = () => {
@@ -127,10 +181,16 @@ class Home extends React.Component {
             {'\nExercises for you'}
           </Text>
           <Block flex row>
-            {this.state.exercisesToDo1.map((w) => {
+            {this.state.exercisesToDo.slice(0, 2).map((w) => {
               return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
             })}
           </Block>
+          <Block flex row>
+            {this.state.exercisesToDo.slice(2, 4).map((w) => {
+              return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+            })}
+          </Block>
+
         </Block>
       </ScrollView>
     )

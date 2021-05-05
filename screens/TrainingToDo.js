@@ -91,7 +91,7 @@ class Articles extends React.Component {
       const urlList = snapshot.val()
       totalNum = 0
       completedNum = 0
-      
+
       for (let i = 1; i < urlList.length; i++) {
         totalNum++
       }
