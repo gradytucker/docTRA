@@ -26,10 +26,9 @@ const config = {
 }
 
 
-
 class Register extends React.Component {
 
-  
+
   signInWithGoogleAsync = async () => {
     try {
       const result = await Google.logInAsync(config);
@@ -134,29 +133,8 @@ class Register extends React.Component {
     hasUser: false
   }
 
-  createAccount = () =>{
-    let email = this.state.email
-    let password = this.state.password
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      var user = userCredential.user;
-      firebase.database().ref('user-information/'+ firebase.auth().currentUser.uid).set({
-        familyName: this.state.name,
-        givenName: this.state.name,
-        name: this.state.name,
-        email: user.email,
-        photoUrl: "https://firebasestorage.googleapis.com/v0/b/doctra-f4f4b.appspot.com/o/doctraLogo.png?alt=media&token=a44d4d6a-a2e3-41a9-979b-c99798b6fd07"
-      });
-      this.props.navigation.navigate("App");
-      console.log("created")
-    })
-    .catch((error) => {
-      console.log("error")
-    });
-  }
-
   signUpAccount = () =>{
-    let email = this.state.email
+    let email = this.state.email + "@tester.com"
     let password = this.state.password
     firebase.auth().signInWithEmailAndPassword(email, password).then((userCredential) => {
     // Signed in
@@ -226,7 +204,7 @@ class Register extends React.Component {
               <Block flex>
               <Block flex={0.17} middle>
                   <Text color="#8898AA" size={12}>
-                    Or sign up the classic way
+                    sign up with ID
                   </Text>
                 </Block>
                 <Block flex center>
@@ -238,30 +216,7 @@ class Register extends React.Component {
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                       <Input
                         borderless
-                        placeholder="Name"
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="hat-3"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                        // change the state value when input information
-                        onChangeText={text => {
-                          this.setState({ name: text });
-                        }}
-                        value = {this.state.name}
-                        // NameTest = {
-                        //   console.log(this.state.name)
-                        // }
-                      />
-                    </Block>
-                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                      <Input
-                        borderless
-                        placeholder="Email"
+                        placeholder="ID"
                         multiline={false}
                         iconContent={
                           <Icon
@@ -281,39 +236,6 @@ class Register extends React.Component {
                         //   console.log(this.state.email)
                         // }
                       />
-                    </Block>
-                    <Block width={width * 0.8}>
-                      <Input
-                        password
-                        borderless
-                        placeholder="Password"
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="padlock-unlocked"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                        // change the state value when input information
-                        onChangeText={text => {
-                          this.setState({ password: text });
-                        }}
-                        value = {this.state.password}
-                        // passwordTest = {
-                        //   console.log(this.state.password)
-                        // }
-                      />
-                      <Block row style={styles.passwordCheck}>
-                        <Text size={12} color={argonTheme.COLORS.MUTED}>
-                          password strength:
-                        </Text>
-                        <Text bold size={12} color={argonTheme.COLORS.SUCCESS}>
-                          {" "}
-                          strong
-                        </Text>
-                      </Block>
                     </Block>
                     <Block row width={width * 0.75}>
                       <Checkbox
@@ -335,13 +257,7 @@ class Register extends React.Component {
                       </Button>
                     </Block>
                     <Block middle>
-                      {/* create account button */}
-                    <Button color="primary" style={styles.createButton} onPress = {this.createAccount}>
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          CREATE ACCOUNT
-                        </Text>
-                        {/* sign in button */}
-                    </Button >
+                    {/* sign in button */}
                     <Button color="success" style={styles.createButton} onPress = {this.signUpAccount}>
                     <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                          Sign Up

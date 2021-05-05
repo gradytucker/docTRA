@@ -40,6 +40,7 @@ var userInfor = null;
 var key_count = 0;
 var totalNum = 0;
 var moduleList = null;
+var newArticleList= null;
 
 
 
@@ -67,10 +68,19 @@ class Home extends React.Component {
   fetchModulesToDo = async () => {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
+      if(snapshot.exists()){
       moduleList = snapshot.val()
       moduleList.shift()
       totalNum = moduleList.length
       this.setState({ exercisesToDo: moduleList })
+      }else{
+          await firebase.database().ref('ArticleURL').get().then(function (snapshot) {
+            newArticleList = snapshot.val()
+          })
+          await firebase.database().ref('user-modules/' + firebase.auth().currentUser.uid).set(newArticleList)
+          newArticleList.shift()
+          this.setState({exercisesToDo: newArticleList})
+      }
     })
   }
 
@@ -95,35 +105,37 @@ class Home extends React.Component {
   compareWithArticalURL = async () => {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
-      const urlList = snapshot.val()
-      totalNum = 0
-      completedNum = 0
-
-      for (let i = 1; i < urlList.length; i++) {
-        totalNum++
+      if(snapshot.exists()){
+        const urlList = snapshot.val()
+        totalNum = 0
+        completedNum = 0
+  
+        for (let i = 1; i < urlList.length; i++) {
+          totalNum++
+        }
+        historyList = urlList.filter(item => {
+          for (let i = 0; i < historyList.length; i++) {
+            if (item.URL == historyList[i].url) {
+              completedNum++;
+              return true
+            }
+          }
+          return false;
+        });
+  
+        moduleList = urlList.filter(item => {
+          for (let j = 0; j < historyList.length; j++) {
+            if (item.URL == historyList[j].URL) {
+              return false
+            }
+          }
+          return true
+        });
+        this.setState({ totalNum: totalNum })
+        this.setState({ completedNum: completedNum })
+        this.setState({ exercisesCompleted: historyList == null ? null : historyList })
+        this.setState({ exercisesToDo: moduleList })
       }
-      historyList = urlList.filter(item => {
-        for (let i = 0; i < historyList.length; i++) {
-          if (item.URL == historyList[i].url) {
-            completedNum++;
-            return true
-          }
-        }
-        return false;
-      });
-
-      moduleList = urlList.filter(item => {
-        for (let j = 0; j < historyList.length; j++) {
-          if (item.URL == historyList[j].URL) {
-            return false
-          }
-        }
-        return true
-      });
-      this.setState({ totalNum: totalNum })
-      this.setState({ completedNum: completedNum })
-      this.setState({ exercisesCompleted: historyList == null ? null : historyList })
-      this.setState({ exercisesToDo: moduleList })
     })
   }
 
