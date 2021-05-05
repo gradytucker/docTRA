@@ -61,8 +61,9 @@ class GeneralStarExample extends React.Component {
     let dataList = []
     firebase.database().ref('ArticleURL').get().then((snapshot) => {
       dataList = snapshot.val()
-      for (index = 1; index < dataList.length; index++) {
-        if (url == dataList[index].URL) {
+      for (let i = 1; i < dataList.length; i++) {
+        if (url == dataList[i].URL) {
+          index = i
           return
         }
       }
@@ -85,6 +86,7 @@ class GeneralStarExample extends React.Component {
           updates['/exercise-rating/' + index] = dataList;
           firebase.database().ref().update(updates);
         }else{
+          dataList = []
           dataList.push({
             user: userId,
             url: url,
