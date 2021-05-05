@@ -20,7 +20,7 @@ import firebase from 'firebase'
 import Articles from './Training';
 
 
-{/* THIS NEEDS TO BE FROM THE TO DO LIST, MUST FIX*/ }
+{/* custom time-based greeting */ }
 const now = new Date().getHours();
 var message = "hello";
 var key_count = 0;
