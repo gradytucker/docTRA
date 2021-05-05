@@ -46,7 +46,9 @@ function ElementsStack(props) {
       <Stack.Screen
         name="Elements"
         component={Elements}
+
         options={{
+          gestureEnabled: false,
           header: ({ navigation, scene }) => (
             <Header title="Elements" navigation={navigation} scene={scene} />
           ),
@@ -64,6 +66,7 @@ function TrainingStack(props) {
         name="Training"
         component={Training}
         options={{
+          gestureEnabled: false,
           header: ({ navigation, scene }) => (
             <Header title="Training" navigation={navigation} scene={scene} />
           ),
@@ -305,6 +308,7 @@ const bottomNavitgationStack = () => {
         name="HomeStack"
         component={HomeStack}
         options={{
+          gestureEnabled: false,
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
@@ -316,6 +320,7 @@ const bottomNavitgationStack = () => {
         name="TrainingStack"
         component={TrainingStack}
         options={{
+          gestureEnabled: false,
           tabBarLabel: 'Exercises',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
@@ -331,6 +336,7 @@ const bottomNavitgationStack = () => {
         name="AboutStack"
         component={AboutStack}
         options={{
+          gestureEnabled: false,
           tabBarLabel: 'About',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
@@ -346,6 +352,7 @@ const bottomNavitgationStack = () => {
         name="ProfileStack"
         component={ProfileStack}
         options={{
+          gestureEnabled: false,
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
@@ -368,7 +375,8 @@ export default function OnboardingStack() {
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
-        option={{
+        options={{
+          gestureEnabled: false,
           headerTransparent: true
         }}
       />
@@ -376,7 +384,7 @@ export default function OnboardingStack() {
       <Stack.Screen name="WebViewScreen" component={WebViewScreenStack}></Stack.Screen>
       <Stack.Screen name="ResearchArticles" component={ResearchArticleStack}></Stack.Screen>
       <Stack.Screen name="Account" component={Register} />
-      <Stack.Screen name="App" component={DrawerStack}></Stack.Screen>
+      <Stack.Screen name="App" options={{ gestureEnabled: false }} component={DrawerStack}></Stack.Screen>
     </Stack.Navigator>
   );
 }
@@ -384,6 +392,9 @@ export default function OnboardingStack() {
 const DrawerStack = () => {
   return (
     <Drawer.Navigator
+
+      edgeWidth={0}
+      options={{ gestureEnabled: false }}
       style={{ flex: 1 }}
       drawerContent={props => <CustomDrawerContent {...props} />}
       drawerStyle={{
@@ -413,20 +424,20 @@ const DrawerStack = () => {
       initialRouteName="Home"
     >
       {/*link to all the screen*/}
-      <Drawer.Screen name="tabStack" component={bottomNavitgationStack} />
-      <Drawer.Screen name="Profile" component={ProfileStack} />
-      <Drawer.Screen name="Elements" component={ElementsStack} />
-      <Drawer.Screen name="Training" component={TrainingStack} />
-      <Drawer.Screen name="TrainingToDo" component={TrainingToDoStack} />
-      <Drawer.Screen name="TrainingCompleted" component={TrainingCompletedStack} />
-      <Drawer.Screen name="TrainingReflective" component={TrainingReflectiveStack} />
-      <Drawer.Screen name="About" component={AboutStack} />
-      <Drawer.Screen name="ResearchArticles" component={ResearchArticleStack} />
-      <Drawer.Screen name="StarRating" component={StarRatingStack} />
-      <Drawer.Screen name="ExerciseRating" component={ExerciseRatingStack} />
-      <Drawer.Screen name="FAQs" component={FAQStack} />
-      <Drawer.Screen name="DownloadableGuides" component={DownloadableGuidesStack} />
-      <Drawer.Screen name="WebViewScreen" component={WebViewScreenStack}></Drawer.Screen>
+      <Drawer.Screen name="tabStack" options={{ gestureEnabled: false }} component={bottomNavitgationStack} />
+      <Drawer.Screen name="Profile" options={{ gestureEnabled: false }} component={ProfileStack} />
+      <Drawer.Screen name="Elements" options={{ gestureEnabled: false }} component={ElementsStack} />
+      <Drawer.Screen name="Training" options={{ gestureEnabled: false }} component={TrainingStack} />
+      <Drawer.Screen name="TrainingToDo" options={{ gestureEnabled: false }} component={TrainingToDoStack} />
+      <Drawer.Screen name="TrainingCompleted" options={{ gestureEnabled: false }} component={TrainingCompletedStack} />
+      <Drawer.Screen name="TrainingReflective" options={{ gestureEnabled: false }} component={TrainingReflectiveStack} />
+      <Drawer.Screen name="About" options={{ gestureEnabled: false }} component={AboutStack} />
+      <Drawer.Screen name="ResearchArticles" options={{ gestureEnabled: false }} component={ResearchArticleStack} />
+      <Drawer.Screen name="StarRating" options={{ gestureEnabled: false }} component={StarRatingStack} />
+      <Drawer.Screen name="ExerciseRating" options={{ gestureEnabled: false }} component={ExerciseRatingStack} />
+      <Drawer.Screen name="FAQs" options={{ gestureEnabled: false }} component={FAQStack} />
+      <Drawer.Screen name="DownloadableGuides" options={{ gestureEnabled: false }} component={DownloadableGuidesStack} />
+      <Drawer.Screen name="WebViewScreen" options={{ gestureEnabled: false }} component={WebViewScreenStack}></Drawer.Screen>
     </Drawer.Navigator>
   );
 }
