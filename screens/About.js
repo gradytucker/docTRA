@@ -71,7 +71,7 @@ class Articles extends React.Component {
         <Block center style={styles.productImage}>
           <Image
             style={styles.productImage}
-            source={require('../assets/imgs/doctraLogo.png')}
+            source={Images.doctraLogo}
           />
         </Block>
         <Block>
