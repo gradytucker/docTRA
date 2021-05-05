@@ -12,7 +12,7 @@ const defaultMenu = [
   { id: 'motocycles', title: 'Motocycles', },
 ];
 
-export default class Tabs extends React.Component {
+class Tabs extends React.Component {
   static defaultProps = {
     data: defaultMenu,
     initialIndex: null,
@@ -68,7 +68,7 @@ export default class Tabs extends React.Component {
       outputRange: [argonTheme.COLORS.BLACK, isActive ? argonTheme.COLORS.WHITE : argonTheme.COLORS.BLACK],
       extrapolate: 'clamp',
     });
-    
+
     const containerStyles = [
       styles.titleContainer,
       !isActive && { backgroundColor: argonTheme.COLORS.SECONDARY },
@@ -157,3 +157,7 @@ const styles = StyleSheet.create({
     color: argonTheme.COLORS.MUTED
   },
 });
+
+
+
+export default Tabs
