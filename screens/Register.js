@@ -73,7 +73,7 @@ class Register extends React.Component {
             familyName: googleUser.user.familyName,
             givenName: googleUser.user.givenName,
             name: googleUser.user.name,
-            eamil:googleUser.user.email,
+            email:googleUser.user.email,
             photoUrl: googleUser.user.photoUrl
           })
           this.props.navigation.navigate("App");
@@ -144,7 +144,7 @@ class Register extends React.Component {
         familyName: this.state.name,
         givenName: this.state.name,
         name: this.state.name,
-        eamil: user.email,
+        email: user.email,
         photoUrl: "https://firebasestorage.googleapis.com/v0/b/doctra-f4f4b.appspot.com/o/doctraLogo.png?alt=media&token=a44d4d6a-a2e3-41a9-979b-c99798b6fd07"
       });
       this.props.navigation.navigate("App");
