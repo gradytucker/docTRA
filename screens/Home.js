@@ -10,7 +10,7 @@ as a queue for them to start a new exercise quickly.
 */}
 
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView, StatusBar, Image } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, StatusBar, Image, TouchableOpacity } from 'react-native';
 import { Block, Text, theme } from "galio-framework";
 import { Card } from '../components';
 import articles from '../constants/articles';
@@ -18,6 +18,7 @@ import { Images } from '../constants';
 const { height, width } = Dimensions.get('screen');
 import firebase from 'firebase'
 import Articles from './Training';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 {/* custom time-based greeting */ }
@@ -40,7 +41,7 @@ var userInfor = null;
 var key_count = 0;
 var totalNum = 0;
 var moduleList = null;
-var newArticleList= null;
+var newArticleList = null;
 
 
 
@@ -68,18 +69,18 @@ class Home extends React.Component {
   fetchModulesToDo = async () => {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
-      if(snapshot.exists()){
-      moduleList = snapshot.val()
-      moduleList.shift()
-      totalNum = moduleList.length
-      this.setState({ exercisesToDo: moduleList })
-      }else{
-          await firebase.database().ref('ArticleURL').get().then(function (snapshot) {
-            newArticleList = snapshot.val()
-          })
-          await firebase.database().ref('user-modules/' + firebase.auth().currentUser.uid).set(newArticleList)
-          newArticleList.shift()
-          this.setState({exercisesToDo: newArticleList})
+      if (snapshot.exists()) {
+        moduleList = snapshot.val()
+        moduleList.shift()
+        totalNum = moduleList.length
+        this.setState({ exercisesToDo: moduleList })
+      } else {
+        await firebase.database().ref('ArticleURL').get().then(function (snapshot) {
+          newArticleList = snapshot.val()
+        })
+        await firebase.database().ref('user-modules/' + firebase.auth().currentUser.uid).set(newArticleList)
+        newArticleList.shift()
+        this.setState({ exercisesToDo: newArticleList })
       }
     })
   }
@@ -105,11 +106,11 @@ class Home extends React.Component {
   compareWithArticalURL = async () => {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
-      if(snapshot.exists()){
+      if (snapshot.exists()) {
         const urlList = snapshot.val()
         totalNum = 0
         completedNum = 0
-  
+
         for (let i = 1; i < urlList.length; i++) {
           totalNum++
         }
@@ -122,7 +123,7 @@ class Home extends React.Component {
           }
           return false;
         });
-  
+
         moduleList = urlList.filter(item => {
           for (let j = 0; j < historyList.length; j++) {
             if (item.URL == historyList[j].URL) {
@@ -180,7 +181,9 @@ class Home extends React.Component {
           <Text bold size={20} color="#32325D">
             {'\n\nDaily quote'}
           </Text>
-          <Card item={articles[0]} none keyExtractor={(item, index) => index.toString()} />
+          <TouchableWithoutFeedback disabled={true}>
+            <Card item={articles[0]} none keyExtractor={(item, index) => index.toString()} />
+          </TouchableWithoutFeedback>
           <Text bold size={20} color="#32325D"> {'\nCompassion Cartoon'}
           </Text>
           <Block>
