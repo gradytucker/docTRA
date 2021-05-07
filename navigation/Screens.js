@@ -399,6 +399,7 @@ export default function OnboardingStack() {
       />
       {/*add the webViewScreen and other screen to stack navigator*/}
       <Stack.Screen name="WebViewScreen" component={WebViewScreenStack}></Stack.Screen>
+      <Stack.Screen name="NonExerciseWebViewScreen" options={{ gestureEnabled: false }} component={nonExerciseWebViewScreenStack} />
       <Stack.Screen name="ResearchArticles" component={ResearchArticleStack}></Stack.Screen>
       <Stack.Screen name="Account" component={Register} />
       <Stack.Screen name="App" options={{ gestureEnabled: false }} component={DrawerStack}></Stack.Screen>
