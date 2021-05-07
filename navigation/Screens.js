@@ -22,8 +22,9 @@ import FAQs from "../screens/FAQs";
 import UserRatingScreen from "../screens/UserRatingScreen";
 import ExerciseRatingScreen from "../screens/ExerciseRatingScreen";
 import WebViewScreen from "../screens/WebViewScreen";
+import nonExerciseWebviewScreen from "../screens/nonExerciseWebviewScreen";
 import TrainingCompleted from "../screens/TrainingCompleted";
-import TrainingReflective from "../screens/TrainingReflective";
+import TrainingRelective from "../screens/TrainingReflective";
 import TrainingToDo from "../screens/TrainingToDo";
 import DownloadableGuides from "../screens/DownloadableGuides";
 
@@ -249,6 +250,22 @@ function WebViewScreenStack(props) {
     <Stack.Screen name="tabStack" component={bottomNavitgationStack}></Stack.Screen>
   </Stack.Navigator>
 }
+
+function nonExerciseWebViewScreenStack(props) {
+  return <Stack.Navigator headerMode="screen">
+    <Stack.Screen
+      //the id of the web browers screen
+      name="nonExerciseWebviewScreen"
+      //webViewScreen js file
+      component={nonExerciseWebviewScreen}
+      options={{
+        header: ({ navigation, scene }) => (<Header title="Article PDF" navigation={navigation} scene={scene} />),
+
+      }} />
+    <Stack.Screen name="tabStack" component={bottomNavitgationStack}></Stack.Screen>
+  </Stack.Navigator>
+}
+
 function ProfileStack(props) {
   return (
     <Stack.Navigator initialRouteName="Profile" mode="card" headerMode="screen">
@@ -437,7 +454,8 @@ const DrawerStack = () => {
       <Drawer.Screen name="ExerciseRating" options={{ gestureEnabled: false }} component={ExerciseRatingStack} />
       <Drawer.Screen name="FAQs" options={{ gestureEnabled: false }} component={FAQStack} />
       <Drawer.Screen name="DownloadableGuides" options={{ gestureEnabled: false }} component={DownloadableGuidesStack} />
-      <Drawer.Screen name="WebViewScreen" options={{ gestureEnabled: false }} component={WebViewScreenStack}></Drawer.Screen>
+      <Drawer.Screen name="NonExerciseWebViewScreen" options={{ gestureEnabled: false }} component={nonExerciseWebViewScreenStack} />
+      <Drawer.Screen name="WebViewScreen" options={{ gestureEnabled: false }} component={WebViewScreenStack} />
     </Drawer.Navigator>
   );
 }

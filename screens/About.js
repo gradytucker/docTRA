@@ -29,7 +29,7 @@ class Articles extends React.Component {
       <TouchableWithoutFeedback
         style={{ zIndex: 3 }}
         key={`product-${item.title}`}
-        onPress={() => navigation.navigate("WebViewScreen", { product: item })}
+        onPress={() => navigation.navigate("nonExerciseWebViewScreen", { product: item })}
       >
         <Block center style={styles.productItem}>
           <Image
