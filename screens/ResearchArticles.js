@@ -27,7 +27,7 @@ class Articles extends React.Component {
       <TouchableWithoutFeedback
         style={{ zIndex: 3 }}
         key={`product-${item.title}`}
-        onPress={() => navigation.navigate("WebViewScreen", { product: item })}
+        onPress={() => navigation.navigate("NonExerciseWebViewScreen", { product: item })}
       >
         <Block center style={styles.productItem}>
           <Image
@@ -71,8 +71,8 @@ class Articles extends React.Component {
           <Text bold size={28} color="#32325D">
             {'\nSome Articles to Read:'}
           </Text>
-          <Card item={ConstantresearchArticles[0]} horizontal />
-          <Card item={ConstantresearchArticles[1]} horizontal />
+          <Card item={ConstantresearchArticles[0]} horizontal nonExercise={true} />
+          <Card item={ConstantresearchArticles[1]} horizontal nonExercise={true} />
           <Block>
           </Block>
         </Block>
