@@ -27,6 +27,7 @@ import TrainingCompleted from "../screens/TrainingCompleted";
 import TrainingRelective from "../screens/TrainingReflective";
 import TrainingToDo from "../screens/TrainingToDo";
 import DownloadableGuides from "../screens/DownloadableGuides";
+import AdminDashboard from "../screens/AdminDashboard";
 
 // drawer
 import CustomDrawerContent from "./Menu";
@@ -157,6 +158,23 @@ function FAQStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="FAQs" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function AdminDashboardStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Admin Dashboard"
+        component={AdminDashboard}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Admin Dashboard" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
@@ -456,6 +474,7 @@ const DrawerStack = () => {
       <Drawer.Screen name="DownloadableGuides" options={{ gestureEnabled: false }} component={DownloadableGuidesStack} />
       <Drawer.Screen name="NonExerciseWebViewScreen" options={{ gestureEnabled: false }} component={NonExerciseWebViewScreenStack} />
       <Drawer.Screen name="WebViewScreen" options={{ gestureEnabled: false }} component={WebViewScreenStack} />
+      <Drawer.Screen name="AdminDashboard" options={{ gestureEnabled: false }} component={AdminDashboardStack} />
     </Drawer.Navigator>
   );
 }

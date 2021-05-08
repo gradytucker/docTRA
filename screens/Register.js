@@ -32,7 +32,7 @@ class Register extends React.Component {
   signInWithGoogleAsync = async () => {
     try {
       const result = await Google.logInAsync(config);
-  
+
       if (result.type === 'success') {
         this.onSignIn(result);
         return result.accessToken;
@@ -44,12 +44,12 @@ class Register extends React.Component {
     }
   }
 
-  userCheckIn = () =>{
+  userCheckIn = () => {
     let unsubscribe = firebase.auth().onAuthStateChanged(user => {
-      if(user != null){
+      if (user != null) {
         this.state.hasUser = true
         this.props.navigation.navigate("App")
-      }else{
+      } else {
         this.state.hasUser = false
       }
     })
@@ -57,22 +57,22 @@ class Register extends React.Component {
   }
 
   onSignIn = googleUser => {
-    console.log("google Auth Response",googleUser)
+    console.log("google Auth Response", googleUser)
     // We need to register an Observer on Firebase Auth to make sure auth is initialized.
     const unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
       unsubscribe()
       // Check if we are already signed-in Firebase with the correct user.
       if (!this.isUserEqual(googleUser, firebaseUser)) {
         // Build Firebase credential with the Google ID token.
-        var credential = firebase.auth.GoogleAuthProvider.credential(googleUser.idToken,googleUser.accessToken)
+        var credential = firebase.auth.GoogleAuthProvider.credential(googleUser.idToken, googleUser.accessToken)
         // Sign in with credential from the Google user.
         firebase.auth().signInWithCredential(credential).then(() => {
           console.log("user sign in")
-          firebase.database().ref('user-information/'+ firebase.auth().currentUser.uid).set({
+          firebase.database().ref('user-information/' + firebase.auth().currentUser.uid).set({
             familyName: googleUser.user.familyName,
             givenName: googleUser.user.givenName,
             name: googleUser.user.name,
-            email:googleUser.user.email,
+            email: googleUser.user.email,
             photoUrl: googleUser.user.photoUrl
           })
           this.props.navigation.navigate("App");
@@ -106,9 +106,9 @@ class Register extends React.Component {
     }
     return false;
   }
-  
+
   isHasUser = (firebaseUser) => {
-    if(firebaseUser){
+    if (firebaseUser) {
       var providerData = firebaseUser.providerData
       for (var i = 0; i < providerData.length; i++) {
         if (providerData[i].providerId === firebase.auth.EmailAuthProvider.PROVIDER_ID) {
@@ -127,35 +127,35 @@ class Register extends React.Component {
   // user state
   state = {
     user: null,
-    name:"Tester",
+    name: "Tester",
     email: "",
-    password:"123456",
+    password: "123456",
     hasUser: false
   }
 
-  signUpAccount = () =>{
+  signUpAccount = () => {
     let email = this.state.email + "@tester.com"
     let password = this.state.password
     firebase.auth().signInWithEmailAndPassword(email, password).then((userCredential) => {
-    // Signed in
-    var user = userCredential.user;
-    this.props.navigation.navigate("App");
-    console.log("Success")
-    // ...
+      // Signed in
+      var user = userCredential.user;
+      this.props.navigation.navigate("App");
+      console.log("Success")
+      // ...
     })
-    .catch((error) => {
-    console.log("error")
-    });
+      .catch((error) => {
+        console.log("error")
+      });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.userCheckIn()
   }
 
-  componentWillUnmount(){}
+  componentWillUnmount() { }
 
   render() {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     return (
       <Block flex middle>
         <StatusBar
@@ -176,39 +176,39 @@ class Register extends React.Component {
           <Block safe flex middle>
             <Block style={styles.registerContainer}>
               <Block flex={0.25} middle style={styles.socialConnect}>
-                <Text color="#ff8282" size={14}>
-                  Welcome to docTRA
+                <Text bold size={16} color="#32325D" >
+                  {"\nWelcome to docTRA"}
                 </Text>
                 <Block flex middle>
                   <Block flex middle>
-                  <Button style={styles.socialButtons} onPress = {() => {
+                    <Button style={styles.socialButtons} onPress={() => {
                       this.signInWithGoogleAsync();
                     }
 
-                  }>
-                    <Block row>
-                      <Icon 
-                        name="logo-google"
-                        family="Ionicon"
-                        size={14}
-                        color={"black"}
-                        style={{ marginTop: 2, marginRight: 5 }}
-                      />
-                      <Text style={styles.socialTextButtons}>GOOGLE</Text>
-                    </Block>
-                  </Button>
+                    }>
+                      <Block row>
+                        <Icon
+                          name="logo-google"
+                          family="Ionicon"
+                          size={14}
+                          color={"black"}
+                          style={{ marginTop: 2, marginRight: 5 }}
+                        />
+                        <Text style={styles.socialTextButtons}>GOOGLE</Text>
+                      </Block>
+                    </Button>
                   </Block>
                 </Block>
               </Block>
-              
+
               <Block flex>
-              <Block flex={0.17} middle>
+                <Block flex={0.17} middle>
                   <Text color="#8898AA" size={12}>
                     sign up with ID
                   </Text>
                 </Block>
                 <Block flex center>
-                <KeyboardAvoidingView
+                  <KeyboardAvoidingView
                     style={{ flex: 1 }}
                     behavior="padding"
                     enabled
@@ -222,7 +222,7 @@ class Register extends React.Component {
                           <Icon
                             size={16}
                             color={argonTheme.COLORS.ICON}
-                            name="ic_mail_24px"
+                            name="padlock-unlocked"
                             family="ArgonExtra"
                             style={styles.inputIcons}
                           />
@@ -231,38 +231,21 @@ class Register extends React.Component {
                         onChangeText={text => {
                           this.setState({ email: text });
                         }}
-                        value = {this.state.email}
-                        // emailTest = {
-                        //   console.log(this.state.email)
-                        // }
+                        value={this.state.email}
+                      // emailTest = {
+                      //   console.log(this.state.email)
+                      // }
                       />
                     </Block>
                     <Block row width={width * 0.75}>
-                      <Checkbox
-                        checkboxStyle={{
-                          borderWidth: 3
-                        }}
-                        color={argonTheme.COLORS.PRIMARY}
-                        label="I agree with the"
-                      />
-                      <Button
-                        style={{ width: 100 }}
-                        color="transparent"
-                        textStyle={{
-                          color: argonTheme.COLORS.PRIMARY,
-                          fontSize: 14
-                        }}
-                      >
-                        Privacy Policy
-                      </Button>
                     </Block>
                     <Block middle>
-                    {/* sign in button */}
-                    <Button color="success" style={styles.createButton} onPress = {this.signUpAccount}>
-                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                         Sign Up
+                      {/* sign in button */}
+                      <Button color="success" style={styles.createButton} onPress={this.signUpAccount}>
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          Sign Up
                         </Text>
-                    </Button>
+                      </Button>
                     </Block>
                   </KeyboardAvoidingView>
                 </Block>

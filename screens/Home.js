@@ -11,7 +11,7 @@ as a queue for them to start a new exercise quickly.
 
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView, StatusBar, Image, TouchableOpacity } from 'react-native';
-import { Block, Text, theme } from "galio-framework";
+import { Block, Text, Button, theme } from "galio-framework";
 import { Card } from '../components';
 import articles from '../constants/articles';
 import { Images } from '../constants';
@@ -52,6 +52,7 @@ class Home extends React.Component {
   state = {
     user: false,
     userId: null,
+    userName: null,
     articles: historyList,
     userInfor: null,
     totalNum: 0,
@@ -105,6 +106,7 @@ class Home extends React.Component {
   /* FETCH HISTORY LIST TO MODULES FROM DATABASE */
   compareWithArticalURL = async () => {
     let userId = firebase.auth().currentUser.uid
+
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
       if (snapshot.exists()) {
         const urlList = snapshot.val()
@@ -144,6 +146,7 @@ class Home extends React.Component {
   firebaseFetch = firebase.auth().onAuthStateChanged(async user => {
     if (user != null) {
       this.state.userId = firebase.auth().currentUser.uid
+      this.state.userName = firebase.auth().currentUser.USER_ID
       await this.fetchHistory()
     }
   })
@@ -162,10 +165,21 @@ class Home extends React.Component {
 
   /* RENDER T.O.D GREETING, DAILY QUOTE, CARTOON, EXERCISE QUEUE  */
   renderArticles = () => {
+    const { navigation } = this.props;
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
+        {this.state.userId == "9Mz7v0DN5YOWlB6s0W4CpYcT0JJ3" ?
+          <Block >
+            <Block style={styles.signOut}>
+              <Text bold size={16} color="#FFFFFF" onPress={() => navigation.navigate("AdminDashboard")}> {'GO TO ADMIN DASHBOARD'} </Text>
+            </Block>
+            <Block style={styles.divider}>
+              <Text bold size={16} color="#000000" > {'          '} </Text>
+            </Block>
+          </Block>
+          : <Text></Text>}
         <Text bold size={28} color="#32325D">
           {message}
         </Text>
@@ -224,6 +238,24 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   home: {
     width: width,
+  },
+  signOut: {
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    alignSelf: "center",
+    marginTop: 40,
+    marginHorizontal: 0,
+    backgroundColor: "#32325D",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#8898AA"
+  },
+  divider: {
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    alignSelf: "center",
+    marginHorizontal: 0,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   articles: {
     width: width - theme.SIZES.BASE * 2,
