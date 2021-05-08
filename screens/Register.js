@@ -170,35 +170,16 @@ class Register extends React.Component {
           networkActivityIndicatorVisible={true}
         />
         <ImageBackground
-          source={Images.RegisterBackground}
+          source={Images.ProfileBackground}
           style={{ width, height, zIndex: 1 }}
         >
           <Block safe flex middle>
             <Block style={styles.registerContainer}>
               <Block flex={0.25} middle style={styles.socialConnect}>
-                <Text bold size={16} color="#32325D" >
+                <Text bold size={26} color="#32325D" >
                   {"\nWelcome to docTRA"}
                 </Text>
-                <Block flex middle>
-                  <Block flex middle>
-                    <Button style={styles.socialButtons} onPress={() => {
-                      this.signInWithGoogleAsync();
-                    }
 
-                    }>
-                      <Block row>
-                        <Icon
-                          name="logo-google"
-                          family="Ionicon"
-                          size={14}
-                          color={"black"}
-                          style={{ marginTop: 2, marginRight: 5 }}
-                        />
-                        <Text style={styles.socialTextButtons}>GOOGLE</Text>
-                      </Block>
-                    </Button>
-                  </Block>
-                </Block>
               </Block>
 
               <Block flex>
@@ -246,6 +227,26 @@ class Register extends React.Component {
                           Sign Up
                         </Text>
                       </Button>
+                      <Block flex middle>
+                        <Block flex middle>
+                          <Button style={styles.socialButtons} onPress={() => {
+                            this.signInWithGoogleAsync();
+                          }
+
+                          }>
+                            <Block row>
+                              <Icon
+                                name="logo-google"
+                                family="Ionicon"
+                                size={14}
+                                color={"black"}
+                                style={{ marginTop: 2, marginRight: 5 }}
+                              />
+                              <Text style={styles.socialTextButtons}>GOOGLE</Text>
+                            </Block>
+                          </Button>
+                        </Block>
+                      </Block>
                     </Block>
                   </KeyboardAvoidingView>
                 </Block>
@@ -261,7 +262,7 @@ class Register extends React.Component {
 const styles = StyleSheet.create({
   registerContainer: {
     width: width * 0.9,
-    height: height * 0.875,
+    height: height * 0.675,
     backgroundColor: "#F4F5F7",
     borderRadius: 4,
     shadowColor: argonTheme.COLORS.BLACK,
