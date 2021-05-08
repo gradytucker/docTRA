@@ -22,10 +22,12 @@ const { width } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 var userList = []
+var userUsage = null;
 class Articles extends React.Component {
 
   state = {
-    userList : null
+    userList : null,
+    userUsage : null
   }
   fetchAllUserInformation = () =>{
     firebase.database().ref('user-information').on('value', async snapshot =>{
@@ -36,7 +38,14 @@ class Articles extends React.Component {
       this.setState({userList:userList})
     })
   }
-
+  fetchSpecifyUserUsage = (userId) =>{
+    firebase.database().ref('user-complete' + userId).on('value', async snapshot =>{
+      if(snapshot.exists()){
+        userUsage = snapshot.val()
+        this.setState({userUsage:userUsage})
+      }
+    })
+  }
   componentDidMount(){
     this.fetchAllUserInformation()
   }
@@ -47,14 +56,16 @@ class Articles extends React.Component {
 
   renderUserUsage = (item) =>{
     return(
-      <TouchableWithoutFeedback onPress={() => navigation.navigate("ResearchArticles")}>
+      <TouchableWithoutFeedback>
         <Block>
           <Block row space="between">
             <Text center
               size={16}
               color={theme.COLORS.MUTED}
               style={styles.title}
-            > {item[1]}</Text>
+            > User_ID: {item[1]}</Text>
+          </Block>
+          <Block>
           </Block>
         </Block>
       </TouchableWithoutFeedback>
