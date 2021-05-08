@@ -1,6 +1,9 @@
 # docTRA
 
 ### Introduction:
+
+  - ADMIN ACCOUNT: ID: aavc
+
   - The aim of this project is to develop a software platform that will assist doctors and those in medical professions to deal and manage their day-to-day emotional stresses. It has been shown in both past attempts and current available strategies that training is critical to a doctor’s professional development and success. However, what makes the effectiveness of doctor training so critical is the fact that the training itself must not be perceived as a burden to those partaking in it, and the purpose of the training must be fully justified and understood by the participants.
 
   - We aim to develop an application platform that provides targeted information to doctors as a supplementary reinforcement tool to their face-to-face training. This application will provide doctors with exercises, videos, guides and reminders relating to their stress and well-being management. The application will provide users the ability to provide and share anonymous feedback, and the effectiveness of the application will be measured via  usage data, triggered use rating and said anonymous feedback.
