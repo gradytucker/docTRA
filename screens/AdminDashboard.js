@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Image,
   ImageBackground,
-  Dimensions
+  Dimensions,
+  TouchableWithoutFeedback
 } from "react-native";
 //galio
 import { Block, Text, theme } from "galio-framework";
@@ -46,18 +47,18 @@ class Articles extends React.Component {
 
   renderUserUsage = (item) =>{
     return(
-      <View style = {styles.articles}>
-        <Block flex>
-        <Text bold size={20} color="#32325D">
-            {'\nUser_ID:'}
-          </Text>
-          <Block flex>
-            <Text bold size={16} color="#32325D"> 
-              {item[1]} 
-            </Text>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate("ResearchArticles")}>
+        <Block>
+          <Block row space="between">
+            <Text center
+              size={16}
+              color={theme.COLORS.MUTED}
+              style={styles.title}
+            > {item[1]}</Text>
           </Block>
-      </Block>
-    </View>
+        </Block>
+      </TouchableWithoutFeedback>
+       
     )
   }
 
@@ -96,10 +97,18 @@ class Articles extends React.Component {
 
 const styles = StyleSheet.create({
   title: {
-    paddingBottom: theme.SIZES.BASE * 2,
-    paddingHorizontal: theme.SIZES.BASE,
-    marginTop: 22,
-    color: argonTheme.COLORS.HEADER
+    paddingBottom: theme.SIZES.BASE,
+    paddingHorizontal: theme.SIZES.BASE * 2,
+    backgroundColor: "white",
+    width: "100%",
+    paddingTop: 20,
+    paddingBottom: 20,
+    marginBottom: 3,
+    fontWeight: "bold",
+    color: argonTheme.COLORS.HEADER,
+    textAlign: "justify",
+    justifyContent: "flex-start",
+    alignItems: "flex-start"
   },
   group: {
     paddingTop: theme.SIZES.BASE
