@@ -2,7 +2,7 @@
 
 ### Introduction:
 
-  - ADMIN ACCOUNT: ID: aavc
+  - ADMIN ACCOUNT: ID: Sime
 
   - The aim of this project is to develop a software platform that will assist doctors and those in medical professions to deal and manage their day-to-day emotional stresses. It has been shown in both past attempts and current available strategies that training is critical to a doctor’s professional development and success. However, what makes the effectiveness of doctor training so critical is the fact that the training itself must not be perceived as a burden to those partaking in it, and the purpose of the training must be fully justified and understood by the participants.
 
