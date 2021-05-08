@@ -11,7 +11,7 @@ const { width } = Dimensions.get('screen');
 the purpose of this js file is open a web page in app when user click article card
 and get the web url send by card component.
 */
-class nonExerciseWebViewScreen extends React.Component {
+class NonExerciseWebViewScreen extends React.Component {
 
     // loading state when open the web page
     LoadingIndicatorView() {
@@ -29,7 +29,7 @@ class nonExerciseWebViewScreen extends React.Component {
     }
     // web render funcion
     render() {
-        const { navigation, route } = this.props;
+        const { route } = this.props;
         //const {websiteURL} = navigation.state.params
         console.log(route)
         return (
@@ -50,4 +50,4 @@ class nonExerciseWebViewScreen extends React.Component {
     }
 }
 
-export default nonExerciseWebViewScreen
+export default NonExerciseWebViewScreen

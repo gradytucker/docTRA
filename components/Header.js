@@ -1,6 +1,6 @@
 import React from 'react';
-import { withNavigation } from '@react-navigation/compat';
-import { TouchableOpacity, Alert, View, TextInput, StyleSheet, Platform, Dimensions } from 'react-native';
+import { withNavigation, StackActions, NavigationActions } from '@react-navigation/compat';
+import { TouchableOpacity, Alert, View, TextInput, StyleSheet, Platform, Dimensions, } from 'react-native';
 import { Button, Block, NavBar, Text, theme } from 'galio-framework';
 
 import Icon from './Icon';
@@ -60,6 +60,15 @@ function recordUserCompleteExercise(userId, url) {
 class Header extends React.Component {
   handleLeftPress = () => {
     const { back, title, navigation } = this.props;
+
+    const resetNonExercise = () => {
+      this.props.navigation.reset({
+        index: 0,
+        routes: [{ name: 'NonExerciseWebviewScreen' }],
+      });
+    }
+
+
     const BackAlert = () =>
       Alert.alert(
         "If you have not finished the exercise, it will not be marked as complete.",
@@ -72,7 +81,9 @@ class Header extends React.Component {
           { text: "Okay", onPress: () => (console.log("OK Pressed")) }
         ]
       );
-    return (title == "Web" ? BackAlert() : navigation.goBack());
+    return (title == "Web" ? BackAlert() :
+      title == "Article PDF" ? (navigation.goBack(), resetNonExercise()) :
+        navigation.goBack());
   }
 
   handleFinishPress = () => {

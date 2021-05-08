@@ -10,7 +10,7 @@ import { argonTheme } from '../constants';
 class Card extends React.Component {
 
   render() {
-    const { navigation, item, horizontal, full, none, style, ctaColor, imageStyle, nonExercise } = this.props;
+    const { navigation, item, horizontal, full, none, style, ctaColor, imageStyle, NonExercise } = this.props;
     const imageStyles = [
       full ? styles.fullImage : styles.horizontalImage,
       none ? styles.noImage : styles.horizontalImage,
@@ -25,13 +25,19 @@ class Card extends React.Component {
     return (
       <Block row={horizontal} card flex style={cardContainer}>
         {/*navigate to the webViewScreen when you click the element */}
-        <TouchableWithoutFeedback onPress={() => nonExercise == true ? navigation.navigate('NonExerciseWebViewScreen', { screen: "nonExerciseWebViewScreen", params: { websiteURL: item.URL } }) : navigation.navigate('WebViewScreen', { screen: "WebViewScreen", params: { websiteURL: item.URL } })}>
+        <TouchableWithoutFeedback onPress={() =>
+          NonExercise == true ?
+            navigation.navigate('NonExerciseWebViewScreen', { screen: "NonExerciseWebviewScreen", params: { websiteURL: item.URL } })
+            : navigation.navigate('WebViewScreen', { screen: "WebViewScreen", params: { websiteURL: item.URL } })}>
           <Block flex style={imgContainer}>
             <Image source={{ uri: item.image }} style={imageStyles} />
           </Block>
         </TouchableWithoutFeedback>
         {/*navigate to the webViewScreen when you click the element */}
-        <TouchableWithoutFeedback onPress={() => nonExercise == true ? navigation.navigate('NonExerciseWebViewScreen', { screen: "nonExerciseWebviewScreen", params: { websiteURL: item.URL } }) : navigation.navigate('WebViewScreen', { screen: "WebViewScreen", params: { websiteURL: item.URL } })}>
+        <TouchableWithoutFeedback onPress={() =>
+          NonExercise == true ?
+            navigation.navigate('NonExerciseWebViewScreen', { screen: "NonExerciseWebviewScreen", params: { websiteURL: item.URL } })
+            : navigation.navigate('WebViewScreen', { screen: "WebViewScreen", params: { websiteURL: item.URL } })}>
           <Block flex space="between" style={styles.cardDescription}>
             <Text size={item.cardStyles == none ? 14 : 25} style={item.cardStyles == none ? styles.cardTitle : styles.noImageTitle}>{item.title}</Text>
             <Text size={12} muted={!ctaColor} color={ctaColor || argonTheme.COLORS.ACTIVE} bold>{item.cta}</Text>
@@ -49,7 +55,7 @@ Card.propTypes = {
   none: PropTypes.bool,
   ctaColor: PropTypes.string,
   imageStyle: PropTypes.any,
-  nonExercise: PropTypes.bool
+  NonExercise: PropTypes.bool
 }
 
 const styles = StyleSheet.create({
