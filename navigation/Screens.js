@@ -28,7 +28,8 @@ import TrainingRelective from "../screens/TrainingReflective";
 import TrainingToDo from "../screens/TrainingToDo";
 import DownloadableGuides from "../screens/DownloadableGuides";
 import AdminDashboard from "../screens/AdminDashboard";
-
+import DashboardUsers from "../screens/DashboardUsers";
+import DashboardExercises from "../screens/DashboardExercises";
 // drawer
 import CustomDrawerContent from "./Menu";
 
@@ -175,6 +176,40 @@ function AdminDashboardStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="Admin Dashboard" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function DashboardExercisesStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="DashboardExercises"
+        component={DashboardExercises}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title=" Exercises" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function DashboardUsersStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="DashboardUSers"
+        component={DashboardUsers}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Users" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
@@ -475,6 +510,8 @@ const DrawerStack = () => {
       <Drawer.Screen name="NonExerciseWebViewScreen" options={{ gestureEnabled: false }} component={NonExerciseWebViewScreenStack} />
       <Drawer.Screen name="WebViewScreen" options={{ gestureEnabled: false }} component={WebViewScreenStack} />
       <Drawer.Screen name="AdminDashboard" options={{ gestureEnabled: false }} component={AdminDashboardStack} />
+      <Drawer.Screen name="DashboardUsers" options={{ gestureEnabled: false }} component={DashboardUsersStack} />
+      <Drawer.Screen name="DashboardExercises" options={{ gestureEnabled: false }} component={DashboardExercisesStack} />
     </Drawer.Navigator>
   );
 }

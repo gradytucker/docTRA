@@ -128,6 +128,7 @@ class Articles extends React.Component {
 
 
   renderfd = (item, index) => {
+
     return (
       <TouchableWithoutFeedback>
         <Block>
@@ -146,31 +147,26 @@ class Articles extends React.Component {
   }
 
   renderCards = () => {
-    const { navigation } = this.props;
+    console.log(this.state.exerciseFeedback)
+    for (let i in this.state.exerciseFeedback) {
+      console.log(i.children)
+    }
     return (
       <View style={styles.articles}>
         <Block flex>
           <Text bold size={28} color="#32325D">
-            {'\nAdmin Dashboard:\n'}
+            {'\nAdmin Dashboard:'}
           </Text>
           <Block>
-
+            <Text bold size={22} color="#32325D">
+              {'\n Usage data:'}
+            </Text>
           </Block>
           <Block flex row>
-            <Text center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.title}
-              onPress={() => navigation.navigate("DashboardUsers")}
-            > see all users </Text>
-          </Block>
-          <Block flex row>
-            <Text center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.title}
-              onPress={() => navigation.navigate("DashboardExercises")}
-            > see exercise ratings </Text>
+            <FlatList data={this.state.userList}
+              renderItem={({ item }) => this.renderUserUsage(item)}
+              keyExtractor={(item, index) => index.toString()}>
+            </FlatList>
           </Block>
         </Block>
       </View>
@@ -195,7 +191,6 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingTop: 20,
     paddingBottom: 20,
-    marginBottom: 5,
     fontWeight: "bold",
     color: argonTheme.COLORS.HEADER,
     textAlign: "justify",

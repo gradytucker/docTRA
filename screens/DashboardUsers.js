@@ -146,31 +146,22 @@ class Articles extends React.Component {
   }
 
   renderCards = () => {
-    const { navigation } = this.props;
     return (
       <View style={styles.articles}>
         <Block flex>
           <Text bold size={28} color="#32325D">
-            {'\nAdmin Dashboard:\n'}
+            {'\nAdmin Dashboard:'}
           </Text>
           <Block>
-
+            <Text bold size={22} color="#32325D">
+              {'\n All users:\n'}
+            </Text>
           </Block>
           <Block flex row>
-            <Text center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.title}
-              onPress={() => navigation.navigate("DashboardUsers")}
-            > see all users </Text>
-          </Block>
-          <Block flex row>
-            <Text center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.title}
-              onPress={() => navigation.navigate("DashboardExercises")}
-            > see exercise ratings </Text>
+            <FlatList data={this.state.userList}
+              renderItem={({ item }) => this.renderUserUsage(item)}
+              keyExtractor={(item, index) => index.toString()}>
+            </FlatList>
           </Block>
         </Block>
       </View>
