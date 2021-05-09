@@ -36,7 +36,6 @@ class Articles extends React.Component {
     exerciseFeedback: null
   }
 
-
   compareAndMatchArticalData = async (userUsage) =>{
     await firebase.database().ref('ArticleURL').get().then((snapshot) =>{
       allArticleData = snapshot.val()
@@ -52,13 +51,13 @@ class Articles extends React.Component {
         for(let j = 0; j < userUsageWithFullData[i][1].length; j++){
           if(item.URL == userUsageWithFullData[i][1][j].url){
             return true
-          }else{
-            return false
           }
         }
+        return false
       })
     }
     this.setState({userUsageWithFullData:userUsageWithFullData})
+    console.log(this.state.userUsageWithFullData)
   }
   
   fetchUserComment = async () =>{
@@ -66,7 +65,6 @@ class Articles extends React.Component {
       if(snapshot.exists()){
         exerciseFeedback = snapshot.val()
         this.setState({exerciseFeedback:exerciseFeedback})
-        console.log(this.state.exerciseFeedback)
       }else{
         exerciseFeedback = null
       }
