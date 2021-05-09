@@ -23,51 +23,13 @@ const { width } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 var userList = []
-var userUsage = null;
-var userUsageWithFullData = [];
-var allArticleData = []
-var exerciseFeedback = null;
+
+
 class Articles extends React.Component {
 
   state = {
     userList: null,
-    userUsage: null,
-    userUsageWithFullData: null,
-    exerciseFeedback: null
-  }
-
-  compareAndMatchArticalData = async (userUsage) => {
-    await firebase.database().ref('ArticleURL').get().then((snapshot) => {
-      allArticleData = snapshot.val()
-      allArticleData.shift()
-    })
-
-    for (let i in userUsage) {
-      userUsageWithFullData.push([i, userUsage[i]])
-    }
-
-    for (let i in userUsageWithFullData) {
-      userUsageWithFullData[i][1] = allArticleData.filter(item => {
-        for (let j = 0; j < userUsageWithFullData[i][1].length; j++) {
-          if (item.URL == userUsageWithFullData[i][1][j].url) {
-            return true
-          }
-        }
-        return false
-      })
-    }
-    this.setState({ userUsageWithFullData: userUsageWithFullData })
-  }
-
-  fetchUserComment = async () => {
-    firebase.database().ref('exercise-rating').on('value', snapshot => {
-      if (snapshot.exists()) {
-        exerciseFeedback = snapshot.val()
-        this.setState({ exerciseFeedback: exerciseFeedback })
-      } else {
-        exerciseFeedback = null
-      }
-    })
+  
   }
 
   fetchAllUserInformation = async () => {
@@ -80,32 +42,15 @@ class Articles extends React.Component {
     this.setState({ userList: userList })
   }
 
-  fetchAllUserUsage = async () => {
-    firebase.database().ref('user-complete').on('value', snapshot => {
-      if (snapshot.exists()) {
-        userUsage = snapshot.val()
-        this.setState({ userUsage: userUsage })
-        this.compareAndMatchArticalData(userUsage)
-      } else {
-        userUsage = null
-      }
-    })
-  }
-
   fetchFirebase = async () => {
     this.fetchAllUserInformation()
-    await this.fetchAllUserUsage()
-    await this.fetchUserComment()
   }
 
   componentDidMount() {
     this.fetchFirebase()
   }
 
-  componentWillUnmount() {
-    firebase.database().ref('user-complete').off()
-    firebase.database().ref('exercise-rating').off()
-  }
+  componentWillUnmount() {}
 
   renderUserUsage = (item, index) => {
     return (

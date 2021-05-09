@@ -17,6 +17,7 @@ import FAQresponses from '../constants/FAQresponses';
 import { Card } from "../components";
 import { FlatList } from "react-native-gesture-handler";
 import firebase from "firebase";
+import articleList from "../constants/articles";
 
 const { width } = Dimensions.get("screen");
 
@@ -26,14 +27,14 @@ var userList = []
 var userUsage = null;
 var userUsageWithFullData = [];
 var allArticleData = []
-var exerciseFeedback = null;
+var exerciseFeedback = [];
 class Articles extends React.Component {
 
   state = {
     userList: null,
     userUsage: null,
     userUsageWithFullData: null,
-    exerciseFeedback: null
+    exerciseFeedback: null,
   }
 
   compareAndMatchArticalData = async (userUsage) => {
@@ -55,17 +56,26 @@ class Articles extends React.Component {
         }
         return false
       })
+      
+      for(let j in this.state.exerciseFeedback){
+        if(this.state.exerciseFeedback[j][0] == userUsageWithFullData[i][0]){
+          userUsageWithFullData[i].push(this.state.exerciseFeedback[j][1])
+        }
+      }
     }
     this.setState({ userUsageWithFullData: userUsageWithFullData })
   }
 
   fetchUserComment = async () => {
+    let dataList = null
+    exerciseFeedback = []
     firebase.database().ref('exercise-rating').on('value', snapshot => {
       if (snapshot.exists()) {
-        exerciseFeedback = snapshot.val()
-        this.setState({ exerciseFeedback: exerciseFeedback })
-      } else {
-        exerciseFeedback = null
+        dataList = snapshot.val()
+        for(let i in dataList){
+          exerciseFeedback.push([i,dataList[i]])
+        }
+        this.setState({ exerciseFeedback: exerciseFeedback})
       }
     })
   }
@@ -94,43 +104,75 @@ class Articles extends React.Component {
 
   fetchFirebase = async () => {
     this.fetchAllUserInformation()
-    await this.fetchAllUserUsage()
     await this.fetchUserComment()
+    await this.fetchAllUserUsage()
   }
 
   componentDidMount() {
     this.fetchFirebase()
   }
-
+  
   componentWillUnmount() {
     firebase.database().ref('user-complete').off()
     firebase.database().ref('exercise-rating').off()
   }
 
-  renderUserUsage = (item, index) => {
+
+  renderList = (item, exerciseData) =>{
+    let newData = []
+    for(let i in exerciseData){
+      newData.push([i,exerciseData[i]])
+    }
+    for(let i in newData){
+      if(newData[i][1].url == item.URL){
+        item.title = "Star: " + newData[i][1].starCount + "\n" + "Comment: " + newData[i][1].feedbackText
+      }
+    }
     return (
-      <TouchableWithoutFeedback>
-        <Block>
-          <Block row space="between">
+      <Card item = { item } style={{ marginRight: theme.SIZES.BASE, width: 200 }}></Card>
+    );
+  }
+
+  renderUserUsage = (item, index) => {
+    let userId = item[0]
+    let userdata = []
+    let exerciseData = null
+    let data = null
+    if(this.state.userUsageWithFullData != null){
+      userdata = this.state.userUsageWithFullData.filter(item =>{
+        if(item[0] == userId){
+          data = item[1]
+          exerciseData = item[2]
+          return true
+        }
+        return false
+      })
+    }
+    return (
+          <Block flex>
             <Text center
               size={16}
               color={theme.COLORS.MUTED}
               style={styles.title}
-            > ID: {item[2]} {"\n"} Name: {item[1]}</Text>
+            > ID: {item[2]} {"\n"} Name: {item[1]}
+            </Text>
+            <Block flex row>
+              <FlatList 
+                horizontal = { true }
+                data= {data}
+                renderItem={({ item }) => this.renderList(item, exerciseData) }
+                keyExtractor={(item, index) => index.toString()}
+              >
+              </FlatList>
+              </Block>
           </Block>
-
-        </Block>
-      </TouchableWithoutFeedback>
-
     )
   }
 
 
 
   renderfd = (item, index) => {
-
     return (
-      <TouchableWithoutFeedback>
         <Block>
           <Block row space="between">
             <Text center
@@ -141,16 +183,10 @@ class Articles extends React.Component {
           </Block>
 
         </Block>
-      </TouchableWithoutFeedback>
-
     )
   }
 
   renderCards = () => {
-    console.log(this.state.exerciseFeedback)
-    for (let i in this.state.exerciseFeedback) {
-      console.log(i.children)
-    }
     return (
       <View style={styles.articles}>
         <Block flex>
@@ -185,17 +221,17 @@ class Articles extends React.Component {
 
 const styles = StyleSheet.create({
   title: {
-    paddingBottom: theme.SIZES.BASE,
-    paddingHorizontal: theme.SIZES.BASE * 2,
-    backgroundColor: "white",
-    width: "100%",
-    paddingTop: 20,
-    paddingBottom: 20,
-    fontWeight: "bold",
-    color: argonTheme.COLORS.HEADER,
-    textAlign: "justify",
-    justifyContent: "flex-start",
-    alignItems: "flex-start"
+    padding: theme.SIZES.BASE,
+    marginHorizontal: theme.SIZES.BASE,
+    marginTop: 65,
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
+    backgroundColor: theme.COLORS.WHITE,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 8,
+    shadowOpacity: 0.2,
+    zIndex: 2
   },
   subtext: {
     paddingBottom: theme.SIZES.BASE,
