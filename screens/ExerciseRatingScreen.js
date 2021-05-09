@@ -72,29 +72,27 @@ class GeneralStarExample extends React.Component {
   storeUserFeedback = (userId, textInput, starCount) => {
     const url = this.props.route.params.websiteURL
     let updates = {}
-    let dataList = []
+    let data = null
     this.compareWithArticalURL(url)
-    firebase.database().ref('exercise-rating/' + index).get().then(function (snapshot) {
+    firebase.database().ref('exercise-rating/' + userId).get().then(function (snapshot) {
         if(snapshot.exists()){
-          dataList = snapshot.val()
-          dataList.push({
-            user: userId,
+          data = {
+            Articles_id: index,
             url: url,
             starCount: starCount,
             feedbackText: textInput
-          })
-          updates['/exercise-rating/' + index] = dataList;
+          }
+          updates['/exercise-rating/' + userId + "/" + index] = data
           firebase.database().ref().update(updates);
         }else{
-          dataList = []
-          dataList.push({
-            user: userId,
+          data = null
+          data = {
+            Articles_id: index,
             url: url,
             starCount: starCount,
             feedbackText: textInput
-          })
-          updates['/exercise-rating/' + index] = dataList;
-          firebase.database().ref().update(updates);
+          }
+          firebase.database().ref('/exercise-rating/' + userId + "/" + index).set(data);
         }
     }).catch(function (error) {
       console.error(error);

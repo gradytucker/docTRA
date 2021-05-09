@@ -6,7 +6,8 @@ import {
   Image,
   ImageBackground,
   Dimensions,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  RecyclerViewBackedScrollViewComponent
 } from "react-native";
 //galio
 import { Block, Text, theme } from "galio-framework";
@@ -23,35 +24,90 @@ const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 var userList = []
 var userUsage = null;
+var userUsageWithFullData = [];
+var allArticleData = []
+var exerciseFeedback = null;
 class Articles extends React.Component {
 
   state = {
     userList : null,
-    userUsage : null
+    userUsage : null,
+    userUsageWithFullData: null,
+    exerciseFeedback: null
   }
-  fetchAllUserInformation = () =>{
-    firebase.database().ref('user-information').on('value', async snapshot =>{
+
+
+  compareAndMatchArticalData = async (userUsage) =>{
+    await firebase.database().ref('ArticleURL').get().then((snapshot) =>{
+      allArticleData = snapshot.val()
+      allArticleData.shift()
+    })
+
+    for (let i in userUsage){
+      userUsageWithFullData.push([i,userUsage[i]])
+    }
+
+    for (let i in userUsageWithFullData){
+      userUsageWithFullData[i][1] = allArticleData.filter(item =>{
+        for(let j = 0; j < userUsageWithFullData[i][1].length; j++){
+          if(item.URL == userUsageWithFullData[i][1][j].url){
+            return true
+          }else{
+            return false
+          }
+        }
+      })
+    }
+    this.setState({userUsageWithFullData:userUsageWithFullData})
+  }
+  
+  fetchUserComment = async () =>{
+    firebase.database().ref('exercise-rating').on('value',snapshot =>{
+      if(snapshot.exists()){
+        exerciseFeedback = snapshot.val()
+        this.setState({exerciseFeedback:exerciseFeedback})
+        console.log(this.state.exerciseFeedback)
+      }else{
+        exerciseFeedback = null
+      }
+    })
+  }
+
+  fetchAllUserInformation = async () =>{
+    await firebase.database().ref('user-information').once("value").then(snapshot =>{
       let dataList = snapshot.val()
       for(let i in dataList){
         userList.push([i,dataList[i].name])
       }
-      this.setState({userList:userList})
     })
+    this.setState({userList:userList})
   }
-  fetchSpecifyUserUsage = (userId) =>{
-    firebase.database().ref('user-complete' + userId).on('value', async snapshot =>{
+
+  fetchAllUserUsage = async () =>{
+    firebase.database().ref('user-complete').on('value',snapshot =>{
       if(snapshot.exists()){
         userUsage = snapshot.val()
         this.setState({userUsage:userUsage})
+        this.compareAndMatchArticalData(userUsage)
+      }else{
+        userUsage = null
       }
     })
   }
-  componentDidMount(){
+
+  fetchFirebase = async () => {
     this.fetchAllUserInformation()
+    await this.fetchAllUserUsage()
+    await this.fetchUserComment()
+  }
+
+  componentDidMount(){
+    this.fetchFirebase()
   }
 
   componentWillUnmount(){
-    firebase.database().ref('user-information').off()
+    firebase.database().ref('user-complete').off()
+    firebase.database().ref('exercise-rating').off()
   }
 
   renderUserUsage = (item) =>{
@@ -64,8 +120,6 @@ class Articles extends React.Component {
               color={theme.COLORS.MUTED}
               style={styles.title}
             > User_ID: {item[1]}</Text>
-          </Block>
-          <Block>
           </Block>
         </Block>
       </TouchableWithoutFeedback>
