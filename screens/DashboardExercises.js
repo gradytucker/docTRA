@@ -40,7 +40,6 @@ class Articles extends React.Component {
   compareAndMatchArticalData = async (userUsage) => {
     await firebase.database().ref('ArticleURL').get().then((snapshot) => {
       allArticleData = snapshot.val()
-      allArticleData.shift()
     })
 
     for (let i in userUsage) {

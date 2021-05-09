@@ -57,7 +57,7 @@ class GeneralStarExample extends React.Component {
       feedbackText: ""
     };
   }
-  compareWithArticalURL = (url) => {
+  compareWithArticalURL = async (url) => {
     let dataList = []
     firebase.database().ref('ArticleURL').get().then((snapshot) => {
       dataList = snapshot.val()
@@ -69,11 +69,11 @@ class GeneralStarExample extends React.Component {
       }
     })
   }
-  storeUserFeedback = (userId, textInput, starCount) => {
+  storeUserFeedback = async (userId, textInput, starCount) => {
     const url = this.props.route.params.websiteURL
     let updates = {}
     let data = null
-    this.compareWithArticalURL(url)
+    await this.compareWithArticalURL(url)
     firebase.database().ref('exercise-rating/' + userId).get().then(function (snapshot) {
         if(snapshot.exists()){
           data = {
