@@ -117,19 +117,24 @@ class Articles extends React.Component {
     firebase.database().ref('exercise-rating').off()
   }
 
-
   renderList = (item, exerciseData) =>{
     let newData = []
+    let newItem = null
+    // console.log(exerciseData)
     for(let i in exerciseData){
       newData.push([i,exerciseData[i]])
     }
     for(let i in newData){
       if(newData[i][1].url == item.URL){
-        item.title = "Star: " + newData[i][1].starCount + "\n" + "Comment: " + newData[i][1].feedbackText
+        newItem = {
+          title:"Star: " + newData[i][1].starCount + "\n" + "Comment: " + newData[i][1].feedbackText,
+          image: item.image,
+          url: item.URL
+        }
       }
     }
     return (
-      <Card item = { item } style={{ marginRight: theme.SIZES.BASE, width: 200 }}></Card>
+      <Card item = { newItem == null ? item : newItem } style={{ marginRight: theme.SIZES.BASE, width: 200 }}></Card>
     );
   }
 
@@ -142,7 +147,11 @@ class Articles extends React.Component {
       userdata = this.state.userUsageWithFullData.filter(item =>{
         if(item[0] == userId){
           data = item[1]
-          exerciseData = item[2]
+          if(item.length == 3){
+            exerciseData = item[2]
+          }else{
+            exerciseData = null
+          }
           return true
         }
         return false
