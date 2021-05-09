@@ -31,7 +31,6 @@ class NonExerciseWebViewScreen extends React.Component {
     render() {
         const { route } = this.props;
         //const {websiteURL} = navigation.state.params
-        console.log(route)
         return (
             // link to the web page
             <

@@ -38,7 +38,7 @@ class Articles extends React.Component {
   }
 
   compareAndMatchArticalData = async (userUsage) => {
-    await firebase.database().ref('ArticleURL').get().then((snapshot) => {
+    await firebase.database().ref('ArticleURL').once('value').then((snapshot) => {
       allArticleData = snapshot.val()
     })
 
@@ -68,7 +68,7 @@ class Articles extends React.Component {
   fetchUserComment = async () => {
     let dataList = null
     exerciseFeedback = []
-    firebase.database().ref('exercise-rating').on('value', snapshot => {
+    firebase.database().ref('exercise-rating').get().then( snapshot => {
       if (snapshot.exists()) {
         dataList = snapshot.val()
         for(let i in dataList){

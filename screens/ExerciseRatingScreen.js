@@ -59,7 +59,7 @@ class GeneralStarExample extends React.Component {
   }
   compareWithArticalURL = async (url) => {
     let dataList = []
-    firebase.database().ref('ArticleURL').get().then((snapshot) => {
+    firebase.database().ref('ArticleURL').once('value').then((snapshot) => {
       dataList = snapshot.val()
       for (let i = 1; i < dataList.length; i++) {
         if (url == dataList[i].URL) {
