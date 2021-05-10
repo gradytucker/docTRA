@@ -55,9 +55,9 @@ class Articles extends React.Component {
         }
         return false
       })
-      
-      for(let j in this.state.exerciseFeedback){
-        if(this.state.exerciseFeedback[j][0] == userUsageWithFullData[i][0]){
+
+      for (let j in this.state.exerciseFeedback) {
+        if (this.state.exerciseFeedback[j][0] == userUsageWithFullData[i][0]) {
           userUsageWithFullData[i].push(this.state.exerciseFeedback[j][1])
         }
       }
@@ -68,13 +68,13 @@ class Articles extends React.Component {
   fetchUserComment = async () => {
     let dataList = null
     exerciseFeedback = []
-    firebase.database().ref('exercise-rating').get().then( snapshot => {
+    firebase.database().ref('exercise-rating').get().then(snapshot => {
       if (snapshot.exists()) {
         dataList = snapshot.val()
-        for(let i in dataList){
-          exerciseFeedback.push([i,dataList[i]])
+        for (let i in dataList) {
+          exerciseFeedback.push([i, dataList[i]])
         }
-        this.setState({ exerciseFeedback: exerciseFeedback})
+        this.setState({ exerciseFeedback: exerciseFeedback })
       }
     })
   }
@@ -110,30 +110,32 @@ class Articles extends React.Component {
   componentDidMount() {
     this.fetchFirebase()
   }
-  
+
   componentWillUnmount() {
     firebase.database().ref('user-complete').off()
     firebase.database().ref('exercise-rating').off()
   }
 
-  renderList = (item, exerciseData) =>{
+  renderList = (item, exerciseData) => {
     let newData = []
     let newItem = null
     // console.log(exerciseData)
-    for(let i in exerciseData){
-      newData.push([i,exerciseData[i]])
+    for (let i in exerciseData) {
+      newData.push([i, exerciseData[i]])
     }
-    for(let i in newData){
-      if(newData[i][1].url == item.URL){
+    for (let i in newData) {
+      if (newData[i][1].url == item.URL) {
         newItem = {
-          title:"Star: " + newData[i][1].starCount + "\n" + "Comment: " + newData[i][1].feedbackText,
+          title: item.title + "\n\nSTARS: \n - " + newData[i][1].starCount + "\n" + "COMMENT:\n - " + newData[i][1].feedbackText,
           image: item.image,
           url: item.URL
         }
       }
     }
     return (
-      <Card item = { newItem == null ? item : newItem } style={{ marginRight: theme.SIZES.BASE, width: 200 }}></Card>
+      <TouchableWithoutFeedback disabled={true}>
+        <Card item={newItem == null ? item : newItem} style={{ marginRight: theme.SIZES.BASE, width: 200, height: 400 }}></Card>
+      </TouchableWithoutFeedback>
     );
   }
 
@@ -142,13 +144,13 @@ class Articles extends React.Component {
     let userdata = []
     let exerciseData = null
     let data = null
-    if(this.state.userUsageWithFullData != null){
-      userdata = this.state.userUsageWithFullData.filter(item =>{
-        if(item[0] == userId){
+    if (this.state.userUsageWithFullData != null) {
+      userdata = this.state.userUsageWithFullData.filter(item => {
+        if (item[0] == userId) {
           data = item[1]
-          if(item.length == 3){
+          if (item.length == 3) {
             exerciseData = item[2]
-          }else{
+          } else {
             exerciseData = null
           }
           return true
@@ -157,23 +159,23 @@ class Articles extends React.Component {
       })
     }
     return (
-          <Block flex>
-            <Text center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.title}
-            > ID: {item[2]} {"\n"} Name: {item[1]}
-            </Text>
-            <Block flex row>
-              <FlatList 
-                horizontal = { true }
-                data= {data}
-                renderItem={({ item }) => this.renderList(item, exerciseData) }
-                keyExtractor={(item, index) => index.toString()}
-              >
-              </FlatList>
-              </Block>
-          </Block>
+      <Block flex>
+        <Text
+          size={16}
+          color={theme.COLORS.MUTED}
+          style={styles.title}
+        > ID: {item[2]} {"\n"} Name: {item[1]}
+        </Text>
+        <Block flex row>
+          <FlatList
+            horizontal={true}
+            data={data}
+            renderItem={({ item }) => this.renderList(item, exerciseData)}
+            keyExtractor={(item, index) => index.toString()}
+          >
+          </FlatList>
+        </Block>
+      </Block>
     )
   }
 
@@ -181,16 +183,16 @@ class Articles extends React.Component {
 
   renderfd = (item, index) => {
     return (
-        <Block>
-          <Block row space="between">
-            <Text center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.title}
-            > {item[3]} </Text>
-          </Block>
-
+      <Block>
+        <Block row space="between">
+          <Text center
+            size={16}
+            color={theme.COLORS.MUTED}
+            style={styles.title}
+          > {item[3]} </Text>
         </Block>
+
+      </Block>
     )
   }
 
@@ -229,12 +231,12 @@ class Articles extends React.Component {
 
 const styles = StyleSheet.create({
   title: {
+    color: argonTheme.COLORS.HEADER,
     padding: theme.SIZES.BASE,
     marginHorizontal: theme.SIZES.BASE,
     marginTop: 65,
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
-    backgroundColor: theme.COLORS.WHITE,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 0 },
     shadowRadius: 8,

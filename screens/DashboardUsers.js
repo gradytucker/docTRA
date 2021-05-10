@@ -29,7 +29,7 @@ class Articles extends React.Component {
 
   state = {
     userList: null,
-  
+
   }
 
   fetchAllUserInformation = async () => {
@@ -50,7 +50,7 @@ class Articles extends React.Component {
     this.fetchFirebase()
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   renderUserUsage = (item, index) => {
     return (
@@ -72,23 +72,7 @@ class Articles extends React.Component {
 
 
 
-  renderfd = (item, index) => {
-    return (
-      <TouchableWithoutFeedback>
-        <Block>
-          <Block row space="between">
-            <Text center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.title}
-            > {item[3]} </Text>
-          </Block>
 
-        </Block>
-      </TouchableWithoutFeedback>
-
-    )
-  }
 
   renderCards = () => {
     return (
