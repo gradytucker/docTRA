@@ -162,18 +162,23 @@ class Articles extends React.Component {
       <Block flex>
         <Text
           size={16}
+          bold
           color={theme.COLORS.MUTED}
           style={styles.title}
         > ID: {item[2]} {"\n"} Name: {item[1]}
         </Text>
         <Block flex row>
-          <FlatList
-            horizontal={true}
-            data={data}
-            renderItem={({ item }) => this.renderList(item, exerciseData)}
-            keyExtractor={(item, index) => index.toString()}
-          >
-          </FlatList>
+          {userdata.length != 0 ?
+            <FlatList
+              horizontal={true}
+              data={data}
+              renderItem={({ item }) => this.renderList(item, exerciseData)}
+              keyExtractor={(item, index) => index.toString()}
+            >
+            </FlatList>
+            : <Text size={16}
+              color={theme.COLORS.MUTED}
+              style={styles.noDataCard}>{"no data yet"}</Text>}
         </Block>
       </Block>
     )
@@ -238,6 +243,22 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
     shadowColor: "black",
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 8,
+    shadowOpacity: 0.2,
+    zIndex: 2
+  },
+  noDataCard: {
+    color: "black",
+    padding: theme.SIZES.BASE,
+    marginHorizontal: theme.SIZES.BASE - 10,
+    marginTop: 25,
+    width: "95%",
+    height: 100,
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
+    shadowColor: "black",
+    backgroundColor: "white",
     shadowOffset: { width: 0, height: 0 },
     shadowRadius: 8,
     shadowOpacity: 0.2,
