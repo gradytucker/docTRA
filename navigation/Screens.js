@@ -192,7 +192,7 @@ function DashboardExercisesStack(props) {
         component={DashboardExercises}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title=" Exercises" navigation={navigation} scene={scene} />
+            <Header title=" Exercise history" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
