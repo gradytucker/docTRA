@@ -42,7 +42,7 @@ var key_count = 0;
 var totalNum = 0;
 var moduleList = null;
 var newArticleList = null;
-
+const cardWidth = width - theme.SIZES.BASE * 2;
 
 
 
@@ -209,16 +209,25 @@ class Home extends React.Component {
           <Text bold size={20} color="#32325D">
             {'\nExercises for you'}
           </Text>
-          <Block flex row>
-            {this.state.exercisesToDo.slice(0, 2).map((w) => {
-              return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-            })}
-          </Block>
-          <Block flex row>
-            {this.state.exercisesToDo.slice(2, 4).map((w) => {
-              return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
-            })}
-          </Block>
+          {this.state.exercisesToDo.length != 0 ?
+            <Block>
+              <Block flex row>
+                {this.state.exercisesToDo.slice(0, 2).map((w) => {
+                  return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                })}
+              </Block>
+              <Block flex row>
+                {this.state.exercisesToDo.slice(2, 4).map((w) => {
+                  return <Card item={w} key={++key_count} style={{ marginRight: theme.SIZES.BASE, width: 200 }} />
+                })}
+              </Block>
+            </Block>
+            : <Block flex row>
+              <Image
+                style={styles.productImage}
+                source={require('../assets/imgs/exerciseCompletedIMG.png')}
+              />
+            </Block>}
 
         </Block>
       </ScrollView>
@@ -260,6 +269,13 @@ const styles = StyleSheet.create({
   articles: {
     width: width - theme.SIZES.BASE * 2,
     paddingVertical: 0, //draft
+  },
+  productImage: {
+    borderRadius: 3,
+    opacity: 0.7,
+    width: (cardWidth - theme.SIZES.BASE) * 0.9,
+    height: (cardWidth - theme.SIZES.BASE - 200) * 0.9,
+    alignSelf: "center"
   },
   cartoon: {
     flex: 1,

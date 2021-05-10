@@ -25,9 +25,14 @@ const config = {
   scopes: ['profile', 'email'],
 }
 
+var loginErrorMessage = "";
+
 
 class Register extends React.Component {
 
+  sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   signInWithGoogleAsync = async () => {
     try {
@@ -130,7 +135,8 @@ class Register extends React.Component {
     name: "Tester",
     email: "",
     password: "123456",
-    hasUser: false
+    hasUser: false,
+    loginErrorMessage
   }
 
   signUpAccount = () => {
@@ -141,10 +147,14 @@ class Register extends React.Component {
       var user = userCredential.user;
       this.props.navigation.navigate("App");
       console.log("Success")
+      loginErrorMessage = " "
+      this.setState({ loginErrorMessage: loginErrorMessage })
       // ...
     })
       .catch((error) => {
         console.log("error")
+        loginErrorMessage = "Invalid ID. Try again."
+        this.setState({ loginErrorMessage: loginErrorMessage })
       });
   }
 
@@ -224,9 +234,10 @@ class Register extends React.Component {
                       {/* sign in button */}
                       <Button color="success" style={styles.createButton} onPress={this.signUpAccount}>
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Sign Up
+                          Log In
                         </Text>
                       </Button>
+                      <Text color="red" size={16}>{"\n"}  {loginErrorMessage}</Text>
                       <Block flex middle>
                         <Block flex middle>
                           <Button style={styles.socialButtons} onPress={() => {
