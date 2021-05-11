@@ -22,7 +22,36 @@ const { width } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
+var userList = []
+
+
 class Articles extends React.Component {
+
+  state = {
+    userList: null,
+
+  }
+
+  fetchAllUserInformation = async () => {
+    await firebase.database().ref('user-feedback').once("value").then(snapshot => {
+      let dataList = snapshot.val()
+      for (let i in dataList) {
+        userList.push([i, dataList[i].feedbackText, dataList[i].starCount])
+      }
+    })
+    this.setState({ userList: userList })
+  }
+
+  fetchFirebase = async () => {
+    this.fetchAllUserInformation()
+  }
+
+  componentDidMount() {
+    this.fetchFirebase()
+  }
+
+  componentWillUnmount() { }
+
   renderUserUsage = (item, index) => {
     return (
       <TouchableWithoutFeedback>
@@ -32,7 +61,7 @@ class Articles extends React.Component {
               size={16}
               color={theme.COLORS.MUTED}
               style={styles.title}
-            > ID: {item[2]} {"\n"} Name: {item[1]}</Text>
+            > Star Rating: {item[2]} {"\n"} Feedback: {item[1]}</Text>
           </Block>
 
         </Block>
@@ -43,58 +72,25 @@ class Articles extends React.Component {
 
 
 
-  renderfd = (item, index) => {
-    return (
-      <TouchableWithoutFeedback>
-        <Block>
-          <Block row space="between">
-            <Text center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.title}
-            > {item[3]} </Text>
-          </Block>
 
-        </Block>
-      </TouchableWithoutFeedback>
-
-    )
-  }
 
   renderCards = () => {
-    const { navigation } = this.props;
     return (
       <View style={styles.articles}>
         <Block flex>
           <Text bold size={28} color="#32325D">
-            {'\nAdmin Dashboard:\n'}
+            {'\nAdmin Dashboard:'}
           </Text>
           <Block>
-
+            <Text bold size={22} color="#32325D">
+              {'\n All users:\n'}
+            </Text>
           </Block>
           <Block flex row>
-            <Text center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.title}
-              onPress={() => navigation.navigate("DashboardUsers")}
-            > see all users </Text>
-          </Block>
-          <Block flex row>
-            <Text center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.title}
-              onPress={() => navigation.navigate("DashboardExercises")}
-            > see exercise ratings </Text>
-          </Block>
-          <Block flex row>
-            <Text center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.title}
-              onPress={() => navigation.navigate("DashboardAppFeedback")}
-            > see anonymous app feedback </Text>
+            <FlatList data={this.state.userList}
+              renderItem={({ item }) => this.renderUserUsage(item)}
+              keyExtractor={(item, index) => index.toString()}>
+            </FlatList>
           </Block>
         </Block>
       </View>

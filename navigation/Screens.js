@@ -30,6 +30,7 @@ import DownloadableGuides from "../screens/DownloadableGuides";
 import AdminDashboard from "../screens/AdminDashboard";
 import DashboardUsers from "../screens/DashboardUsers";
 import DashboardExercises from "../screens/DashboardExercises";
+import DashboardAppFeedback from "../screens/DashboardAppFeedback";
 // drawer
 import CustomDrawerContent from "./Menu";
 
@@ -210,6 +211,23 @@ function DashboardUsersStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="Users" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function DashboardAppFeedbackStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="DashboardAppFeedback"
+        component={DashboardAppFeedback}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="App Feedback" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
@@ -512,6 +530,7 @@ const DrawerStack = () => {
       <Drawer.Screen name="AdminDashboard" options={{ gestureEnabled: false }} component={AdminDashboardStack} />
       <Drawer.Screen name="DashboardUsers" options={{ gestureEnabled: false }} component={DashboardUsersStack} />
       <Drawer.Screen name="DashboardExercises" options={{ gestureEnabled: false }} component={DashboardExercisesStack} />
+      <Drawer.Screen name="DashboardAppFeedback" options={{ gestureEnabled: false }} component={DashboardAppFeedbackStack} />
     </Drawer.Navigator>
   );
 }
