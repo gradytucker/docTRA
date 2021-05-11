@@ -1,8 +1,19 @@
+
 # docTRA
 
-### Introduction:
+## Install and Run:
+- on your mobile phone, ensure that you have downloaded "expo go" from your respective app store.
+- scan the QR code below, or visit this link: https://expo.io/@3162team10/projects/docTRA
+- find the button that says "Open Project using Expo".
+- You can now start running the DocTRA application (using Expo Go as a 'container').
 
-  - ADMIN ACCOUNT: ID: Sime
+- QR CODE:<br>
+![Screen Shot 2021-05-11 at 12 11 31 pm](https://user-images.githubusercontent.com/18438921/117747734-0e2fad00-b252-11eb-9d43-8201fc4b6f8b.png)
+
+
+## Information and Management:
+
+### Introduction:
 
   - The aim of this project is to develop a software platform that will assist doctors and those in medical professions to deal and manage their day-to-day emotional stresses. It has been shown in both past attempts and current available strategies that training is critical to a doctor’s professional development and success. However, what makes the effectiveness of doctor training so critical is the fact that the training itself must not be perceived as a burden to those partaking in it, and the purpose of the training must be fully justified and understood by the participants.
 
@@ -12,6 +23,11 @@
 We plan to introduce this application as part of the common humanity training at Epworth HealthCare that will take place in July 2021, and the application will be introduced and utilised for 6 weeks after their initial common humanity training sessions.
 <br>
 
+### System management details
+  - ADMIN ACCOUNT ID: Sime
+  - USER ACCOUNTS DOCUMENT: https://docs.google.com/spreadsheets/d/1uYt6T-Aqorx2ypXC5gWCNK9Re9egLINNait0rWYBV7g/edit?usp=sharing
+
+## Develoment
 
 ### Development requirements:
   - Node.js
