@@ -48,7 +48,7 @@ class Articles extends React.Component {
     articles: historyList,
     userInfor: null,
     totalNum: 0,
-    exercisesCompleted: null,
+    exercisesCompleted: [],
     exercisesToDo: articles,
   }
 
@@ -140,12 +140,19 @@ class Articles extends React.Component {
           <Text bold size={28} color="#32325D">
             {'\nCompleted Modules:'}
           </Text>
-          <Block flex row>
-            <FlatList data={this.state.exercisesCompleted}
-              renderItem={({ item }) => <Card item={item} horizontal />}
-              keyExtractor={(item, index) => index.toString()}>
-            </FlatList>
-          </Block>
+          {this.state.exercisesCompleted.length != 0 ?
+            <Block flex row>
+              <FlatList data={this.state.exercisesCompleted}
+                renderItem={({ item }) => <Card item={item} horizontal />}
+                keyExtractor={(item, index) => index.toString()}>
+              </FlatList>
+            </Block>
+            : <Block center style={styles.productImage}>
+              <Image
+                style={styles.productImage}
+                source={require('../assets/imgs/startExercisesIMG.png')}
+              />
+            </Block>}
         </Block>
       </View>
     )
@@ -213,9 +220,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2
   },
   productImage: {
-    width: cardWidth - theme.SIZES.BASE,
-    height: cardWidth - theme.SIZES.BASE,
-    borderRadius: 3
+    borderRadius: 3,
+    opacity: 0.7,
+    width: (cardWidth - theme.SIZES.BASE) * 0.9,
+    height: (cardWidth - theme.SIZES.BASE - 200) * 0.9,
+    alignSelf: "center"
   },
   productPrice: {
     paddingTop: theme.SIZES.BASE,

@@ -52,7 +52,7 @@ class Articles extends React.Component {
     userInfor: null,
     totalNum: 0,
     exercisesCompleted: articles,
-    exercisesToDo: null,
+    exercisesToDo: [],
     reflectiveExercises: [articles[1], articles[2]]
   }
 
@@ -156,13 +156,19 @@ class Articles extends React.Component {
           <Text bold size={28} color="#32325D">
             {'\nModules To Do:'}
           </Text>
-          <Block flex row>
-            <FlatList data={this.state.exercisesToDo}
-              renderItem={({ item }) => <Card item={item} horizontal />}
-              keyExtractor={(item, index) => index.toString()}>
-            </FlatList>
-          </Block>
-
+          {this.state.exercisesToDo != 0 ?
+            <Block flex row>
+              <FlatList data={this.state.exercisesToDo}
+                renderItem={({ item }) => <Card item={item} horizontal />}
+                keyExtractor={(item, index) => index.toString()}>
+              </FlatList>
+            </Block>
+            : <Block center style={styles.productImage}>
+              <Image
+                style={styles.productImage}
+                source={require('../assets/imgs/exerciseCompletedIMG.png')}
+              />
+            </Block>}
         </Block>
       </View>
     )
@@ -230,9 +236,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2
   },
   productImage: {
-    width: cardWidth - theme.SIZES.BASE,
-    height: cardWidth - theme.SIZES.BASE,
-    borderRadius: 3
+    borderRadius: 3,
+    opacity: 0.7,
+    width: (cardWidth - theme.SIZES.BASE) * 0.9,
+    height: (cardWidth - theme.SIZES.BASE - 200) * 0.9,
+    alignSelf: "center"
   },
   productPrice: {
     paddingTop: theme.SIZES.BASE,
