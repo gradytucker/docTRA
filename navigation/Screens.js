@@ -461,7 +461,7 @@ export default function OnboardingStack() {
     <Stack.Navigator mode="card" headerMode="none">
       <Stack.Screen
         name="Register"
-        component={Register}
+        component={Onboarding}
         options={{
           gestureEnabled: false,
           headerTransparent: true

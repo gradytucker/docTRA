@@ -13,6 +13,7 @@ const ProfilePicture = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQoAAAC+CA
 // docTra Images
 const compassionCartoon = require("../assets/docTraMaterial/compassioncartoon.png")
 const doctraLogo = require("../assets/imgs/doctraLogo.png")
+const doctraLogoTransparent = require("../assets/imgs/doctraLogoTransparent.png")
 
 const Viewed = [
   'https://images.unsplash.com/photo-1501601983405-7c7cabaa1581?fit=crop&w=240&q=80',
@@ -41,5 +42,6 @@ export default {
   iOSLogo,
   androidLogo,
   compassionCartoon,
-  doctraLogo
+  doctraLogo,
+  doctraLogoTransparent
 };
