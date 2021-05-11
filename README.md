@@ -3,6 +3,9 @@
 
 ## Install and Run:
 - on your mobile phone, ensure that you have downloaded "expo go" from your respective app store.
+  * log into the expo account with:
+       * Username: 3162team10  
+       * Password: 3162team10
 - scan the QR code below, or visit this link: https://expo.io/@3162team10/projects/docTRA
 - find the button that says "Open Project using Expo".
 - You can now start running the DocTRA application (using Expo Go as a 'container').
