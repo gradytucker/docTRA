@@ -36,17 +36,22 @@ class Articles extends React.Component {
     userUsageWithFullData: null,
     exerciseFeedback: null,
   }
-
+  
+  // compare user's history article url with the main article list. 
+  // if same, replace the url to full article data(title, url, image...)
   compareAndMatchArticalData = async (userUsage) => {
     await firebase.database().ref('ArticleURL').once('value').then((snapshot) => {
       allArticleData = snapshot.val()
     })
 
+    // data format: Array[firebase uid, Array[object:{article url}]]
     for (let i in userUsage) {
       userUsageWithFullData.push([i, userUsage[i]])
     }
 
+    //compare with main articleData and using Array.filter to replace specify index with corresponding data.
     for (let i in userUsageWithFullData) {
+      //data format: Array[firebase uid, Array[object:{full article information}]]
       userUsageWithFullData[i][1] = allArticleData.filter(item => {
         for (let j = 0; j < userUsageWithFullData[i][1].length; j++) {
           if (item.URL == userUsageWithFullData[i][1][j].url) {
@@ -56,15 +61,19 @@ class Articles extends React.Component {
         return false
       })
 
+      //push the corresponding exercise feedback data to specify user list.
+      //data format: Array[firebase uid, Array[object:{article url}], Array[object:{article feedback}]]
       for (let j in this.state.exerciseFeedback) {
         if (this.state.exerciseFeedback[j][0] == userUsageWithFullData[i][0]) {
           userUsageWithFullData[i].push(this.state.exerciseFeedback[j][1])
         }
       }
     }
+    // save the data to state object.
     this.setState({ userUsageWithFullData: userUsageWithFullData })
   }
 
+  //fetch the user comment from firebase
   fetchUserComment = async () => {
     let dataList = null
     exerciseFeedback = []
@@ -72,23 +81,29 @@ class Articles extends React.Component {
       if (snapshot.exists()) {
         dataList = snapshot.val()
         for (let i in dataList) {
+          //data format: Array[firebase uid, Array[object:{article feedback}]]
           exerciseFeedback.push([i, dataList[i]])
         }
+        // save the data to state object.
         this.setState({ exerciseFeedback: exerciseFeedback })
       }
     })
   }
 
+  //fetch the user information from firebase
   fetchAllUserInformation = async () => {
     await firebase.database().ref('user-information').once("value").then(snapshot => {
       let dataList = snapshot.val()
       for (let i in dataList) {
+        //data format: Array[firebase uid, user name, user_id]
         userList.push([i, dataList[i].name, dataList[i].USER_ID])
       }
     })
+    // save the data to state object.
     this.setState({ userList: userList })
   }
 
+  //fetch the user usage from firebase
   fetchAllUserUsage = async () => {
     firebase.database().ref('user-complete').on('value', snapshot => {
       if (snapshot.exists()) {
@@ -101,28 +116,34 @@ class Articles extends React.Component {
     })
   }
 
+  /*FIREBASE FETCH FUNCTION*/
   fetchFirebase = async () => {
     this.fetchAllUserInformation()
     await this.fetchUserComment()
     await this.fetchAllUserUsage()
   }
 
+  /*MOUNT*/
   componentDidMount() {
     this.fetchFirebase()
   }
 
+  /*UNMOUNT*/
   componentWillUnmount() {
     firebase.database().ref('user-complete').off()
     firebase.database().ref('exercise-rating').off()
   }
 
+  //render the user usage data
   renderList = (item, exerciseData) => {
     let newData = []
     let newItem = null
     // console.log(exerciseData)
+    // data format: Array[firebase uid, Array[userUsageWithFullData]]
     for (let i in exerciseData) {
       newData.push([i, exerciseData[i]])
     }
+    //display the comment
     for (let i in newData) {
       if (newData[i][1].url == item.URL) {
         newItem = {
@@ -139,7 +160,9 @@ class Articles extends React.Component {
     );
   }
 
+  //render the userUsage with flat list.
   renderUserUsage = (item, index) => {
+    //get the specify user usage
     let userId = item[0]
     let userdata = []
     let exerciseData = null
@@ -201,6 +224,7 @@ class Articles extends React.Component {
     )
   }
 
+  //main render function
   renderCards = () => {
     return (
       <View style={styles.articles}>
@@ -224,6 +248,7 @@ class Articles extends React.Component {
     );
   };
 
+  //main render function
   render() {
     return (
       <Block flex center>

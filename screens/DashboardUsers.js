@@ -32,24 +32,30 @@ class Articles extends React.Component {
 
   }
 
+  //fetch the user information from firebase
   fetchAllUserInformation = async () => {
     await firebase.database().ref('user-information').once("value").then(snapshot => {
       let dataList = snapshot.val()
       for (let i in dataList) {
+        //data format: Array[firebase uid, user name, user_id]
         userList.push([i, dataList[i].name, dataList[i].USER_ID])
       }
     })
+    // save the data to state object.
     this.setState({ userList: userList })
   }
 
+  /*FIREBASE FETCH FUNCTION*/
   fetchFirebase = async () => {
     this.fetchAllUserInformation()
   }
 
+  /*MOUNT*/
   componentDidMount() {
     this.fetchFirebase()
   }
 
+  /*UNMOUNT*/
   componentWillUnmount() { }
 
   renderUserUsage = (item, index) => {
