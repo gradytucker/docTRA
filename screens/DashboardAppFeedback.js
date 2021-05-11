@@ -83,7 +83,7 @@ class Articles extends React.Component {
           </Text>
           <Block>
             <Text bold size={22} color="#32325D">
-              {'\n All users:\n'}
+              {'\n anonymous feedback from users:\n'}
             </Text>
           </Block>
           <Block flex row>
