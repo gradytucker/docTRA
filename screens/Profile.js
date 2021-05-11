@@ -172,7 +172,7 @@ class Profile extends React.Component {
                     {/* USER NAME */}
                     <Block middle style={styles.nameInfo}>
                       <Text bold size={32} color="#32325D">
-                        {this.state.userInfor == null ? "Loading..." : this.state.userInfor.name}
+                        {this.state.userInfor == null ? "Loading..." : this.state.userInfor.USER_ID}
                       </Text>
                     </Block>
                     <Block middle style={{ marginTop: 30, marginBottom: 16 }}>
