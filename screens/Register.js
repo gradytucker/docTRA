@@ -153,7 +153,7 @@ class Register extends React.Component {
     })
       .catch((error) => {
         console.log("error")
-        loginErrorMessage = "Invalid ID. Try again."
+        loginErrorMessage = "Something went wrong. \nEither you have an Invalid ID,\n or there is an issue with the network. \nTry again."
         this.setState({ loginErrorMessage: loginErrorMessage })
       });
   }
