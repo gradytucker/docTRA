@@ -10,12 +10,9 @@
 - QR CODE:
 - ![Screen Shot 2021-05-11 at 12 02 02 pm](https://user-images.githubusercontent.com/18438921/117746977-b3e21c80-b250-11eb-90c2-73efe942042d.png)
 
-## Development:
+## Information and Management:
 
 ### Introduction:
-
-  - ADMIN ACCOUNT: ID: Sime
-  - USER ACCOUNTS DOCUMENT: https://docs.google.com/spreadsheets/d/1uYt6T-Aqorx2ypXC5gWCNK9Re9egLINNait0rWYBV7g/edit?usp=sharing
 
   - The aim of this project is to develop a software platform that will assist doctors and those in medical professions to deal and manage their day-to-day emotional stresses. It has been shown in both past attempts and current available strategies that training is critical to a doctor’s professional development and success. However, what makes the effectiveness of doctor training so critical is the fact that the training itself must not be perceived as a burden to those partaking in it, and the purpose of the training must be fully justified and understood by the participants.
 
@@ -25,6 +22,11 @@
 We plan to introduce this application as part of the common humanity training at Epworth HealthCare that will take place in July 2021, and the application will be introduced and utilised for 6 weeks after their initial common humanity training sessions.
 <br>
 
+### System management details
+  - ADMIN ACCOUNT: ID: Sime
+  - USER ACCOUNTS DOCUMENT: https://docs.google.com/spreadsheets/d/1uYt6T-Aqorx2ypXC5gWCNK9Re9egLINNait0rWYBV7g/edit?usp=sharing
+
+## Develoment
 
 ### Development requirements:
   - Node.js
