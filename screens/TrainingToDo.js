@@ -59,6 +59,7 @@ class Articles extends React.Component {
   /* FETCH MODULES LIST FROM DATABASE */
   fetchModulesToDo = async () => {
     let userId = firebase.auth().currentUser.uid
+    //set value event listener
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
       moduleList = snapshot.val()
       moduleList.shift()
@@ -73,6 +74,7 @@ class Articles extends React.Component {
     totalNum = 0;
     completedNum = 0
     let userId = firebase.auth().currentUser.uid
+    //set value event listener
     await firebase.database().ref('user-complete/' + userId).on('value', async (snapshot) => {
       if (snapshot.exists()) {
         historyList = snapshot.val()
@@ -87,14 +89,18 @@ class Articles extends React.Component {
   /* FETCH HISTORY LIST TO MODULES FROM DATABASE */
   compareWithArticalURL = async () => {
     let userId = firebase.auth().currentUser.uid
+    //set value event listener
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
       const urlList = snapshot.val()
       totalNum = 0
       completedNum = 0
 
+      //get the total number for all modules
       for (let i = 1; i < urlList.length; i++) {
         totalNum++
       }
+
+      //get the complete data and complete number
       historyList = urlList.filter(item => {
         for (let i = 0; i < historyList.length; i++) {
           if (item.URL == historyList[i].url) {
@@ -105,6 +111,7 @@ class Articles extends React.Component {
         return false;
       });
 
+      //get the TO DO modules data
       moduleList = urlList.filter(item => {
         for (let j = 0; j < historyList.length; j++) {
           if (item.URL == historyList[j].URL) {

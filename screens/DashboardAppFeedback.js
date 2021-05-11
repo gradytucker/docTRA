@@ -31,14 +31,18 @@ class Articles extends React.Component {
     userList: null,
 
   }
+  
 
+  // fetch the userinformation from firebase
   fetchAllUserInformation = async () => {
     await firebase.database().ref('user-feedback').once("value").then(snapshot => {
       let dataList = snapshot.val()
       for (let i in dataList) {
+        // data format: Array[firebase uid, user-feedbackText, user-StarCount]
         userList.push([i, dataList[i].feedbackText, dataList[i].starCount])
       }
     })
+    //save the data to state object
     this.setState({ userList: userList })
   }
 
@@ -46,12 +50,16 @@ class Articles extends React.Component {
     this.fetchAllUserInformation()
   }
 
+  /* MOUNT */
   componentDidMount() {
     this.fetchFirebase()
   }
 
+  /* UNMOUNT */
   componentWillUnmount() { }
 
+
+  // render the user feedback
   renderUserUsage = (item, index) => {
     return (
       <TouchableWithoutFeedback>
@@ -73,7 +81,7 @@ class Articles extends React.Component {
 
 
 
-
+  // render the user feedback using flat list.
   renderCards = () => {
     return (
       <View style={styles.articles}>
@@ -97,6 +105,8 @@ class Articles extends React.Component {
     );
   };
 
+
+  //main render function
   render() {
     return (
       <Block flex center>

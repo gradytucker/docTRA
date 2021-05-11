@@ -23,6 +23,8 @@ const { width } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 class Articles extends React.Component {
+
+  // render user information(user Id and user name)
   renderUserUsage = (item, index) => {
     return (
       <TouchableWithoutFeedback>
@@ -60,7 +62,8 @@ class Articles extends React.Component {
 
     )
   }
-
+  
+  //render the three admin's options
   renderCards = () => {
     const { navigation } = this.props;
     return (
@@ -101,6 +104,8 @@ class Articles extends React.Component {
     );
   };
 
+
+  //main render function
   render() {
     return (
       <Block flex center>

@@ -30,6 +30,7 @@ const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 var index = 0;
 
+/*unused function */
 const createOneButtonAlert = () =>
   Alert.alert(
     "Response submitted",
@@ -39,6 +40,7 @@ const createOneButtonAlert = () =>
     ]
   );
 
+  /*unused function */
 const feedbackExistAlert = () => {
   Alert.alert(
     "you have already submitted",
@@ -57,6 +59,8 @@ class GeneralStarExample extends React.Component {
       feedbackText: ""
     };
   }
+
+  //get index for the specify article url on the main article list
   compareWithArticalURL = async (url) => {
     let dataList = []
     firebase.database().ref('ArticleURL').once('value').then((snapshot) => {
@@ -69,12 +73,18 @@ class GeneralStarExample extends React.Component {
       }
     })
   }
+
+  //save the user feedback into firebase
+  //data structure: "json object:{userId: Array[json object{ article feedback }] }"
   storeUserFeedback = async (userId, textInput, starCount) => {
     const url = this.props.route.params.websiteURL
     let updates = {}
     let data = null
+    //get the specify article index on main data list 
     await this.compareWithArticalURL(url)
     firebase.database().ref('exercise-rating/' + userId).get().then(function (snapshot) {
+        // if already create the relevant path on fireabse
+        // updata the list
         if(snapshot.exists()){
           data = {
             Articles_id: index,
@@ -85,6 +95,7 @@ class GeneralStarExample extends React.Component {
           updates['/exercise-rating/' + userId + "/" + index] = data
           firebase.database().ref().update(updates);
         }else{
+          // create the relevant path to firebase and set the first data to it.
           data = null
           data = {
             Articles_id: index,
@@ -99,7 +110,7 @@ class GeneralStarExample extends React.Component {
     });
 
   }
-
+  
   onStarRatingPress(rating) {
     this.setState({
       starCount: rating
