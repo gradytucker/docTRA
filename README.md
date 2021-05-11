@@ -1,3 +1,4 @@
+
 # docTRA
 
 ## Install:
@@ -5,6 +6,9 @@
 - visit this link: https://expo.io/@3162team10/projects/docTRA
 - find the button that says "Open Project using Expo".
 - You can now start running the DocTRA application (using Expo Go as a 'container').
+
+- you may also scan this QR code to start the application.
+- ![Screen Shot 2021-05-11 at 12 02 02 pm](https://user-images.githubusercontent.com/18438921/117746977-b3e21c80-b250-11eb-90c2-73efe942042d.png)
 
 ## Development:
 
