@@ -8,7 +8,7 @@
 - You can now start running the DocTRA application (using Expo Go as a 'container').
 
 - QR CODE:
-![Screen Shot 2021-05-11 at 12 02 02 pm](https://user-images.githubusercontent.com/18438921/117746977-b3e21c80-b250-11eb-90c2-73efe942042d.png)
+- ![Screen Shot 2021-05-11 at 12 02 02 pm](https://user-images.githubusercontent.com/18438921/117746977-b3e21c80-b250-11eb-90c2-73efe942042d.png)
 
 ## Development:
 
