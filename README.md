@@ -1,7 +1,7 @@
 
 # docTRA
 
-## Install:
+## Install and Run:
 - on your mobile phone, ensure that you have downloaded "expo go" from your respective app store.
 - scan the QR code below, or visit this link: https://expo.io/@3162team10/projects/docTRA
 - find the button that says "Open Project using Expo".
