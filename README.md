@@ -1,5 +1,13 @@
 # docTRA
 
+## Install:
+- on your mobile phone, ensure that you have downloaded "expo go" from your respective app store.
+- visit this link: https://expo.io/@3162team10/projects/docTRA
+- find the button that says "Open Project using Expo".
+- You can now start running the DocTRA application (using Expo Go as a 'container').
+
+## Development:
+
 ### Introduction:
 
   - ADMIN ACCOUNT: ID: Sime
