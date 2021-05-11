@@ -27,6 +27,7 @@ const { width } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 
+//response when give feedback successfully.
 const createOneButtonAlert = () =>
   Alert.alert(
     "Response submitted",
@@ -36,6 +37,7 @@ const createOneButtonAlert = () =>
     ]
   );
 
+//alert if already give the feedback
 const feedbackExistAlert = () =>{
   Alert.alert(
     "you have already submitted",
@@ -55,12 +57,17 @@ class GeneralStarExample extends React.Component {
     };
   }
 
+  //save the user app feedback into firebase
+  //data structure: "json object:{userId: {feedback} }"
   storeUserFeedback = (userId,textInput,starCount) => {
     firebase.database().ref('user-feedback/' + userId).get().then(function(snapshot){
+      // if already create the relevant path on fireabse
+      // updata the list
       if (snapshot.exists()) {
         feedbackExistAlert();
       }
       else {
+        // create the relevant path to firebase and set the first data to it.
         firebase
         .database()
         .ref('user-feedback/' + userId)

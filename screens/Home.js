@@ -70,12 +70,15 @@ class Home extends React.Component {
   fetchModulesToDo = async () => {
     let userId = firebase.auth().currentUser.uid
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
+      // if the user is not the first time login, just fetch data under the relevant path 
       if (snapshot.exists()) {
         moduleList = snapshot.val()
         moduleList.shift()
         totalNum = moduleList.length
         this.setState({ exercisesToDo: moduleList })
       } else {
+        // if the user is the first time login, assign the data to the relevant path.
+        // data structure: {user_id: Array[article list]}
         await firebase.database().ref('ArticleURL').get().then(function (snapshot) {
           newArticleList = snapshot.val()
         })
@@ -92,6 +95,7 @@ class Home extends React.Component {
     totalNum = 0;
     completedNum = 0
     let userId = firebase.auth().currentUser.uid
+    //set value event listener
     await firebase.database().ref('user-complete/' + userId).on('value', async (snapshot) => {
       if (snapshot.exists()) {
         historyList = snapshot.val()
@@ -106,16 +110,19 @@ class Home extends React.Component {
   /* FETCH HISTORY LIST TO MODULES FROM DATABASE */
   compareWithArticalURL = async () => {
     let userId = firebase.auth().currentUser.uid
-
+    //set value event listener
     firebase.database().ref('user-modules/' + userId).on('value', async (snapshot) => {
+      // if the user is not the first time login, just fetch data under the relevant path 
       if (snapshot.exists()) {
         const urlList = snapshot.val()
         totalNum = 0
         completedNum = 0
-
+        //get the total number for all modules
         for (let i = 1; i < urlList.length; i++) {
           totalNum++
         }
+
+        //get the complete data and complete number
         historyList = urlList.filter(item => {
           for (let i = 0; i < historyList.length; i++) {
             if (item.URL == historyList[i].url) {
@@ -125,7 +132,8 @@ class Home extends React.Component {
           }
           return false;
         });
-
+        
+        //get the TO DO modules data
         moduleList = urlList.filter(item => {
           for (let j = 0; j < historyList.length; j++) {
             if (item.URL == historyList[j].URL) {
