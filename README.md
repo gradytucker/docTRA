@@ -12,6 +12,7 @@
 
 - QR CODE:<br>
 ![Screen Shot 2021-05-11 at 12 11 31 pm](https://user-images.githubusercontent.com/18438921/117747734-0e2fad00-b252-11eb-9d43-8201fc4b6f8b.png)
+<br>
 
 
 ## Information and Management:
