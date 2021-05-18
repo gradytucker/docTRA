@@ -32,7 +32,7 @@ We plan to introduce this application as part of the common humanity training at
 - user and technical guide
   - https://docs.google.com/document/d/1PUnNMFrsYwJ9LLk8ucHmpv-M_-8iVgrXYFsK0y4HWXE/edit?usp=sharing
 
-- Demo script:
+- Demo run document:
   - https://docs.google.com/document/d/1X6I0w_PAljiK8EJpTSeIAGEj-sZxZ1H0Yuw0gijPP7U/edit?usp=sharing
 <br>
 
@@ -41,7 +41,7 @@ We plan to introduce this application as part of the common humanity training at
   - USER ACCOUNTS DOCUMENT: https://docs.google.com/spreadsheets/d/1uYt6T-Aqorx2ypXC5gWCNK9Re9egLINNait0rWYBV7g/edit?usp=sharing
 <br>
 
-## Develoment
+## Development
 
 ### Development requirements:
   - Node.js
