@@ -79,10 +79,10 @@ class Header extends React.Component {
         buttons:
           [
             {
-              label: "Leave", onPress: () => (console.log("OK Pressed"), navigation.goBack(),
+              label: "Leave", onClick: () => (navigation.goBack(),
                 this.props.navigation.reset({ index: 0, routes: [{ name: 'WebViewScreen' }], }))
             },
-            { label: "Okay", onPress: () => (console.log("OK Pressed")) }
+            { label: "Okay", onClick: () => (console.log("OK Pressed")) }
           ]
       });
     return (title == "Web" ? BackAlert() :
@@ -98,9 +98,9 @@ class Header extends React.Component {
         message: "Finished the Exercise?",
         buttons:
           [
-            { label: "No", onPress: () => console.log("OK Pressed") },
+            { label: "No", onClick: () => console.log("OK Pressed") },
             {
-              label: "Yes", onPress: () => (recordUserCompleteExercise(firebase.auth().currentUser.uid, url),
+              label: "Yes", onClick: () => (recordUserCompleteExercise(firebase.auth().currentUser.uid, url),
                 navigation.navigate("ExerciseRating", { screen: "Exercise Rating", params: { websiteURL: url } }),
                 this.props.navigation.reset({ index: 0, routes: [{ name: 'WebViewScreen' }], }))
             }
@@ -130,7 +130,7 @@ class Header extends React.Component {
   }
   render() {
     const { route, back, title, white, transparent, bgColor, iconColor, titleColor, navigation, ...props } = this.props;
-    const noShadow = ['Categories', 'Deals', 'Pro', 'Profile'].includes(title);
+    const noShadow = ['Categories', 'Deals', 'Pro'].includes(title);
     const headerStyles = [
       !noShadow ? styles.shadow : null,
       transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null,
@@ -186,6 +186,9 @@ class Header extends React.Component {
     );
   }
 }
+
+
+
 
 const styles = StyleSheet.create({
   button: {

@@ -236,6 +236,7 @@ function DashboardAppFeedbackStack(props) {
   );
 }
 
+// test
 function StarRatingStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="screen">
@@ -350,8 +351,7 @@ function ProfileStack(props) {
               scene={scene}
             />
           ),
-          cardStyle: { backgroundColor: "#FFFFFF" },
-          headerTransparent: true
+          cardStyle: { backgroundColor: "#F8F9FE" },
         }}
       />
     </Stack.Navigator>
