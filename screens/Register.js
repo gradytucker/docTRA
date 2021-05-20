@@ -240,22 +240,6 @@ class Register extends React.Component {
                       <Text color="red" size={16}>{"\n"}  {loginErrorMessage}</Text>
                       <Block flex middle>
                         <Block flex middle>
-                          <Button style={styles.socialButtons} onPress={() => {
-                            this.signInWithGoogleAsync();
-                          }
-
-                          }>
-                            <Block row>
-                              <Icon
-                                name="logo-google"
-                                family="Ionicon"
-                                size={14}
-                                color={"black"}
-                                style={{ marginTop: 2, marginRight: 5 }}
-                              />
-                              <Text style={styles.socialTextButtons}>GOOGLE</Text>
-                            </Block>
-                          </Button>
                         </Block>
                       </Block>
                     </Block>

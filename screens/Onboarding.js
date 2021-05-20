@@ -32,7 +32,7 @@ class Onboarding extends React.Component {
         />
         <Block flex center>
           <ImageBackground
-            source={onboardingBGdocTRA}
+            source={Images.ProfileBackground}
             style={{ height, width, zIndex: 1 }}
           />
         </Block>
@@ -41,22 +41,28 @@ class Onboarding extends React.Component {
           <Block flex space="around" style={{ zIndex: 2 }}>
             <Block style={styles.title}>
               <Block>
-                <Text color="white" size={60}>
-
+                <Text size={60} color="#FFFFFF" >
+                  {"welcome, to"}
                 </Text>
+
+
               </Block>
               <Block>
-                <Text color="white" size={60}>
-
+                <Text bold color="white" size={60}>
+                  {"Doctra"}
                 </Text>
               </Block>
               <Block style={styles.subTitle}>
                 <Text color="white" size={16}>
-
                 </Text>
+                <Block flex={0.25} middle style={styles.padded}>
+
+
+                </Block>
               </Block>
             </Block>
             <Block center>
+
               <Button
                 style={styles.button}
                 color={"#ED5653"}
@@ -68,7 +74,7 @@ class Onboarding extends React.Component {
             </Block>
           </Block>
         </Block>
-      </Block>
+      </Block >
     );
   }
 }
@@ -89,9 +95,15 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     shadowOpacity: 0
   },
+  productImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 3
+  },
+
   logo: {
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 100,
     zIndex: 2,
     position: 'relative',
     marginTop: '-50%'

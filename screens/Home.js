@@ -255,6 +255,7 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   home: {
     width: width,
+    alignSelf: "center",
   },
   signOut: {
     paddingVertical: 10,
@@ -287,7 +288,7 @@ const styles = StyleSheet.create({
   },
   cartoon: {
     flex: 1,
-    width: width * 0.9,
+    width: width * 0.5,
     height: width,
     resizeMode: "contain"
   },
