@@ -62,7 +62,7 @@ class WebViewScreen extends React.Component {
         this.storeUserHistory(firebase.auth().currentUser.uid, route.params.websiteURL);
         //const {websiteURL} = navigation.state.params
         console.log(Platform.OS)
-        return (Platform.OS === 'web'? <iframe scr = {route.params.websiteURL}/> :
+        return (Platform.OS === 'web' ? <iframe src = {route.params.websiteURL}/> :
             // link to the web page
             <
                 WebView source={
