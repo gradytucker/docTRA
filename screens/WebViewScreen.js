@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Dimensions, ActivityIndicator, SafeAreaView, StatusBar, Linking } from 'react-native'
+import { StyleSheet, View, Text, Dimensions, ActivityIndicator, SafeAreaView, StatusBar, Linking, Platform } from 'react-native'
 import { WebView } from 'react-native-webview';
 import { argonTheme } from '../constants';
 import { withNavigation } from '@react-navigation/compat';
@@ -43,7 +43,6 @@ class WebViewScreen extends React.Component {
         });
     }
     // loading state when open the web page
-    render
     LoadingIndicatorView() {
         return (<
             ActivityIndicator color='#0a1142'
@@ -62,7 +61,7 @@ class WebViewScreen extends React.Component {
         const { navigation, route } = this.props;
         this.storeUserHistory(firebase.auth().currentUser.uid, route.params.websiteURL);
         //const {websiteURL} = navigation.state.params
-        console.log(route)
+        console.log(Platform.OS)
         return (
             // link to the web page
             <
