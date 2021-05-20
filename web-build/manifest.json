@@ -1,0 +1,39 @@
+{
+  "background_color": "#ffffff",
+  "description": "Doctor training reinforcement and assessment application",
+  "display": "standalone",
+  "lang": "en",
+  "name": "docTRA",
+  "short_name": "docTRA",
+  "start_url": "/?utm_source=web_app_manifest",
+  "orientation": "portrait",
+  "related_applications": [
+    {
+      "platform": "itunes",
+      "id": "com.ios.docTRA"
+    },
+    {
+      "platform": "play",
+      "url": "http://play.google.com/store/apps/details?id=com.docTRA",
+      "id": "com.docTRA"
+    }
+  ],
+  "prefer_related_applications": true,
+  "icons": [
+    {
+      "src": "/screens.Register.jz/pwa/chrome-icon/chrome-icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/screens.Register.jz/pwa/chrome-icon/chrome-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/screens.Register.jz/pwa/chrome-icon/chrome-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

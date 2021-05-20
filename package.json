@@ -63,10 +63,7 @@
     "argon expo react native",
     "react native ui template"
   ],
-  "author": "Creative Tim <hello@creative-tim.com> (https://www.creative-tim.com/)",
+  "author": "team10Doctra",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/creativetimofficial/argon-react-native/issues"
-  },
-  "homepage": "https://demos.creative-tim.com/argon-react-native"
+  "homepage": "/screens.Register.jz"
 }

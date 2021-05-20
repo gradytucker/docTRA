@@ -31,6 +31,15 @@
       },
       "googleServicesFile": "./GoogleService-Info.plist"
     },
+    "web": {
+      "build": {
+        "babel": {
+          "include": [
+            "galio-framework"
+          ]
+        }
+      }
+    },
     "android": {
       "package": "com.docTRA",
       "googleServicesFile": "./google-services.json"

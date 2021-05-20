@@ -1,4 +1,6 @@
-export default tabs = {
+
+
+const tabs = {
   categories: [
     { id: 'popular', title: 'Popular' },
     { id: 'beauty', title: 'Beauty' },
@@ -6,3 +8,5 @@ export default tabs = {
     { id: 'car_motorcycle', title: 'Car & Motorcycle' },
   ],
 }
+
+export default tabs
