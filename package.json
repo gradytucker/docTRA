@@ -27,11 +27,14 @@
     "expo-font": "~8.4.0",
     "expo-google-app-auth": "^8.1.4",
     "expo-google-sign-in": "^8.4.0",
-    "firebase": "^8.3.1",
+    "firebase": "^8.6.1",
     "galio-framework": "^0.7.1",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
+    "react-confirm-alert": "^2.7.0",
+    "react-dom": "^17.0.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+    "react-native-confirm-dialog": "^0.1.0",
     "react-native-eject": "^0.1.2",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-modal-dropdown": "git+https://github.com/siemiatj/react-native-modal-dropdown.git",
@@ -40,6 +43,7 @@
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",
     "react-native-star-rating": "^1.1.0",
+    "react-native-web": "^0.16.3",
     "react-native-webview": "^11.0.0"
   },
   "devDependencies": {
