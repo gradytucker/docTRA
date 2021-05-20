@@ -124,6 +124,10 @@ class Articles extends React.Component {
               </Block>
             </Block>
           </TouchableWithoutFeedback>
+          <Text center
+            size={16}
+            color={theme.COLORS.MUTED}
+          > {"\n\n\n"}</Text>
         </ScrollView>
       </Block >
     );

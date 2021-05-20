@@ -162,6 +162,8 @@ class Home extends React.Component {
   /* MOUNT */
   componentDidMount() {
     this.firebaseFetch()
+    window.addEventListener('resize', this.resize)
+
   }
 
   /* UNMOUNT */
@@ -169,6 +171,8 @@ class Home extends React.Component {
     let userId = this.state.userId
     firebase.database().ref('user-complete/' + userId).off()
     firebase.database().ref('user-modules/' + userId).off()
+    window.removeEventListener('resize', this.resize)
+
   }
 
   /* RENDER T.O.D GREETING, DAILY QUOTE, CARTOON, EXERCISE QUEUE  */
@@ -284,11 +288,12 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     width: (cardWidth - theme.SIZES.BASE) * 0.9,
     height: (cardWidth - theme.SIZES.BASE - 200) * 0.9,
-    alignSelf: "center"
+    alignSelf: "center",
+    resizeMode: 'contain'
   },
   cartoon: {
     flex: 1,
-    width: width * 0.5,
+    width: width * 0.9,
     height: width,
     resizeMode: "contain"
   },

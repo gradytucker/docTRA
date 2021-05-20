@@ -141,65 +141,60 @@ class Profile extends React.Component {
   /* RENDER PROFILE SCREEN */
   render() {
     return (
-      <Block flex style={styles.profile}>
+      <Block center style={styles.profile}>
         <Block flex>
-          <ImageBackground
-            source={Images.ProfileBackground}
-            style={styles.profileContainer}
-            imageStyle={styles.profileBackground}
-          >
-            <FlatList ListHeaderComponent={
-              <View style={{ width, marginTop: '30%' }}>
 
-                <Block flex style={styles.profileCard}>
-                  <Block middle style={styles.avatarContainer}>
-                    {/* PROFILE IMAGE */}
-                    <Image
-                      source={this.state.userInfor == null ? { uri: Images.ProfilePicture } : { uri: this.state.userInfor.photoUrl }}
-                      style={styles.avatar}
-                    />
+          <FlatList ListHeaderComponent={
+            <View style={{ width, marginTop: '30%' }}>
+
+              <Block flex style={styles.profileCard}>
+                <Block middle style={styles.avatarContainer}>
+                  {/* PROFILE IMAGE */}
+                  <Image
+                    source={this.state.userInfor == null ? { uri: Images.ProfilePicture } : { uri: this.state.userInfor.photoUrl }}
+                    style={styles.avatar}
+                  />
+                </Block>
+                <Block style={styles.info}>
+                  <Block
+                    middle
+                    row
+                    space="evenly"
+                    style={{ marginTop: -20, paddingBottom: 24 }}
+                  >
                   </Block>
-                  <Block style={styles.info}>
-                    <Block
-                      middle
-                      row
-                      space="evenly"
-                      style={{ marginTop: -20, paddingBottom: 24 }}
-                    >
+                </Block>
+                <Block flex>
+                  {/* USER NAME */}
+                  <Block middle style={styles.nameInfo}>
+                    <Text bold size={32} color="#32325D">
+                      {this.state.userInfor == null ? "Loading..." : this.state.userInfor.USER_ID}
+                    </Text>
+                  </Block>
+                  <Block middle style={{ marginTop: 30, marginBottom: 16 }}>
+                    <Block style={styles.divider} />
+                  </Block>
+                  <Block middle>
+                    {/* SIGN OUT BUTTON */}
+                    <Block style={styles.signOut}>
+                      <Text bold size={16} color="#FFFFFF" onPress={this.signOut}> {'Sign out'} </Text>
                     </Block>
-                  </Block>
-                  <Block flex>
-                    {/* USER NAME */}
-                    <Block middle style={styles.nameInfo}>
-                      <Text bold size={32} color="#32325D">
-                        {this.state.userInfor == null ? "Loading..." : this.state.userInfor.USER_ID}
+                    <Block>
+                      <Text bold size={22} color="#32325D">
+                        {'\nRecently Completed Exercises:\n'}
                       </Text>
-                    </Block>
-                    <Block middle style={{ marginTop: 30, marginBottom: 16 }}>
-                      <Block style={styles.divider} />
-                    </Block>
-                    <Block middle>
-                      {/* SIGN OUT BUTTON */}
-                      <Block style={styles.signOut}>
-                        <Text bold size={16} color="#FFFFFF" onPress={this.signOut}> {'Sign out'} </Text>
-                      </Block>
-                      <Block>
-                        <Text bold size={22} color="#32325D">
-                          {'\nRecently Completed Exercises:\n'}
-                        </Text>
-                        <Text bold size={16} color="#32325D">
-                          {completedNum + ' exercises completed.\n'}
-                        </Text>
-                        {this.renderCards()}
-                      </Block>
+                      <Text bold size={16} color="#32325D">
+                        {completedNum + ' exercises completed.\n'}
+                      </Text>
+                      {this.renderCards()}
                     </Block>
                   </Block>
                 </Block>
-              </View>
-            }></FlatList>
-          </ImageBackground>
+              </Block>
+            </View>
+          }></FlatList>
         </Block>
-      </Block>
+      </Block >
     );
   }
 }

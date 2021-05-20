@@ -326,10 +326,11 @@ const styles = StyleSheet.create({
   },
   productImage: {
     borderRadius: 3,
-    opacity: 0.7,
+    opacity: 0.5,
     width: (cardWidth - theme.SIZES.BASE) * 0.9,
     height: (cardWidth - theme.SIZES.BASE - 200) * 0.9,
-    alignSelf: "center"
+    alignSelf: "center",
+    resizeMode: 'contain'
   },
   productPrice: {
     paddingTop: theme.SIZES.BASE,

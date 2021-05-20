@@ -160,9 +160,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2
   },
   productImage: {
-    width: cardWidth - theme.SIZES.BASE,
-    height: cardWidth - theme.SIZES.BASE,
-    borderRadius: 3
+    borderRadius: 3,
+    opacity: 0.5,
+    width: (cardWidth - theme.SIZES.BASE) * 0.9,
+    height: (cardWidth - theme.SIZES.BASE - 200) * 0.9,
+    alignSelf: "center",
+    resizeMode: 'contain'
   },
   productPrice: {
     paddingTop: theme.SIZES.BASE,
