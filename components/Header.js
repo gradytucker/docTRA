@@ -2,6 +2,9 @@ import React from 'react';
 import { withNavigation, StackActions, NavigationActions } from '@react-navigation/compat';
 import { TouchableOpacity, Alert, View, TextInput, StyleSheet, Platform, Dimensions, } from 'react-native';
 import { Button, Block, NavBar, Text, theme } from 'galio-framework';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
 
 import Icon from './Icon';
 import Input from './Input';
@@ -70,17 +73,17 @@ class Header extends React.Component {
 
 
     const BackAlert = () =>
-      Alert.alert(
-        "If you have not finished the exercise, it will not be marked as complete.",
-        "",
-        [
-          {
-            text: "Leave", onPress: () => (console.log("OK Pressed"), navigation.goBack(),
-              this.props.navigation.reset({ index: 0, routes: [{ name: 'WebViewScreen' }], }))
-          },
-          { text: "Okay", onPress: () => (console.log("OK Pressed")) }
-        ]
-      );
+      confirmAlert({
+        message: "If you have not finished the exercise, it will not be marked as complete.",
+        buttons:
+          [
+            {
+              label: "Leave", onPress: () => (console.log("OK Pressed"), navigation.goBack(),
+                this.props.navigation.reset({ index: 0, routes: [{ name: 'WebViewScreen' }], }))
+            },
+            { label: "Okay", onPress: () => (console.log("OK Pressed")) }
+          ]
+      });
     return (title == "Web" ? BackAlert() :
       title == "Article PDF" ? (navigation.goBack(), resetNonExercise()) :
         navigation.goBack());
@@ -90,19 +93,19 @@ class Header extends React.Component {
     const { back, title, navigation } = this.props;
     const url = this.props.scene.__memo[0].params.websiteURL
     const FinishAlert = () =>
-      Alert.alert(
-        "Finished the Exercise?",
-        "",
-        [
-          { text: "No", onPress: () => console.log("OK Pressed") },
-          {
-            text: "Yes", onPress: () => (recordUserCompleteExercise(firebase.auth().currentUser.uid, url),
-              navigation.navigate("ExerciseRating", { screen: "Exercise Rating", params: { websiteURL: url } }),
-              this.props.navigation.reset({ index: 0, routes: [{ name: 'WebViewScreen' }], }))
-          }
+      confirmAlert({
+        message: "Finished the Exercise?",
+        buttons:
+          [
+            { label: "No", onPress: () => console.log("OK Pressed") },
+            {
+              label: "Yes", onPress: () => (recordUserCompleteExercise(firebase.auth().currentUser.uid, url),
+                navigation.navigate("ExerciseRating", { screen: "Exercise Rating", params: { websiteURL: url } }),
+                this.props.navigation.reset({ index: 0, routes: [{ name: 'WebViewScreen' }], }))
+            }
 
-        ]
-      );
+          ]
+      });
     return (FinishAlert());
   }
 
