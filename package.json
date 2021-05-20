@@ -64,6 +64,5 @@
     "react native ui template"
   ],
   "author": "team10Doctra",
-  "license": "MIT",
-  "homepage": "/screens/Register.js"
+  "license": "MIT"
 }
