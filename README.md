@@ -12,6 +12,7 @@
 
 - QR CODE:<br>
 ![Screen Shot 2021-05-11 at 12 11 31 pm](https://user-images.githubusercontent.com/18438921/117747734-0e2fad00-b252-11eb-9d43-8201fc4b6f8b.png)
+<br>
 
 
 ## Information and Management:
@@ -26,11 +27,21 @@
 We plan to introduce this application as part of the common humanity training at Epworth HealthCare that will take place in July 2021, and the application will be introduced and utilised for 6 weeks after their initial common humanity training sessions.
 <br>
 
+
+### Guides:
+- user and technical guide
+  - https://docs.google.com/document/d/1PUnNMFrsYwJ9LLk8ucHmpv-M_-8iVgrXYFsK0y4HWXE/edit?usp=sharing
+
+- Demo run document:
+  - https://docs.google.com/document/d/1X6I0w_PAljiK8EJpTSeIAGEj-sZxZ1H0Yuw0gijPP7U/edit?usp=sharing
+<br>
+
 ### System management details
   - ADMIN ACCOUNT ID: Sime
   - USER ACCOUNTS DOCUMENT: https://docs.google.com/spreadsheets/d/1uYt6T-Aqorx2ypXC5gWCNK9Re9egLINNait0rWYBV7g/edit?usp=sharing
+<br>
 
-## Develoment
+## Development
 
 ### Development requirements:
   - Node.js
