@@ -5,6 +5,7 @@ import { Button, Block, NavBar, Text, theme } from 'galio-framework';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
+//test
 
 import Icon from './Icon';
 import Input from './Input';
