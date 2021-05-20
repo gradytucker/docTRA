@@ -19,7 +19,7 @@ import { FlatList } from "react-native-gesture-handler";
 import firebase from "firebase";
 import articleList from "../constants/articles";
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
@@ -36,7 +36,7 @@ class Articles extends React.Component {
     userUsageWithFullData: null,
     exerciseFeedback: null,
   }
-  
+
   // compare user's history article url with the main article list. 
   // if same, replace the url to full article data(title, url, image...)
   compareAndMatchArticalData = async (userUsage) => {

@@ -24,7 +24,7 @@ import firebaseSetUp from "../firebase";
 import firebase from "firebase"
 import { NavigationEvents } from "@react-navigation/compat";
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
@@ -40,7 +40,7 @@ const createOneButtonAlert = () =>
     ]
   );
 
-  /*unused function */
+/*unused function */
 const feedbackExistAlert = () => {
   Alert.alert(
     "you have already submitted",
@@ -83,34 +83,34 @@ class GeneralStarExample extends React.Component {
     //get the specify article index on main data list 
     await this.compareWithArticalURL(url)
     firebase.database().ref('exercise-rating/' + userId).get().then(function (snapshot) {
-        // if already create the relevant path on fireabse
-        // updata the list
-        if(snapshot.exists()){
-          data = {
-            Articles_id: index,
-            url: url,
-            starCount: starCount,
-            feedbackText: textInput
-          }
-          updates['/exercise-rating/' + userId + "/" + index] = data
-          firebase.database().ref().update(updates);
-        }else{
-          // create the relevant path to firebase and set the first data to it.
-          data = null
-          data = {
-            Articles_id: index,
-            url: url,
-            starCount: starCount,
-            feedbackText: textInput
-          }
-          firebase.database().ref('/exercise-rating/' + userId + "/" + index).set(data);
+      // if already create the relevant path on fireabse
+      // updata the list
+      if (snapshot.exists()) {
+        data = {
+          Articles_id: index,
+          url: url,
+          starCount: starCount,
+          feedbackText: textInput
         }
+        updates['/exercise-rating/' + userId + "/" + index] = data
+        firebase.database().ref().update(updates);
+      } else {
+        // create the relevant path to firebase and set the first data to it.
+        data = null
+        data = {
+          Articles_id: index,
+          url: url,
+          starCount: starCount,
+          feedbackText: textInput
+        }
+        firebase.database().ref('/exercise-rating/' + userId + "/" + index).set(data);
+      }
     }).catch(function (error) {
       console.error(error);
     });
 
   }
-  
+
   onStarRatingPress(rating) {
     this.setState({
       starCount: rating
@@ -161,7 +161,7 @@ class GeneralStarExample extends React.Component {
                 this.setState({
                   starCount: 0
                 });
-                this.storeUserFeedback(firebase.auth().currentUser.uid,this.state.feedbackText,this.state.starCount)
+                this.storeUserFeedback(firebase.auth().currentUser.uid, this.state.feedbackText, this.state.starCount)
                 navigation.navigate("tabStack");
               }
               }>submit and finish</Button>

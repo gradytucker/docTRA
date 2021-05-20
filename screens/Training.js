@@ -34,7 +34,7 @@ import { color } from "react-native-reanimated";
 import firebase from "firebase";
 import ProgressCircle from 'react-native-progress-circle'
 import articleList from "../constants/articles";
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 
@@ -110,7 +110,7 @@ class Articles extends React.Component {
       totalNum = 0
       completedNum = 0
 
-       //get the total number for all modules
+      //get the total number for all modules
       for (let i = 1; i < urlList.length; i++) {
         totalNum++
       }

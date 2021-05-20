@@ -13,7 +13,7 @@ import { Images, argonTheme } from "../constants";
 import FAQresponses from '../constants/FAQresponses';
 import { Card } from "../components";
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;

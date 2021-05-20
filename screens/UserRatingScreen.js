@@ -22,7 +22,7 @@ import { Button } from "../components";
 import firebaseSetUp from "../firebase";
 import firebase from "firebase"
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
@@ -38,7 +38,7 @@ const createOneButtonAlert = () =>
   );
 
 //alert if already give the feedback
-const feedbackExistAlert = () =>{
+const feedbackExistAlert = () => {
   Alert.alert(
     "you have already submitted",
     "Thankyou for giving feedback",
@@ -59,8 +59,8 @@ class GeneralStarExample extends React.Component {
 
   //save the user app feedback into firebase
   //data structure: "json object:{userId: {feedback} }"
-  storeUserFeedback = (userId,textInput,starCount) => {
-    firebase.database().ref('user-feedback/' + userId).get().then(function(snapshot){
+  storeUserFeedback = (userId, textInput, starCount) => {
+    firebase.database().ref('user-feedback/' + userId).get().then(function (snapshot) {
       // if already create the relevant path on fireabse
       // updata the list
       if (snapshot.exists()) {
@@ -69,18 +69,18 @@ class GeneralStarExample extends React.Component {
       else {
         // create the relevant path to firebase and set the first data to it.
         firebase
-        .database()
-        .ref('user-feedback/' + userId)
-        .set({
-          starCount: starCount,
-          feedbackText: textInput
-        });
+          .database()
+          .ref('user-feedback/' + userId)
+          .set({
+            starCount: starCount,
+            feedbackText: textInput
+          });
         createOneButtonAlert();
       }
-    }).catch(function(error) {
+    }).catch(function (error) {
       console.error(error);
     });
-   
+
   }
 
   onStarRatingPress(rating) {
@@ -118,7 +118,7 @@ class GeneralStarExample extends React.Component {
               style={styles.aboutTitle}> {"\nHave any suggestions to make the app better? Tell us below!"}</Text>
             <TextInput style={styles.input}
               ref={input => { this.textInput = input }}
-              onChangeText={text => {this.setState({ feedbackText: text });}}
+              onChangeText={text => { this.setState({ feedbackText: text }); }}
               underlineColorAndroid="transparent"
               placeholder="Suggestions..."
               multiline={true}
@@ -132,7 +132,7 @@ class GeneralStarExample extends React.Component {
                 this.setState({
                   starCount: 0
                 });
-                this.storeUserFeedback(firebase.auth().currentUser.uid,this.state.feedbackText,this.state.starCount)
+                this.storeUserFeedback(firebase.auth().currentUser.uid, this.state.feedbackText, this.state.starCount)
               }
               }>submit all</Button>
           </Block>

@@ -15,7 +15,7 @@ import { Block, Text, Button, theme } from "galio-framework";
 import { Card } from '../components';
 import articles from '../constants/articles';
 import { Images } from '../constants';
-const { height, width } = Dimensions.get('screen');
+const { height, width } = Dimensions.get('window');
 import firebase from 'firebase'
 import Articles from './Training';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -132,7 +132,7 @@ class Home extends React.Component {
           }
           return false;
         });
-        
+
         //get the TO DO modules data
         moduleList = urlList.filter(item => {
           for (let j = 0; j < historyList.length; j++) {

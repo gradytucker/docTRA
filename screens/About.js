@@ -16,7 +16,7 @@ import { BorderlessButton } from "react-native-gesture-handler";
 import Home from "../screens/Home";
 import { NavigationContainer } from '@react-navigation/native';
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;

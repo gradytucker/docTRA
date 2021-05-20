@@ -16,7 +16,7 @@ import { Card } from "../components";
 import { Button } from "../components";
 import { color } from "react-native-reanimated";
 import ProgressCircle from 'react-native-progress-circle'
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;

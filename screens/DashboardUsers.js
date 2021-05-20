@@ -18,7 +18,7 @@ import { Card } from "../components";
 import { FlatList } from "react-native-gesture-handler";
 import firebase from "firebase";
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;

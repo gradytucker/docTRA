@@ -31,7 +31,7 @@ import { HeaderHeight } from "../constants/utils";
 import firebase from "firebase"
 import { FlatList } from "react-native-gesture-handler";
 
-const { width, height } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("window");
 const thumbMeasure = (width - 48 - 32) / 3;
 var historyList = null
 var oldList = null

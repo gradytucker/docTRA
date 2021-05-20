@@ -17,7 +17,7 @@ import * as Google from 'expo-google-app-auth'
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
 
-const { width, height } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("window");
 
 const config = {
   iosClientId: "813152005106-phlioohd71j6jpc6c148elppopi3686g.apps.googleusercontent.com",

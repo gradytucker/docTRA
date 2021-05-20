@@ -5,7 +5,7 @@ import { argonTheme } from '../constants';
 import { withNavigation } from '@react-navigation/compat';
 import firebase from 'firebase'
 
-const { width } = Dimensions.get('screen');
+const { width } = Dimensions.get('window');
 
 /*
 the purpose of this js file is open a web page in app when user click article card
