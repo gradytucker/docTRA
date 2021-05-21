@@ -5,7 +5,7 @@ import { argonTheme } from '../constants';
 import { withNavigation } from '@react-navigation/compat';
 import firebase from 'firebase'
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 /*
 the purpose of this js file is open a web page in app when user click article card
@@ -32,7 +32,7 @@ class NonExerciseWebViewScreen extends React.Component {
         const { navigation, route } = this.props;
         //const {websiteURL} = navigation.state.params
         console.log(Platform.OS)
-        return (Platform.OS === 'web' ? <iframe src={route.params.websiteURL} height={600} /> :
+        return (Platform.OS === 'web' ? <iframe src={route.params.websiteURL} height={height} /> :
             // link to the web page
             <
                 WebView source={
