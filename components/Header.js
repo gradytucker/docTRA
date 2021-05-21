@@ -75,7 +75,7 @@ class Header extends React.Component {
 
     const BackAlert = () =>
       confirmAlert({
-        message: "If you have not finished the exercise, it will not be marked as complete.",
+        message: "this exercise will not be marked as complete.",
         buttons:
           [
             {
