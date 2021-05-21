@@ -204,8 +204,9 @@ class Articles extends React.Component {
           </Text>
           <View style={styles.articles}>
             <ScrollView
+              persistentScrollbar={true}
               horizontal={true}
-              showsHorizontalScrollIndicator={false}>
+            >
               {/* SHOW EXERCISES TO DO LIST, FIRST 5 ELEMENTS SLICE. IF NO ELEMENTS
               IN LIST, SHOW 'COMPLETION' IMAGE */}
               {this.state.exercisesToDo.length != 0 ?
@@ -231,8 +232,9 @@ class Articles extends React.Component {
           </Text>
           <View style={styles.articles}>
             <ScrollView
+              persistentScrollbar={true}
               horizontal={true}
-              showsHorizontalScrollIndicator={false}>
+            >
               {/* SHOW EXERCISESCOMPLETED LIST, FIRST 5 ELEMENTS SLICE. IF NO ELEMENTS
               IN LIST, SHOW 'START EXERCISES' IMAGE */}
               {this.state.exercisesCompleted.length != 0 ?

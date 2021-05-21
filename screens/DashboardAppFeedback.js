@@ -110,8 +110,12 @@ class Articles extends React.Component {
   render() {
     return (
       <Block flex center>
-        <FlatList ListHeaderComponent={this.renderCards()}>
-        </FlatList>
+        <ScrollView style={styles.screen}
+          showsVerticalScrollIndicator={false}
+        >
+          <FlatList ListHeaderComponent={this.renderCards()}>
+          </FlatList>
+        </ScrollView>
       </Block>
     );
   }
@@ -189,6 +193,7 @@ const styles = StyleSheet.create({
     paddingBottom: theme.SIZES.BASE / 2
   },
   articles: {
+    maxWidth: 800,
     width: width - theme.SIZES.BASE * 2,
     paddingVertical: 0, //draft
   },

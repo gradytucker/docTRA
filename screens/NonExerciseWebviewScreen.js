@@ -29,9 +29,11 @@ class NonExerciseWebViewScreen extends React.Component {
     }
     // web render funcion
     render() {
-        const { route } = this.props;
+        const { navigation, route } = this.props;
+        this.storeUserHistory(firebase.auth().currentUser.uid, route.params.websiteURL);
         //const {websiteURL} = navigation.state.params
-        return (
+        console.log(Platform.OS)
+        return (Platform.OS === 'web' ? <iframe src={route.params.websiteURL} height={600} /> :
             // link to the web page
             <
                 WebView source={
