@@ -145,7 +145,7 @@ class Profile extends React.Component {
         <Block flex>
 
           <FlatList ListHeaderComponent={
-            <View style={{ width, marginTop: '30%' }}>
+            <View style={styles.screen}>
 
               <Block flex style={styles.profileCard}>
                 <Block middle style={styles.avatarContainer}>
@@ -204,6 +204,10 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === "android" ? -HeaderHeight : 0,
     // marginBottom: -HeaderHeight * 2,
     flex: 1
+  },
+  screen: {
+    maxWidth: 800,
+    width, marginTop: '30%'
   },
   signOut: {
     paddingVertical: 2,

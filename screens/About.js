@@ -67,7 +67,7 @@ class Articles extends React.Component {
     const { navigation } = this.props;
     return (
 
-      <Block>
+      <Block maxWidth="400">
         <Block center style={styles.productImage}>
           <Image
             style={styles.productImage}
@@ -136,8 +136,9 @@ class Articles extends React.Component {
 
   render() {
     return (
-      <Block flex center>
-        <ScrollView
+      <Block flex center >
+        <ScrollView style={styles.screen}
+
           showsVerticalScrollIndicator={false}
         >
           {this.renderCards()}
@@ -148,6 +149,9 @@ class Articles extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    maxWidth: 800
+  },
   title: {
     paddingBottom: theme.SIZES.BASE,
     paddingHorizontal: theme.SIZES.BASE * 2,
@@ -199,6 +203,7 @@ const styles = StyleSheet.create({
     borderRadius: 4
   },
   productItem: {
+
     width: cardWidth - theme.SIZES.BASE * 2,
     marginHorizontal: theme.SIZES.BASE,
     shadowColor: "black",
@@ -207,6 +212,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2
   },
   productImage: {
+    maxWidth: 300,
+    maxHeight: 300,
     width: cardWidth - theme.SIZES.BASE - 100,
     height: cardWidth - theme.SIZES.BASE - 100,
     borderRadius: 3

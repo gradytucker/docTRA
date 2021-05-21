@@ -205,6 +205,7 @@ const styles = StyleSheet.create({
     color: argonTheme.COLORS.HEADER
   },
   articles: {
+    maxWidth: 800,
     width: width - theme.SIZES.BASE * 2,
     paddingVertical: 0, //draft
   },
@@ -243,11 +244,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2
   },
   productImage: {
+    alignSelf: "center",
     borderRadius: 3,
-    opacity: 0.7,
+    opacity: 0.5,
+    maxWidth: (cardWidth - theme.SIZES.BASE) * 0.2,
+    maxHeight: (cardWidth - theme.SIZES.BASE - 200) * 0.2,
     width: (cardWidth - theme.SIZES.BASE) * 0.9,
     height: (cardWidth - theme.SIZES.BASE - 200) * 0.9,
-    alignSelf: "center"
+    resizeMode: 'contain'
   },
   productPrice: {
     paddingTop: theme.SIZES.BASE,

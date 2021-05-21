@@ -177,6 +177,9 @@ export default GeneralStarExample
 
 
 const styles = StyleSheet.create({
+  screen: {
+    maxWidth: 800
+  },
   home: {
     width: width,
   },
@@ -188,7 +191,8 @@ const styles = StyleSheet.create({
     marginTop: -20,
     marginBottom: 50,
     height: 100,
-    width: width / 1.3,
+    maxWidth: 500,
+    width: width / 1.7,
     borderColor: '#7a42f4',
     borderWidth: 1
   },

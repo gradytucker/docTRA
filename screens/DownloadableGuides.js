@@ -80,7 +80,7 @@ class Articles extends React.Component {
   render() {
     return (
       <Block flex center>
-        <ScrollView
+        <ScrollView style={styles.screen}
           showsVerticalScrollIndicator={false}
         >
           {this.renderCards()}
@@ -91,6 +91,9 @@ class Articles extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    maxWidth: 800
+  },
   title: {
     paddingBottom: theme.SIZES.BASE * 2,
     paddingHorizontal: theme.SIZES.BASE,

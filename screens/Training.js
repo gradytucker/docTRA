@@ -266,7 +266,7 @@ class Articles extends React.Component {
   render() {
     return (
       <Block flex center>
-        <ScrollView
+        <ScrollView style={styles.screen}
           showsVerticalScrollIndicator={false}
         >
           {this.renderCards()}
@@ -280,6 +280,9 @@ const styles = StyleSheet.create({
   trainingButton: {
     backgroundColor: argonTheme.COLORS.HEADER
   },
+  screen: {
+    maxWidth: 800
+  },
   title: {
     paddingBottom: theme.SIZES.BASE,
     paddingHorizontal: theme.SIZES.BASE * 2,
@@ -287,6 +290,7 @@ const styles = StyleSheet.create({
     color: argonTheme.COLORS.HEADER
   },
   articles: {
+    maxWidth: 800,
     width: width - theme.SIZES.BASE * 2,
     paddingVertical: 0, //draft
   },
@@ -325,11 +329,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2
   },
   productImage: {
+    alignSelf: "center",
     borderRadius: 3,
     opacity: 0.5,
+    maxWidth: (cardWidth - theme.SIZES.BASE) * 0.2,
+    maxHeight: (cardWidth - theme.SIZES.BASE - 200) * 0.2,
     width: (cardWidth - theme.SIZES.BASE) * 0.9,
     height: (cardWidth - theme.SIZES.BASE - 200) * 0.9,
-    alignSelf: "center",
     resizeMode: 'contain'
   },
   productPrice: {

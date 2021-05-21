@@ -250,7 +250,12 @@ class Home extends React.Component {
   render() {
     return (
       <Block flex center style={styles.home}>
-        {this.renderArticles()}
+        <ScrollView
+
+          showsVerticalScrollIndicator={false}
+        >
+          {this.renderArticles()}
+        </ScrollView>
       </Block>
     );
   }
@@ -258,7 +263,12 @@ class Home extends React.Component {
 
 const styles = StyleSheet.create({
   home: {
+    maxWidth: 800,
     width: width,
+    alignSelf: "center",
+  },
+  screen: {
+    maxWidth: 800,
     alignSelf: "center",
   },
   signOut: {
@@ -280,22 +290,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   articles: {
+    maxWidth: 800,
     width: width - theme.SIZES.BASE * 2,
     paddingVertical: 0, //draft
   },
   productImage: {
+    alignSelf: "center",
     borderRadius: 3,
     opacity: 0.5,
+    maxWidth: (cardWidth - theme.SIZES.BASE) * 0.2,
+    maxHeight: (cardWidth - theme.SIZES.BASE - 200) * 0.2,
     width: (cardWidth - theme.SIZES.BASE) * 0.9,
     height: (cardWidth - theme.SIZES.BASE - 200) * 0.9,
-    alignSelf: "center",
     resizeMode: 'contain'
   },
   cartoon: {
     flex: 1,
+    maxHeight: 400,
+    maxWidth: 400,
     width: width * 0.9,
     height: width,
-    resizeMode: "contain"
+    resizeMode: "contain",
+    alignSelf: "center"
   },
 });
 
