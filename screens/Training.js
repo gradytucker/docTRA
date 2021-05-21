@@ -332,8 +332,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 3,
     opacity: 0.5,
-    maxWidth: (cardWidth - theme.SIZES.BASE) * 0.2,
-    maxHeight: (cardWidth - theme.SIZES.BASE - 200) * 0.2,
+    maxWidth: (500) * 0.9,
+    maxHeight: (228) * 0.9,
     width: (cardWidth - theme.SIZES.BASE) * 0.9,
     height: (cardWidth - theme.SIZES.BASE - 200) * 0.9,
     resizeMode: 'contain'
