@@ -30,7 +30,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { Button } from "../components";
 import { color } from "react-native-reanimated";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
@@ -206,6 +206,7 @@ const styles = StyleSheet.create({
   },
   articles: {
     maxWidth: 800,
+    height: height,
     width: width - theme.SIZES.BASE * 2,
     paddingVertical: 0, //draft
   },

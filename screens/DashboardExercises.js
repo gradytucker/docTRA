@@ -19,7 +19,7 @@ import { FlatList } from "react-native-gesture-handler";
 import firebase from "firebase";
 import articleList from "../constants/articles";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
@@ -252,12 +252,10 @@ class Articles extends React.Component {
   render() {
     return (
       <Block flex center>
-        <ScrollView style={styles.screen}
-          showsVerticalScrollIndicator={false}
-        >
-          <FlatList ListHeaderComponent={this.renderCards()}>
-          </FlatList>
-        </ScrollView>
+
+        <FlatList scrollEnabled={true} ListHeaderComponent={this.renderCards()}>
+        </FlatList>
+
       </Block>
     );
   }
@@ -353,6 +351,7 @@ const styles = StyleSheet.create({
     maxWidth: 800,
     width: width - theme.SIZES.BASE * 2,
     paddingVertical: 0, //draft
+    height: height
   },
   productDescription: {
     paddingTop: theme.SIZES.BASE

@@ -26,8 +26,7 @@ import { articles, Images, argonTheme } from "../constants";
 import { Card } from "../components";
 import { Button } from "../components";
 import { color } from "react-native-reanimated";
-
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 import firebase from "firebase";
 import { FlatList } from "react-native-gesture-handler";
 const thumbMeasure = (width - 48 - 32) / 3;
@@ -135,7 +134,8 @@ class Articles extends React.Component {
   /* SHOW ALL COMPLETED CARDS IN FLATLIST FORMAT */
   renderCards = () => {
     return (
-      <View style={styles.articles}>
+      <ScrollView showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.articles} horizontal={false}>
         <Block flex>
           <StatusBar
             barStyle="dark-content"     // dark-content, light-content and default
@@ -161,7 +161,7 @@ class Articles extends React.Component {
               />
             </Block>}
         </Block>
-      </View>
+      </ScrollView>
     )
   }
 
@@ -170,8 +170,9 @@ class Articles extends React.Component {
   render() {
     return (
       <Block flex center>
-        <FlatList ListHeaderComponent={this.renderCards()}>
-        </FlatList>
+
+        {this.renderCards()}
+
       </Block>
     );
   }
@@ -188,10 +189,17 @@ const styles = StyleSheet.create({
     marginTop: 22,
     color: argonTheme.COLORS.HEADER
   },
+  screen: {
+    maxWidth: 800,
+    flex: 1
+  },
   articles: {
     maxWidth: 800,
     width: width - theme.SIZES.BASE * 2,
+    height: height,
     paddingVertical: 0, //draft
+    flex: 1,
+    bottomMargin: 2
   },
   group: {
     paddingTop: theme.SIZES.BASE
@@ -219,15 +227,13 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderRadius: 4
   },
-  productImage: {
-    alignSelf: "center",
-    borderRadius: 3,
-    opacity: 0.5,
-    maxWidth: (500) * 0.9,
-    maxHeight: (228) * 0.9,
-    width: (cardWidth - theme.SIZES.BASE) * 0.9,
-    height: (cardWidth - theme.SIZES.BASE - 200) * 0.9,
-    resizeMode: 'contain'
+  productItem: {
+    width: cardWidth - theme.SIZES.BASE * 2,
+    marginHorizontal: theme.SIZES.BASE,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 7 },
+    shadowRadius: 10,
+    shadowOpacity: 0.2
   },
   productImage: {
     borderRadius: 3,

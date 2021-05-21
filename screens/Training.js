@@ -186,10 +186,10 @@ class Articles extends React.Component {
             networkActivityIndicatorVisible={true}
           />
           <Text bold size={28} color="#32325D">
-            {'\nModules Completed:\n'}
+            {'\nModules Completed:\n\n'}
           </Text>
           <Block flex center>
-            <CircularProgress percent={isNaN(Math.floor((completedNum / totalNum) * 100)) ? 0 : Math.floor((completedNum / totalNum) * 100)}></CircularProgress>
+            <CircularProgress wi percent={isNaN(Math.floor((completedNum / totalNum) * 100)) ? 0 : Math.floor((completedNum / totalNum) * 100)}></CircularProgress>
 
             <Text style={{ fontSize: 18 }}>{'\n' + (totalNum - completedNum) + ' modules remaining!'}</Text>
           </Block>
