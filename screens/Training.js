@@ -32,7 +32,8 @@ import { Card } from "../components/";
 import { Button } from "../components";
 import { color } from "react-native-reanimated";
 import firebase from "firebase";
-import ProgressCircle from 'react-native-progress-circle'
+import CircularProgress from "../components/circularprogress";
+
 import articleList from "../constants/articles";
 const { width } = Dimensions.get("window");
 const thumbMeasure = (width - 48 - 32) / 3;
@@ -166,6 +167,7 @@ class Articles extends React.Component {
 
 
 
+
   /* SHOW ALL REQUIRED CARDS ON SCREEN */
   renderCards = () => {
     const { navigation } = this.props;
@@ -187,16 +189,8 @@ class Articles extends React.Component {
             {'\nModules Completed:\n'}
           </Text>
           <Block flex center>
-            <ProgressCircle
-              percent={isNaN(Math.floor((completedNum / totalNum) * 100)) ? 0 : Math.floor((completedNum / totalNum) * 100)}
-              radius={80}
-              borderWidth={20}
-              color="#3399FF"
-              shadowColor="#999"
-              bgColor="#fff"
-            >
-              <Text style={{ fontSize: 18 }}>{isNaN(Math.floor((completedNum / totalNum) * 100)) ? 0 + "%" : Math.floor((completedNum / totalNum) * 100) + '%'}</Text>
-            </ProgressCircle>
+            <CircularProgress percent={isNaN(Math.floor((completedNum / totalNum) * 100)) ? 0 : Math.floor((completedNum / totalNum) * 100)}></CircularProgress>
+
             <Text style={{ fontSize: 18 }}>{'\n' + (totalNum - completedNum) + ' modules remaining!'}</Text>
           </Block>
           <Text bold size={20} color="#32325D">

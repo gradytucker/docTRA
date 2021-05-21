@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Dimensions, ActivityIndicator, SafeAreaView, StatusBar, Linking } from 'react-native'
+import { StyleSheet, View, Text, Dimensions, ActivityIndicator, SafeAreaView, StatusBar, Linking, Platform } from 'react-native'
 import { WebView } from 'react-native-webview';
 import { argonTheme } from '../constants';
 import { withNavigation } from '@react-navigation/compat';
@@ -30,7 +30,6 @@ class NonExerciseWebViewScreen extends React.Component {
     // web render funcion
     render() {
         const { navigation, route } = this.props;
-        this.storeUserHistory(firebase.auth().currentUser.uid, route.params.websiteURL);
         //const {websiteURL} = navigation.state.params
         console.log(Platform.OS)
         return (Platform.OS === 'web' ? <iframe src={route.params.websiteURL} height={600} /> :
